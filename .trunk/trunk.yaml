@@ -1,0 +1,32 @@
+# This file controls the behavior of Trunk: https://docs.trunk.io/cli
+version: 0.1
+cli:
+  version: 1.25.0
+plugins:
+  sources:
+    - id: trunk
+      ref: v1.10.0
+      uri: https://github.com/trunk-io/plugins
+runtimes:
+  enabled:
+    - node@22.16.0
+lint:
+  enabled:
+    - git-diff-check
+    - markdownlint@0.48.0
+    - oxipng@10.1.1
+    - prettier@3.8.3
+    - trufflehog@3.95.3
+  ignore:
+    - linters: [ALL]
+      paths:
+        - blocks/**
+        - docs/**
+        - files/**
+actions:
+  disabled:
+    - trunk-announce
+    - trunk-check-pre-push
+    - trunk-fmt-pre-commit
+  enabled:
+    - trunk-upgrade-available

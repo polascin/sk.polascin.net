@@ -1,0 +1,29 @@
+# OS generated files
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# Editors & IDEs
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+*.bak
+*.tmp
+
+# Runtime logs
+*.log
+error_log
+php_errors.log
+
+# Claude Code — celý adresár je lokálny
+.claude/
+
+# Citlivé súbory
+.env
+*.env
+*.pem
+*.key
+*.p12
+*.pfx

@@ -1,0 +1,85 @@
+body {
+  font-family: system-ui;
+  background-color: white;
+  max-width: 1024px;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+}
+
+a:link {
+  text-decoration: none;
+  color: black;
+}
+
+a:visited {
+  color: black;
+}
+
+a:hover {
+  color: purple;
+}
+
+.clearfix::after {
+  content: "";
+  clear: both;
+  display: table;
+}
+
+.info {
+  font-family: serif;
+  display: inline-table;
+  max-width: 1024px;
+  margin-left: auto;
+  margin-right: auto;
+  width: 96%;
+  background-color: mintcream;
+  text-align: left;
+  border: solid thin gray;
+  padding: 1em;
+}
+
+img.imgpromo {
+  height: 3em;
+  margin: 0.3em;
+  border-style: none;
+}
+
+.promosection {
+  margin-top: 1.6em;
+  font-style: italic;
+  font-size: small;
+}
+
+hr.promohr {
+  border: dotted thin silver;
+  margin-top: 0em;
+  margin-bottom: 0em;
+}
+
+.quotebox {
+  font-family: sans-serif;
+  display: inline-table;
+  border: solid thin gray;
+  padding: 1em;
+  background-color: snow;
+}
+
+.quote {
+  font-weight: bold;
+  font-size: large;
+  color: gray;
+}
+
+.author {
+  text-align: right;
+  font-style: italic;
+  color: gray;
+}
+
+.source {
+  text-align: right;
+  font-style: italic;
+  font-size: small;
+  color: silver;
+}
