@@ -1,0 +1,4 @@
+# Placeholder baseline — prepíše ho tools/install-dev-tools.ps1 reálnymi nálezmi.
+# PHPStan tak hlási len NOVÉ chyby, nie celý existujúci kód.
+parameters:
+    ignoreErrors: []

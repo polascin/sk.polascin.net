@@ -27,3 +27,8 @@ php_errors.log
 *.key
 *.p12
 *.pfx
+
+# Lokálne PHP dev nástroje (stiahne tools/install-dev-tools.ps1) — NEdeployovať
+tools/*.phar
+.php-cs-fixer.cache
+.phpstan.cache/
