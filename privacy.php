@@ -59,10 +59,10 @@
 
 	<h2>Súbory cookies</h2>
 	<p>
-		Toto webové sídlo samo nenastavuje žiadne súbory cookies, nepoužíva žiadne analytické
-		nástroje a neukladá žiadne údaje do úložiska prehliadača návštevníka.
-		Vložené prvky tretích strán opísané v nasledujúcej časti sa spravujú zásadami
-		ich poskytovateľov.
+		Toto webové sídlo samo nenastavuje žiadne súbory cookies, nepoužíva žiadne vlastné
+		analytické nástroje a neukladá žiadne údaje do úložiska prehliadača návštevníka.
+		Jedinou výnimkou sú vložené prvky tretích strán opísané v nasledujúcej časti
+		(vrátane počítadla návštev ClustrMaps), ktoré sa spravujú zásadami ich poskytovateľov.
 	</p>
 
 	<h2>Tretie strany</h2>
@@ -77,8 +77,9 @@
 		<a href="https://polascin.net/" target="_blank" title="Polascin.Net">polascin.net</a>,
 		ktorú prevádzkuje taktiež prevádzkovateľ tohto webového sídla.
 		Stránky ďalej zobrazujú partnerské (affiliate) bannery spoločností
-		<strong>Audiolibrix</strong> a <strong>Martinus</strong>. Obrázky týchto bannerov
-		sa načítavajú zo serverov uvedených spoločností a jeden banner spoločnosti Martinus
+		<strong>Audiolibrix</strong> a <strong>Martinus</strong>. Obrázok banneru Audiolibrix
+		sa načítava zo siete Amazon CloudFront (d2emjept89nv7b.cloudfront.net), obrázok
+		banneru Martinus zo servera www.martinus.sk a jeden banner spoločnosti Martinus
 		sa vkladá prostredníctvom skriptu z jej partnerského servera (partner.mrtns.eu).
 		Pri načítaní týchto prvkov príslušné servery technicky zaznamenajú IP adresu návštevníka;
 		spracúvanie údajov sa spravuje zásadami ochrany súkromia týchto spoločností.
@@ -94,13 +95,17 @@
 
 	<h2>Doba uchovávania</h2>
 	<p>
-		Serverové logy sa uchovávajú počas štandardnej doby určenej poskytovateľom webhostingu.
+		Prístupové logy uchováva poskytovateľ webhostingu len po obmedzený čas potrebný
+		na zaistenie bezpečnosti a riešenie prevádzkových incidentov (spravidla niekoľko
+		týždňov až mesiacov podľa jeho aktuálnych podmienok spracúvania údajov)
+		a následne sa automaticky mažú.
 		Žiadne iné osobné údaje sa prostredníctvom tohto webového sídla neukladajú.
 	</p>
 
 	<h2>Vaše práva</h2>
 	<p>
-		Podľa nariadenia GDPR máte právo na prístup k svojim osobným údajom, právo na ich opravu,
+		Podľa nariadenia GDPR máte &mdash; v rozsahu, v akom sú splnené podmienky jednotlivých
+		práv &mdash; právo na prístup k svojim osobným údajom, právo na ich opravu,
 		vymazanie, obmedzenie spracúvania, právo na prenosnosť údajov a právo namietať proti
 		spracúvaniu. Svoje práva si môžete uplatniť e-mailom na adrese
 		<a href="mailto:lubomir@polascin.net" title="Pošli e-mail">lubomir@polascin.net</a>.
