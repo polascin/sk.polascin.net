@@ -1,0 +1,15 @@
+# Rsync exclude patterns pre GitHub Actions deploy (.github/workflows/deploy.yml).
+.git
+.gitattributes
+.github
+.gitignore
+.deployignore
+DEPLOY.md
+README.md
+phpstan.neon.dist
+phpstan-baseline.neon
+tools
+.vscode
+.claude
+.trunk
+*.ps1
