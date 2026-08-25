@@ -15,6 +15,12 @@
 	</strong>
 	<br>
 	<small><em>Všetky práva vyhradené! Všetky ochranné známky sú majetkom ich príslušných vlastníkov.</em></small>
+	<br>
+	<small>
+		<a href="./privacy.php" title="Zásady ochrany osobných údajov">Ochrana osobných údajov</a>
+		&nbsp;|&nbsp;
+		<a href="./terms.php" title="Podmienky používania">Podmienky používania</a>
+	</small>
 </div>
 <!-- The End of the Copyright Statement -->
 
