@@ -1,9 +1,13 @@
 ---
 name: Deploy to sk.polascin.net
 
-# Nasadenie cez rsync/SSH podľa vzoru polascin.net. Deploy job sa preskočí
-# s upozornením, kým nie sú nastavené DEPLOY_* secrets (Settings → Secrets
-# and variables → Actions), takže workflow nezostáva červený pred konfiguráciou.
+# Nasadenie cez FTPS (lftp) na WebSupport. Prešli sme z SSH/rsync na FTP, pretože
+# WebSupport odmieta SSH kľúč zo zdrojových IP GitHub runnerov (Permission denied
+# publickey), zatiaľ čo FTP beží na inom porte bez tohto obmedzenia.
+#
+# Deploy job sa preskočí s upozornením, kým nie sú nastavené DEPLOY_FTP_* secrets
+# (Settings → Secrets and variables → Actions), takže workflow nezostáva červený
+# pred konfiguráciou.
 on:
   push:
     branches: [main]
@@ -54,73 +58,74 @@ jobs:
       - name: Check deploy configuration
         id: cfg
         env:
-          DEPLOY_HOST: ${{ secrets.DEPLOY_HOST }}
-          DEPLOY_USER: ${{ secrets.DEPLOY_USER }}
-          DEPLOY_SSH_KEY: ${{ secrets.DEPLOY_SSH_KEY }}
-          DEPLOY_KNOWN_HOSTS: ${{ secrets.DEPLOY_KNOWN_HOSTS }}
-          DEPLOY_REMOTE_PATH: ${{ secrets.DEPLOY_REMOTE_PATH }}
+          DEPLOY_FTP_SERVER: ${{ secrets.DEPLOY_FTP_SERVER }}
+          DEPLOY_FTP_USERNAME: ${{ secrets.DEPLOY_FTP_USERNAME }}
+          DEPLOY_FTP_PASSWORD: ${{ secrets.DEPLOY_FTP_PASSWORD }}
+          DEPLOY_FTP_DIR: ${{ secrets.DEPLOY_FTP_DIR }}
         run: |
           set -euo pipefail
-          if [[ -z "$DEPLOY_HOST" || -z "$DEPLOY_USER" || -z "$DEPLOY_SSH_KEY" || -z "$DEPLOY_KNOWN_HOSTS" || -z "$DEPLOY_REMOTE_PATH" ]]; then
-            echo "::notice::Deploy skipped — configure DEPLOY_HOST, DEPLOY_USER, DEPLOY_SSH_KEY, DEPLOY_KNOWN_HOSTS and DEPLOY_REMOTE_PATH secrets (see DEPLOY.md)."
+          if [[ -z "$DEPLOY_FTP_SERVER" || -z "$DEPLOY_FTP_USERNAME" || -z "$DEPLOY_FTP_PASSWORD" || -z "$DEPLOY_FTP_DIR" ]]; then
+            echo "::notice::Deploy skipped — configure DEPLOY_FTP_SERVER, DEPLOY_FTP_USERNAME, DEPLOY_FTP_PASSWORD and DEPLOY_FTP_DIR secrets (see DEPLOY.md)."
             echo "configured=false" >> "$GITHUB_OUTPUT"
             exit 0
           fi
-          [[ "$DEPLOY_USER" =~ ^[A-Za-z0-9._-]+$ ]] || { echo "::error::DEPLOY_USER contains unsupported characters."; exit 1; }
-          [[ "$DEPLOY_HOST" =~ ^[A-Za-z0-9.-]+$ ]] || { echo "::error::DEPLOY_HOST contains unsupported characters."; exit 1; }
-          REMOTE_PATH="${DEPLOY_REMOTE_PATH%/}"
-          if [[ -z "$REMOTE_PATH" || "$REMOTE_PATH" != /* || "$REMOTE_PATH" =~ ^/+$ || "$REMOTE_PATH" == *".."* || "$REMOTE_PATH" == *"//"* ]]; then
-            echo "::error::DEPLOY_REMOTE_PATH must be a safe absolute non-root path."
-            exit 1
-          fi
+          # server: hostname alebo IPv4/IPv6; dir: bezpečná relatívna cesta bez '..'
+          [[ "$DEPLOY_FTP_SERVER" =~ ^[A-Za-z0-9.:_-]+$ ]] || { echo "::error::DEPLOY_FTP_SERVER contains unsupported characters."; exit 1; }
+          case "$DEPLOY_FTP_DIR" in
+            /*|*..*) echo "::error::DEPLOY_FTP_DIR must be a relative path without '..'."; exit 1 ;;
+          esac
           echo "configured=true" >> "$GITHUB_OUTPUT"
-          echo "remote_path=$REMOTE_PATH" >> "$GITHUB_OUTPUT"
 
-      - name: Prepare SSH
+      - name: Install lftp
         if: steps.cfg.outputs.configured == 'true'
-        env:
-          DEPLOY_SSH_KEY: ${{ secrets.DEPLOY_SSH_KEY }}
-          DEPLOY_KNOWN_HOSTS: ${{ secrets.DEPLOY_KNOWN_HOSTS }}
         run: |
           set -euo pipefail
-          mkdir -p ~/.ssh
-          chmod 700 ~/.ssh
-          printf '%s\n' "$DEPLOY_SSH_KEY" > ~/.ssh/deploy_key
-          chmod 600 ~/.ssh/deploy_key
-          printf '%s\n' "$DEPLOY_KNOWN_HOSTS" > ~/.ssh/known_hosts
-          chmod 644 ~/.ssh/known_hosts
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq lftp >/dev/null
 
-      - name: Verify remote directory exists
+      - name: Upload via FTPS (lftp mirror)
         if: steps.cfg.outputs.configured == 'true'
         env:
-          DEPLOY_HOST: ${{ secrets.DEPLOY_HOST }}
-          DEPLOY_USER: ${{ secrets.DEPLOY_USER }}
-          DEPLOY_PORT: ${{ secrets.DEPLOY_PORT }}
-          REMOTE_PATH: ${{ steps.cfg.outputs.remote_path }}
+          FTP_SERVER: ${{ secrets.DEPLOY_FTP_SERVER }}
+          FTP_USER: ${{ secrets.DEPLOY_FTP_USERNAME }}
+          FTP_PASS: ${{ secrets.DEPLOY_FTP_PASSWORD }}
+          FTP_PORT: ${{ secrets.DEPLOY_FTP_PORT }}
+          FTP_DIR: ${{ secrets.DEPLOY_FTP_DIR }}
         run: |
           set -euo pipefail
-          PORT="${DEPLOY_PORT:-22}"
-          ssh -i ~/.ssh/deploy_key -p "$PORT" -o BatchMode=yes "$DEPLOY_USER@$DEPLOY_HOST" \
-            "test -d '$REMOTE_PATH'" \
-            || { echo "::error::Remote directory $REMOTE_PATH does not exist — create it first."; exit 1; }
-
-      - name: Rsync repository to web root
-        if: steps.cfg.outputs.configured == 'true'
-        env:
-          DEPLOY_HOST: ${{ secrets.DEPLOY_HOST }}
-          DEPLOY_USER: ${{ secrets.DEPLOY_USER }}
-          DEPLOY_PORT: ${{ secrets.DEPLOY_PORT }}
-          REMOTE_PATH: ${{ steps.cfg.outputs.remote_path }}
-        run: |
-          set -euo pipefail
-          PORT="${DEPLOY_PORT:-22}"
-          # Bez --delete: serverové súbory mimo repozitára (konfigurácia,
-          # nahraný obsah) zostávajú nedotknuté.
-          rsync -rlptz --itemize-changes \
-            --chmod=D755,F644 \
-            --exclude-from=.deployignore \
-            -e "ssh -i ~/.ssh/deploy_key -p $PORT -o BatchMode=yes" \
-            ./ "$DEPLOY_USER@$DEPLOY_HOST:$REMOTE_PATH/"
+          PORT="${FTP_PORT:-21}"
+          # Vynútené FTPS (šifrovaný riadiaci aj dátový kanál). Overenie certifikátu
+          # je vypnuté, pretože server adresujeme cez pripnutú IP (cert je na hostname).
+          # BEZ --delete: serverové súbory mimo repozitára (napr. db.config.php) zostávajú.
+          lftp -c "
+            set ftp:ssl-force true;
+            set ftp:ssl-protect-data true;
+            set ssl:verify-certificate no;
+            set net:max-retries 2;
+            set net:timeout 25;
+            set net:persist-retries 2;
+            open -u '$FTP_USER','$FTP_PASS' -p $PORT 'ftp://$FTP_SERVER';
+            mirror --reverse --continue --no-perms --parallel=2 \
+              --exclude-glob .git \
+              --exclude-glob .git/ \
+              --exclude-glob .github/ \
+              --exclude-glob .githooks/ \
+              --exclude-glob .vscode/ \
+              --exclude-glob .claude/ \
+              --exclude-glob .trunk/ \
+              --exclude-glob tools/ \
+              --exclude-glob .gitignore \
+              --exclude-glob .gitattributes \
+              --exclude-glob .deployignore \
+              --exclude-glob '*.md' \
+              --exclude-glob '*.ps1' \
+              --exclude-glob 'phpstan*' \
+              --exclude-glob '.php-cs-fixer*' \
+              --exclude-glob 'db.config.php' \
+              ./ '$FTP_DIR';
+            bye
+          "
+          echo "FTP mirror completed."
 
       - name: Smoke test
         if: steps.cfg.outputs.configured == 'true'
