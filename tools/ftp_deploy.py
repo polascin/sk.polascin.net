@@ -36,9 +36,27 @@ def excluded(name):
     return any(fnmatch.fnmatch(name, pat) for pat in EXCLUDE_GLOBS)
 
 
+class ReuseFTP_TLS(ftplib.FTP_TLS):
+    """FTP_TLS, kde dátové spojenie znovu použije TLS reláciu riadiaceho
+    spojenia. pure-ftpd to vyžaduje, inak dátový kanál (LIST/STOR) odmietne."""
+
+    def ntransfercmd(self, cmd, rest=None):
+        conn, size = ftplib.FTP.ntransfercmd(self, cmd, rest)
+        if self._prot_p:
+            conn = self.context.wrap_socket(
+                conn, server_hostname=self.host, session=self.sock.session
+            )
+        return conn, size
+
+
 def main():
     ctx = ssl._create_unverified_context()
-    ftp = ftplib.FTP_TLS(context=ctx)
+    # Niektoré pure-ftpd servery zhodia FTPS spojenie pri TLS 1.3 → strop na 1.2.
+    try:
+        ctx.maximum_version = ssl.TLSVersion.TLSv1_2
+    except (ValueError, AttributeError):
+        pass
+    ftp = ReuseFTP_TLS(context=ctx)
     ftp.connect(server, port, timeout=30)
     ftp.auth()
     ftp.login(user, password)
