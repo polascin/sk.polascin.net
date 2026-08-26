@@ -9,7 +9,7 @@
 			</a>
 		</div>
     <div>
-    	<a href="https://sk.wikipedia.org/wiki/Dospelos%C5%A5" target="_blank" title="Vek v rokoch">
+    	<a href="https://sk.wikipedia.org/wiki/Dospelos%C5%A5" target="_blank" title="Vek v rokoch" rel="noopener noreferrer">
 				<?php
         	$vek = (time() - mktime(8,30,0,3,4,1971)) / (60 * 60 * 24 * 365.25) ;
   		  	echo "<span style='font-weight: bold; font-size: 2.5em;'>".floor($vek)."</span>"."\n" ;
@@ -20,7 +20,7 @@
   </div>
   <div style="display: inline-table; float: right;">
   	<br><br>
-  	<a href="https://www.linkedin.com/in/lubomirpolascin/" target="_blank" title="Lubomir Polacin's LinkedIn Profile">
+  	<a href="https://www.linkedin.com/in/lubomirpolascin/" target="_blank" title="Lubomir Polacin's LinkedIn Profile" rel="noopener noreferrer">
   		<img src="https://polascin.net/weblogo/LinkedIn-logo.png" alt="LinkedIn Logo" style="height: 3em;">
   	</a>
   	<br>
@@ -35,35 +35,35 @@
 		<!--</a>-->
 		<br><br>
 		<hr class="promohr">
-   	<a href="https://nephro.site/" target="_blank" title="NephroSite">
+   	<a href="https://nephro.site/" target="_blank" title="NephroSite" rel="noopener noreferrer">
 			<img src="https://polascin.net/weblogo/nspanelgray.png" height="50" alt="NephroSite">
 			<br>
 			<small>https://<strong>nephro.site</strong>/</small>
 		</a>
 		<hr class="promohr">
-		<a href="https://www.amazon.com/stores/Lubomir-Polascin/author/B07PN436VJ?store_ref=ap_rdr&isDramIntegrated=true&shoppingPortalEnabled=true&linkCode=ll2&tag=mobile0f21130-20&linkId=857497f66a358285c30f667879e75f8e&language=en_US&ref_=as_li_ss_tl" target="_blank" title="Moje knihy na Amazon-e">
+		<a href="https://www.amazon.com/stores/Lubomir-Polascin/author/B07PN436VJ?store_ref=ap_rdr&isDramIntegrated=true&shoppingPortalEnabled=true&linkCode=ll2&tag=mobile0f21130-20&linkId=857497f66a358285c30f667879e75f8e&language=en_US&ref_=as_li_ss_tl" target="_blank" title="Moje knihy na Amazon-e" rel="noopener noreferrer">
 			<h3 style="border-block-end-color: gray; border-style: solid; border-width: thin; background-color: ghostwhite;">
 				Moje knihy na Amazon-e
 			</h3>
 		</a>
 		<br>
 		<!--<div style="border-style: solid; border-width: thin; border-color: gray; padding: 0.3em;">
-			<a href="https://nemocnica-bory.sk/pacient/ambulancie/#objednanie" target="_blank" title="Nefrologická ambulancia Nemocnice Bory - OBJEDNANIE">
+			<a href="https://nemocnica-bory.sk/pacient/ambulancie/#objednanie" target="_blank" title="Nefrologická ambulancia Nemocnice Bory - OBJEDNANIE" rel="noopener noreferrer">
 				<small><em>Nájdete ma v Nemocnici novej generácie Bory</em></small>
 			</a>
 			<br>
-			<a href="https://nemocnica-bory.sk/" target="_blank" title="Nemocnica Bory - Penta Hospitals">
+			<a href="https://nemocnica-bory.sk/" target="_blank" title="Nemocnica Bory - Penta Hospitals" rel="noopener noreferrer">
 				<img src="https://polascin.net/weblogo/nngb-logo.svg" height="50" alt="Nemocnica Bory - Penta Hospitals">
 			</a>
-			<a href="https://nemocnica-bory.sk/pacient/ambulancie/#objednanie" target="_blank" title="Ako sa objednať?">
+			<a href="https://nemocnica-bory.sk/pacient/ambulancie/#objednanie" target="_blank" title="Ako sa objednať?" rel="noopener noreferrer">
 				<div style="font-weight: bold;"><hr class="promohr">0950 105 510<hr class="promohr"></div>
 			</a>
 			<div style="font-size: small; font-style: italic;">
-				<a href="https://nemocnica-bory.sk/pracovisko/dialyza/" target="_blank" title="Dialyzačný stacionár Nemocnice Bory">
+				<a href="https://nemocnica-bory.sk/pracovisko/dialyza/" target="_blank" title="Dialyzačný stacionár Nemocnice Bory" rel="noopener noreferrer">
 					Dialýza (Dialyzačný stacionár)
 				</a>
 				&nbsp;&nbsp;&nbsp;
-				<a href="https://nemocnica-bory.sk/ambulancia/nefrologicka/" target="_blank" title="Nefrologická ambulancia Nemocnice Bory">
+				<a href="https://nemocnica-bory.sk/ambulancia/nefrologicka/" target="_blank" title="Nefrologická ambulancia Nemocnice Bory" rel="noopener noreferrer">
 					Nefrologická ambulancia
 				</a>
 			</div>

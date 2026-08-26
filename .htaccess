@@ -41,5 +41,8 @@ ServerSignature Off
 # Blokovanie interných adresárov
 <IfModule mod_rewrite.c>
     RewriteEngine On
-    RewriteRule ^(\.git|\.claude|\.vscode|blocks|docs|files)(/.*)?$ - [F,L]
+    RewriteRule ^(\.git|\.claude|\.vscode|blocks|files)(/.*)?$ - [F,L]
+    # docs/: adresár nie je verejne prehľadávateľný, ale docs/mel.pdf je zámerne
+    # vložený na stránke (odkaz aj iframe), preto ho ako jediný ponechávame dostupný.
+    RewriteRule ^docs/(?!mel\.pdf$).* - [F,L]
 </IfModule>

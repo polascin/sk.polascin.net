@@ -42,12 +42,12 @@
 
 <div class="info" style="background-color: honeydew; display: inline-table;">
 	<div style="font-size: 3em; font-variant: small-caps; text-align: center;">
-		<a href="./docs/mel.pdf" target="_blank">
+		<a href="./docs/mel.pdf" target="_blank" rel="noopener noreferrer">
 			Mimotelová eliminačná liečba. &copy; 2009.
 		</a>
 	</div>
 	<br>
-	<iframe src="https://sk.polascin.net/docs/mel.pdf" style="border:3px solid teal; width: 100%; height: 50em;" title="Mimotelolvá eliminačná liečba. &copy; 2009"></iframe>
+	<iframe src="https://sk.polascin.net/docs/mel.pdf" style="border:3px solid teal; width: 100%; height: 50em;" title="Mimotelová eliminačná liečba. &copy; 2009"></iframe>
 </div>
 
 <br>

@@ -14,7 +14,7 @@
 		<span style="font-style: italic; color: gray; display: block;">Kontakty</span>
 		<span style="font-size: small; font-style: italic; color: gray;">E-Mail: </span>
 		&nbsp;
-		<a href="mailto://lubomir@polascin.net" target="_blank">
+		<a href="mailto:lubomir@polascin.net">
 			<strong>lubomir@polascin.net</strong>
 		</a>
 		<br>
@@ -26,7 +26,7 @@
 		<a href="https://polascin.sk/" target="_top">
 			<strong>&nbsp;|&nbsp;polascin.sk</strong>
 		</a>
-		<a href="https://polascin.net/" target="_blank">
+		<a href="https://polascin.net/" target="_blank" rel="noopener noreferrer">
 			<strong>&nbsp;|&nbsp;polascin.net</strong>
 		</a>
 		<br>
@@ -75,7 +75,7 @@
 	<hr>
 
 	<div>
-		<a href="https://www.amazon.com/stores/author/B07PN436VJ/about?ingress=0&visitId=c86fef74-be71-4951-8486-08f60b67d802&store_ref=ap_rdr&linkCode=ll2&tag=mobile0f21130-20&linkId=4e84ad9ae239b52e2b33aaadfb5a7ff8&language=en_US&ref_=as_li_ss_tl" target="_blank">
+		<a href="https://www.amazon.com/stores/author/B07PN436VJ/about?ingress=0&visitId=c86fef74-be71-4951-8486-08f60b67d802&store_ref=ap_rdr&linkCode=ll2&tag=mobile0f21130-20&linkId=4e84ad9ae239b52e2b33aaadfb5a7ff8&language=en_US&ref_=as_li_ss_tl" target="_blank" rel="noopener noreferrer">
 			<em>Autorská stránka Ľubomír Polaščína na <strong>Amazon</strong>-ne v angličtine.</em>
 		</a>
 	</div>
@@ -83,7 +83,7 @@
 </div>
 
 <p style="text-align: center; font-variant: small-caps; ">
-	<a href="https://you.23andme.com/published/reports/a38bc14066464d3c863bcfba5eabfd37/?share_id=cdc1161135484f7a" target="_blank" title="23andme">
+	<a href="https://you.23andme.com/published/reports/a38bc14066464d3c863bcfba5eabfd37/?share_id=cdc1161135484f7a" target="_blank" title="23andme" rel="noopener noreferrer">
 		<img src="https://polascin.net/weblogo/23andme-logo.gif" alt="23andme">
 		&nbsp;&nbsp;&nbsp;
 		<img src="https://polascin.net/weblogo/chromo.gif" alt="23andme">

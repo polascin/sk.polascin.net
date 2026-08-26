@@ -1,9 +1,9 @@
 <div style="border: solid thin silver; display: inline-table; background-color: whitesmoke; padding-left: 1em; padding-right: 1em;">
-	<a href="https://en.wikipedia.org/wiki/Swatch_Internet_Time" target="_blank">
+	<a href="https://en.wikipedia.org/wiki/Swatch_Internet_Time" target="_blank" rel="noopener noreferrer">
 		<span id="internettime" style="font-weight: bold; "></span>
 	</a>
 	<br>
-	<a href="https://time.is/" target="_blank">
+	<a href="https://time.is/" target="_blank" rel="noopener noreferrer">
 		<span>Deň:&nbsp;</span><span id="daynumber" style="font-weight: bold; "></span>
 		<span>&nbsp;&nbsp;&nbsp;Rok:&nbsp;</span><span id="yearnumber" style="font-weight: bolder; "></span>
 		<span>&nbsp;&nbsp;&nbsp;Týždeň:&nbsp;</span><span id="weeknumber" style="font-weight: bold; "></span>
