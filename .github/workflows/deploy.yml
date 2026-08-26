@@ -83,41 +83,30 @@ jobs:
           sudo apt-get update -qq
           sudo apt-get install -y -qq lftp >/dev/null
 
-      - name: Prepare FTP credentials
+      - name: Verify FTP target directory
         if: steps.cfg.outputs.configured == 'true'
         env:
           FTP_SERVER: ${{ secrets.DEPLOY_FTP_SERVER }}
           FTP_USER: ${{ secrets.DEPLOY_FTP_USERNAME }}
           FTP_PASS: ${{ secrets.DEPLOY_FTP_PASSWORD }}
-        run: |
-          set -euo pipefail
-          umask 077
-          # .netrc je odolné voči čiarkam a úvodzovkám v hesle (na rozdiel od
-          # `-u user,pass`, kde sa heslo delí na prvej čiarke). lftp ho číta sám.
-          printf 'machine %s login %s password %s\n' "$FTP_SERVER" "$FTP_USER" "$FTP_PASS" > "$HOME/.netrc"
-          chmod 600 "$HOME/.netrc"
-          echo "netrc pripravené pre $FTP_SERVER"
-
-      - name: Verify FTP target directory
-        if: steps.cfg.outputs.configured == 'true'
-        env:
-          FTP_SERVER: ${{ secrets.DEPLOY_FTP_SERVER }}
           FTP_PORT: ${{ secrets.DEPLOY_FTP_PORT }}
           FTP_DIR: ${{ secrets.DEPLOY_FTP_DIR }}
         run: |
           set -euo pipefail
           PORT="${FTP_PORT:-21}"
-          # Overíme prihlásenie, kam FTP padne (pwd) a či cieľový adresár obsahuje
-          # index.php (t.j. je to web root subdomény). Zabráni to nesprávnemu
-          # (napr. zanorenému) nahraniu, ak DEPLOY_FTP_DIR nesedí voči FTP domovu.
-          OUT=$(lftp "ftp://$FTP_SERVER:$PORT" -e "
+          # Prihlásenie cez lftp príkaz `user` (odolné voči čiarke v hesle; lftp
+          # nečíta ~/.netrc spoľahlivo). Overíme, kam FTP padne (pwd) a či cieľový
+          # adresár obsahuje index.php — zabráni to zanorenému nahraniu pri zlom dir.
+          OUT=$(lftp -c "
             set ftp:ssl-force true;
             set ftp:ssl-protect-data true;
             set ssl:verify-certificate no;
             set net:max-retries 2;
             set net:timeout 25;
+            open -p $PORT 'ftp://$FTP_SERVER';
+            user '$FTP_USER' '$FTP_PASS';
             echo === PWD ===; pwd;
-            echo === LIST $FTP_DIR ===; cls -1 \"$FTP_DIR\";
+            echo === LIST $FTP_DIR ===; cls -1 '$FTP_DIR';
             bye
           " 2>&1) || true
           echo "$OUT"
@@ -136,6 +125,8 @@ jobs:
         if: steps.cfg.outputs.configured == 'true'
         env:
           FTP_SERVER: ${{ secrets.DEPLOY_FTP_SERVER }}
+          FTP_USER: ${{ secrets.DEPLOY_FTP_USERNAME }}
+          FTP_PASS: ${{ secrets.DEPLOY_FTP_PASSWORD }}
           FTP_PORT: ${{ secrets.DEPLOY_FTP_PORT }}
           FTP_DIR: ${{ secrets.DEPLOY_FTP_DIR }}
         run: |
@@ -143,7 +134,7 @@ jobs:
           PORT="${FTP_PORT:-21}"
           # Vynútené FTPS (šifrovaný riadiaci aj dátový kanál). Overenie certifikátu
           # je vypnuté, pretože server adresujeme cez pripnutú IP (cert je na hostname).
-          # Prihlásenie z ~/.netrc. BEZ --delete: serverové súbory mimo repozitára
+          # Prihlásenie cez `user`. BEZ --delete: serverové súbory mimo repozitára
           # (napr. db.config.php) zostávajú nedotknuté.
           lftp -c "
             set ftp:ssl-force true;
@@ -153,6 +144,7 @@ jobs:
             set net:timeout 25;
             set net:persist-retries 2;
             open -p $PORT 'ftp://$FTP_SERVER';
+            user '$FTP_USER' '$FTP_PASS';
             mirror --reverse --continue --no-perms --parallel=2 \
               --exclude-glob .git \
               --exclude-glob .git/ \
