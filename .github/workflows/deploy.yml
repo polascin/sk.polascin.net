@@ -83,6 +83,38 @@ jobs:
           sudo apt-get update -qq
           sudo apt-get install -y -qq lftp >/dev/null
 
+      - name: Verify FTP target directory
+        if: steps.cfg.outputs.configured == 'true'
+        env:
+          FTP_SERVER: ${{ secrets.DEPLOY_FTP_SERVER }}
+          FTP_USER: ${{ secrets.DEPLOY_FTP_USERNAME }}
+          FTP_PASS: ${{ secrets.DEPLOY_FTP_PASSWORD }}
+          FTP_PORT: ${{ secrets.DEPLOY_FTP_PORT }}
+          FTP_DIR: ${{ secrets.DEPLOY_FTP_DIR }}
+        run: |
+          set -euo pipefail
+          PORT="${FTP_PORT:-21}"
+          # Overíme, kam FTP prihlásenie padne (pwd) a či cieľový adresár obsahuje
+          # index.php (t.j. je to web root subdomény). Zabráni to nesprávnemu
+          # (napr. zanorenému) nahraniu, ak DEPLOY_FTP_DIR nesedí voči FTP domovu.
+          OUT=$(lftp -u "$FTP_USER","$FTP_PASS" -p "$PORT" "ftp://$FTP_SERVER" -e "
+            set ftp:ssl-force true;
+            set ftp:ssl-protect-data true;
+            set ssl:verify-certificate no;
+            set net:max-retries 2;
+            set net:timeout 25;
+            echo === PWD ===; pwd;
+            echo === LIST $FTP_DIR ===; cls -1 \"$FTP_DIR\";
+            bye
+          " 2>&1) || true
+          echo "$OUT"
+          if echo "$OUT" | grep -qE '(^|/)index\.php$'; then
+            echo "TARGET_OK: index.php found in $FTP_DIR"
+          else
+            echo "::error::index.php not found in DEPLOY_FTP_DIR='$FTP_DIR'. Uprav DEPLOY_FTP_DIR podľa PWD/výpisu vyššie."
+            exit 1
+          fi
+
       - name: Upload via FTPS (lftp mirror)
         if: steps.cfg.outputs.configured == 'true'
         env:
