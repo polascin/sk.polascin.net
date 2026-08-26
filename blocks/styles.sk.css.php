@@ -99,4 +99,14 @@ hr.promohr {
 	color: silver;
 }
 
+.legal-nav {
+	margin: 0.8em 0;
+	font-size: small;
+}
+
+.legal-nav a {
+	margin: 0 0.6em;
+	text-decoration: underline;
+}
+
 </style>

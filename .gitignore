@@ -32,3 +32,6 @@ php_errors.log
 tools/*.phar
 .php-cs-fixer.cache
 .phpstan.cache/
+
+# Konfigurácia databázy so skutočnými prihlasovacími údajmi — NIKDY neverziovať
+db.config.php

@@ -15,24 +15,26 @@
 	</strong>
 	<br>
 	<small><em>Všetky práva vyhradené! Všetky ochranné známky sú majetkom ich príslušných vlastníkov.</em></small>
-	<br>
-	<small>
-		<a href="./privacy.php" title="Zásady ochrany osobných údajov">Ochrana osobných údajov</a>
-		&nbsp;|&nbsp;
-		<a href="./terms.php" title="Podmienky používania">Podmienky používania</a>
-	</small>
 </div>
 <!-- The End of the Copyright Statement -->
 
+<!-- Právne dokumenty -->
+<nav class="legal-nav" aria-label="Právne dokumenty">
+	<a href="/privacy.php" title="Zásady ochrany súkromia a osobných údajov (GDPR)">Ochrana súkromia</a>
+	<span aria-hidden="true">|</span>
+	<a href="/terms.php" title="Podmienky používania webového sídla">Podmienky používania</a>
+</nav>
+<!-- Koniec právnych dokumentov -->
+
 <br>
 
-<!-- ClustrMaps Code -->
-<p style="text-align: center; ">
-	<a href='https://clustrmaps.com/site/1ak7d' target="_blank" title='Visit tracker'>
-		<img src='//clustrmaps.com/map_v2.png?cl=080808&w=300&t=tt&d=6Uv4S4WFV1sb8yPD3S6mHHJAc2s-xvFu85nftKYGceU&co=ffffff&ct=808080' alt="Clustrmaps.com">
-	</a>
-</p>
-<!-- The End of the ClustrMaps Code -->
+<!--
+	ClustrMaps odstránený (2026-08-26).
+	Widget načítaval obrázok priamo zo servera tretej strany, čím sa jej pri každom
+	zobrazení stránky odosielala IP adresa návštevníka bez jeho súhlasu.
+	Štatistiku návštevnosti poskytuje aj hosting Websupport zo serverových logov,
+	bez prenosu údajov tretej strane.
+-->
 
 <!-- Last modification date in PHP -->
 <div style="color: gray; font-size: smaller;">
@@ -82,12 +84,6 @@
     <img src="https://polascin.net/weblogo/w3c_home_nb.png" alt="W3C Markup Validation Service">
   </a>
 </p>
-<!--<p>
-  <a href="./blocks/phpinfo.php" target="_blank" title="PHP Info">
-    <code>PHP Info</code>
-  </a>
-</p>-->
-
 <br>
 
 <div style="display: inline-table; border: thin solid gray; padding: 1em; background-color: whitesmoke;">

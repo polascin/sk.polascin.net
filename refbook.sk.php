@@ -1,3 +1,60 @@
+<?php
+
+declare(strict_types=1);
+
+require_once __DIR__ . '/blocks/db.sk.php';
+
+// Vstup z URL musí byť kladné celé číslo; čokoľvek iné sa zahodí.
+$quoteId = filter_input(
+    INPUT_GET,
+    'data',
+    FILTER_VALIDATE_INT,
+    ['options' => ['min_range' => 1]]
+);
+
+$record = null;
+
+if ($quoteId !== false && $quoteId !== null) {
+    $db = sk_db();
+
+    if ($db !== null) {
+        try {
+            $stmt = $db->prepare(
+                'SELECT sk.quote_id, sk.quote, sk.author, sk.source, sk.bookpage,
+                        books.title, books.authors, books.lang, books.translation,
+                        books.copyright, books.edition, books.notation, books.isbn
+                   FROM sk
+              LEFT JOIN books ON sk.book = books.book_id
+                  WHERE sk.quote_id = ?
+                  LIMIT 1'
+            );
+            $stmt->bind_param('i', $quoteId);
+            $stmt->execute();
+            $result = $stmt->get_result();
+            $record = $result ? $result->fetch_assoc() : null;
+            $stmt->close();
+        } catch (Throwable $exception) {
+            error_log('sk.polascin.net: načítanie záznamu zlyhalo: ' . $exception->getMessage());
+            $record = null;
+        }
+    }
+}
+
+$esc = static fn (mixed $value): string => htmlspecialchars((string) $value, ENT_QUOTES, 'UTF-8');
+
+/**
+ * Bibliografické polia (preklad, copyright, vydanie, tiráž) majú v databáze
+ * uložené jednoduché formátovanie. Ponecháme len bezpečné značky a zo všetkých
+ * odstránime atribúty, takže sa nedá prepašovať `onclick`, `javascript:` a pod.
+ * Značky `<a>` sa odstránia, ich text (spravidla adresa webu) zostane viditeľný.
+ */
+$richText = static function (mixed $value): string {
+    $allowed = strip_tags((string) $value, '<em><i><strong><b><br>');
+
+    return preg_replace('#<\s*(/?)\s*(em|i|strong|b|br)\b[^>]*>#i', '<$1$2>', $allowed) ?? '';
+};
+
+?>
 <!DOCTYPE html>
 
 <html lang="sk">
@@ -46,56 +103,49 @@
 
 <div style="display: inline-table; border: solid thin grey; padding: 3em; background-color: ghostwhite; width: 80%;">
 
+<?php if ($record === null) { ?>
 
+	<div><em>Citát sa nenašiel.</em></div>
+	<br>
+	<div><em>Záznam s takýmto číslom neexistuje alebo momentálne nie je dostupný.</em></div>
 
-<?php
+<?php } else { ?>
 
-$data = $_GET["data"];
-$quote_number = $data;
+	<div><em>Citát</em></div>
+	<br>
+	<div class="quote"><cite><?= $esc($record['quote']) ?></cite></div>
+	<div class="author"><?= $esc($record['author']) ?></div>
+	<div class="source"><?= $esc($record['source']) ?></div>
+	<br>
 
-@$db = mysqli_connect("mariadb105.r1.websupport.sk", "polascinquotes", "Murianka7", "quotes", 3315);
+	<?php if ($record['title'] !== null) { ?>
 
-$db->select_db("quotes");
+		<div>
+			<em>Som našiel na strane <strong><?= $esc($record['bookpage']) ?></strong> v knihe</em>
+		</div>
+		<br>
+		<h1><cite><?= $esc($record['title']) ?></cite></h1>
+		<h2><?= $esc($record['authors']) ?></h2>
+		<div>Jazyk textu knihy: <?= $esc($record['lang']) ?></div>
+		<div><?= $richText($record['translation']) ?></div>
+		<div><?= $richText($record['copyright']) ?></div>
+		<div><?= $richText($record['edition']) ?></div>
+		<div><?= $richText($record['notation']) ?></div>
+		<div><?= $esc($record['isbn']) ?></div>
 
-$query = "SELECT sk.quote_id, sk.quote, sk.author, sk.source, sk.book, sk.bookpage, books.book_id, books.title, books.authors, books.lang, books.translation, books.copyright, books.edition, books.notation, books.isbn
-						FROM sk, books
-						WHERE sk.quote_id = $quote_number AND sk.book = books.book_id";
+	<?php } else { ?>
 
-$stmt = $db->prepare($query);
-$stmt->execute();
-$stmt->store_result();
-$stmt->bind_result($quote_id, $quote, $author, $source, $book, $bookpage, $book_id, $title, $authors, $lang, $translation, $copyright, $edition, $notation, $isbn);
+		<div>
+			<em>
+				Neviem, kde som našiel.
+				<br>
+				K citátu nie je priradená žiadna kniha ani iný zdroj, kde by som ten citát našiel.
+			</em>
+		</div>
 
-$stmt->fetch();
+	<?php } ?>
 
-echo '';
-echo "<div><em>Citát</em></div>";
-echo "<br>";
-echo "<div class='quote'><cite>".$quote."</cite></div>";
-echo "<div class='author'>".$author."</div>";
-echo "<div class='source'>".$source."</div>";
-echo "<br>";
-if ($book) {
-	echo "<div><em>Som našiel na strane <strong>".$bookpage."</strong> v knihe</em></div>";
-	echo "<br>";
-	echo "<h1><cite>".$title."</cite></h1>";
-	echo "<h2>".$authors."</h2>";
-	echo "<div>Jazyk textu knihy: ".$lang."</div>";
-	echo "<div>".$translation."</div>";
-	echo "<div>".$copyright."</div>";
-	echo "<div>".$edition."</div>";
-	echo "<div>".$notation."</div>";
-	echo "<div>".$isbn."</div>";
-} else {
-	echo "<div><em>Neviem, kde som našiel. <br>K citátu nie je priradená žiadna kniha ani iný zdroj, kde by som ten citát našiel.</em></div>";
-}
-echo '';
-
-$db->close();
-
-?>
-
-
+<?php } ?>
 
 </div>
 

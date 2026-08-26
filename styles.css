@@ -83,3 +83,104 @@ hr.promohr {
   font-size: small;
   color: silver;
 }
+/* Právne stránky (privacy.php, terms.php) */
+.legal {
+  text-align: justify;
+  line-height: 1.6;
+  padding: 1.5em;
+}
+
+.legal h1 {
+  font-size: 1.8em;
+  color: gray;
+  font-style: italic;
+  text-align: center;
+  margin-top: 0;
+}
+
+.legal h2 {
+  font-size: 1.25em;
+  margin-top: 1.8em;
+  margin-bottom: 0.4em;
+  border-bottom: solid thin silver;
+  padding-bottom: 0.2em;
+}
+
+.legal h3 {
+  font-size: 1.05em;
+  margin-top: 1.2em;
+  margin-bottom: 0.3em;
+  color: dimgray;
+}
+
+.legal ul {
+  padding-left: 1.5em;
+}
+
+.legal li {
+  margin-bottom: 0.5em;
+}
+
+.legal-updated {
+  text-align: center;
+  color: gray;
+  font-size: small;
+  margin-bottom: 2em;
+}
+
+.legal-box {
+  border: solid thin gray;
+  background-color: ghostwhite;
+  padding: 1em;
+  margin: 1em 0;
+  text-align: left;
+  line-height: 1.7;
+}
+
+.legal-important {
+  border: solid medium firebrick;
+  background-color: seashell;
+  padding: 1em;
+  margin: 1em 0;
+}
+
+.legal-important p:first-child {
+  margin-top: 0;
+}
+
+.legal-important p:last-child {
+  margin-bottom: 0;
+}
+
+.legal-seealso {
+  margin-top: 2.5em;
+  padding-top: 1em;
+  border-top: solid thin silver;
+  text-align: center;
+  font-style: italic;
+}
+
+.legal-nav {
+  margin: 0.8em 0;
+  font-size: small;
+}
+
+.legal-nav a {
+  margin: 0 0.6em;
+  text-decoration: underline;
+}
+
+@media (max-width: 600px) {
+  .legal {
+    padding: 0.8em;
+    text-align: left;
+  }
+
+  .legal h1 {
+    font-size: 1.4em;
+  }
+
+  .legal h2 {
+    font-size: 1.1em;
+  }
+}

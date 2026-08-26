@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml">
+
+	<!--
+		Mapa webového sídla sk.polascin.net.
+
+		Obsahuje iba indexovateľné stránky. Súbory privacy.php a terms.php sú
+		označené ako noindex, adresáre blocks/, docs/ a files/ sú blokované
+		v .htaccess aj v robots.txt, a refbook.sk.php sa zobrazuje len s parametrom
+		?data=<id> — preto tu uvedené nie sú.
+	-->
+
+	<url>
+		<loc>https://sk.polascin.net/</loc>
+		<lastmod>2026-08-26</lastmod>
+		<changefreq>monthly</changefreq>
+		<priority>1.0</priority>
+		<xhtml:link rel="alternate" hreflang="sk" href="https://sk.polascin.net/"/>
+		<xhtml:link rel="alternate" hreflang="x-default" href="https://sk.polascin.net/"/>
+	</url>
+
+</urlset>

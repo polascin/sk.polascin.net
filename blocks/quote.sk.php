@@ -1,37 +1,50 @@
 <?php
 
-@$db = mysqli_connect("mariadb105.r1.websupport.sk", "polascinquotes", "Murianka7", "quotes", 3315);
+declare(strict_types=1);
 
-$db->select_db("quotes");
+require_once __DIR__ . '/db.sk.php';
 
-$query = "SELECT quote, author, source, book, bookpage
-						FROM sk";
-$stmt = $db->prepare($query);
-$stmt->execute();
-$stmt->store_result();
-$stmt->bind_result($quote, $author, $source, $book, $bookpage);
+$db = sk_db();
 
-$max = $stmt->num_rows;
-$min = 1;
-$quote_number = rand($min, $max);
+if ($db === null) {
+    echo "<div class='quotebox'><div class='source'>Citát momentálne nie je dostupný.</div></div>";
 
-$record = $min;
-while ($record <= $quote_number) {
-	$stmt->fetch();
-	$record++;
+    return;
 }
 
-$data = $quote_number;
-$url = "https://sk.polascin.net/refbook.sk.php?data=" . urlencode($data);
+try {
+    // Náhodný citát aj s jeho skutočným identifikátorom, aby odkaz na
+    // refbook.sk.php smeroval na ten istý záznam, ktorý sa práve zobrazuje.
+    $stmt = $db->prepare(
+        'SELECT quote_id, quote, author, source
+           FROM sk
+       ORDER BY RAND()
+          LIMIT 1'
+    );
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $row = $result ? $result->fetch_assoc() : null;
+    $stmt->close();
+} catch (Throwable $exception) {
+    error_log('sk.polascin.net: načítanie citátu zlyhalo: ' . $exception->getMessage());
+    $row = null;
+}
 
-echo "<a href='$url' target='_self' title='Citát a odkaz na knihu'>";
-echo "<div class='quotebox'>";
-echo "<div class='quote'><cite>".$quote."</cite></div>";
-echo "<div class='author'>".$author."</div>";
-echo "<div class='source'>".$source."</div>";
-echo "</div>";
-echo "</a>";
+if ($row === null) {
+    echo "<div class='quotebox'><div class='source'>Citát momentálne nie je dostupný.</div></div>";
 
-$db->close();
+    return;
+}
+
+$url = 'https://sk.polascin.net/refbook.sk.php?data=' . urlencode((string) $row['quote_id']);
+
+$esc = static fn (mixed $value): string => htmlspecialchars((string) $value, ENT_QUOTES, 'UTF-8');
 
 ?>
+<a href="<?= $esc($url) ?>" target="_self" title="Citát a odkaz na knihu">
+	<div class="quotebox">
+		<div class="quote"><cite><?= $esc($row['quote']) ?></cite></div>
+		<div class="author"><?= $esc($row['author']) ?></div>
+		<div class="source"><?= $esc($row['source']) ?></div>
+	</div>
+</a>
