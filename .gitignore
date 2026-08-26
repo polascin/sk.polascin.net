@@ -35,3 +35,6 @@ tools/*.phar
 
 # Konfigurácia databázy so skutočnými prihlasovacími údajmi — NIKDY neverziovať
 db.config.php
+
+# Lokálne FTP prihlásenie pre deploy — NIKDY neverziovať
+tools/deploy.local.env

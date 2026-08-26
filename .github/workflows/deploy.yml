@@ -1,13 +1,14 @@
 ---
 name: Deploy to sk.polascin.net
 
-# Nasadenie cez FTPS (lftp) na WebSupport. Prešli sme z SSH/rsync na FTP, pretože
-# WebSupport odmieta SSH kľúč zo zdrojových IP GitHub runnerov (Permission denied
-# publickey), zatiaľ čo FTP beží na inom porte bez tohto obmedzenia.
+# Na push do `main` beží iba validácia (php -l). Samotné nasadenie sa NEROBÍ
+# z GitHub-hostovaných runnerov: WebSupport ich zdrojové IP blokuje firewallom —
+# SSH (publickey denied) aj FTP dátový (pasívny) kanál (LIST/STOR max-retries),
+# hoci riadiace porty prejdú a z dôveryhodnej IP (lokál) to funguje.
 #
-# Deploy job sa preskočí s upozornením, kým nie sú nastavené DEPLOY_FTP_* secrets
-# (Settings → Secrets and variables → Actions), takže workflow nezostáva červený
-# pred konfiguráciou.
+# Produkčný deploy preto beží LOKÁLNE cez pre-push hook (`python tools/ftp_deploy.py`,
+# pozri DEPLOY.md). Deploy job nižšie ostáva len pre `workflow_dispatch` — použiteľný
+# iba zo self-hosted runnera na IP, ktorú WebSupport povoľuje.
 on:
   push:
     branches: [main]
@@ -48,7 +49,7 @@ jobs:
     needs: validate
     runs-on: ubuntu-latest
     timeout-minutes: 20
-    if: ${{ github.event_name == 'workflow_dispatch' || !contains(github.event.head_commit.message, '[skip deploy]') }}
+    if: ${{ github.event_name == 'workflow_dispatch' }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v5
