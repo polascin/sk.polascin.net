@@ -1,14 +1,13 @@
 ---
 name: Deploy to sk.polascin.net
 
-# Na push do `main` beží iba validácia (php -l). Samotné nasadenie sa NEROBÍ
-# z GitHub-hostovaných runnerov: WebSupport ich zdrojové IP blokuje firewallom —
-# SSH (publickey denied) aj FTP dátový (pasívny) kanál (LIST/STOR max-retries),
-# hoci riadiace porty prejdú a z dôveryhodnej IP (lokál) to funguje.
+# Na push do `main` (alebo manuálne cez workflow_dispatch) sa najprv overí PHP
+# (php -l) a potom sa obsah nahrá na WebSupport cez FTPS (lftp).
 #
-# Produkčný deploy preto beží LOKÁLNE cez pre-push hook (`python tools/ftp_deploy.py`,
-# pozri DEPLOY.md). Deploy job nižšie ostáva len pre `workflow_dispatch` — použiteľný
-# iba zo self-hosted runnera na IP, ktorú WebSupport povoľuje.
+# Poznámka: pôvodne runnery zlyhávali (SSH publickey denied, FTP pasívny dátový
+# kanál max-retries) — príčinou bola GEO ochrana WebSupportu blokujúca IP GitHub
+# runnerov. Po jej úprave deploy z runnera funguje. Push s `[skip deploy]`
+# v commit message deploy preskočí.
 on:
   push:
     branches: [main]
@@ -49,7 +48,7 @@ jobs:
     needs: validate
     runs-on: ubuntu-latest
     timeout-minutes: 20
-    if: ${{ github.event_name == 'workflow_dispatch' }}
+    if: ${{ github.event_name == 'workflow_dispatch' || !contains(github.event.head_commit.message, '[skip deploy]') }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v5
