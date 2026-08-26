@@ -11,6 +11,14 @@ ServerSignature Off
     Header always set Permissions-Policy "geolocation=(), microphone=(), camera=(), payment=(), usb=()"
     Header always set Cross-Origin-Opener-Policy "same-origin"
     Header always set X-Permitted-Cross-Domain-Policies "none"
+
+    # Content-Security-Policy
+    # - script-src 'self': žiadne inline skripty (JS je v /js/current.js)
+    # - style-src 'unsafe-inline': web má množstvo inline style="" atribútov a <style> blok
+    # - img-src: vlastná doména + externé obrázky (logá z polascin.net, affiliate bannery)
+    # - frame-src 'self': vložený PDF dokument docs/mel.pdf z vlastnej domény
+    Header always set Content-Security-Policy "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' https://polascin.net https://d2emjept89nv7b.cloudfront.net https://www.martinus.sk; frame-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'self'; upgrade-insecure-requests"
+
     Header always unset X-Powered-By
     Header unset X-Powered-By
 </IfModule>
