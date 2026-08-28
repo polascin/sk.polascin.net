@@ -81,7 +81,7 @@
 </div>
 <p>
   <a href="https://validator.w3.org/" target="_blank" title="W3C Markup Validation Service" rel="noopener noreferrer">
-    <img src="/weblogo/w3c_home_nb.png" alt="W3C Markup Validation Service">
+    <img src="../weblogo/w3c_home_nb.png" alt="W3C Markup Validation Service">
   </a>
 </p>
 <br>
