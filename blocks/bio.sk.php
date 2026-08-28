@@ -1,10 +1,10 @@
 <div class="info" style="font-family: system-ui;">
 
-	<img src="https://polascin.net/weblogo/ordinacia.jpg" alt="Ordinácia" style="float: left; width: 30%; margin-right: 1em;">
+	<img src="/weblogo/ordinacia.jpg" alt="Ordinácia" style="float: left; width: 30%; margin-right: 1em;">
 
-	<h1 style="color: gray; font-style: italic;">O mne</h1>
+	<h2 style="color: gray; font-style: italic;">O mne</h2>
 
-	<div style="font-size: 2em;; font-weight: bold; font-variant: small-caps;">
+	<div style="font-size: 2em; font-weight: bold; font-variant: small-caps;">
 		<a href="https://sk.polascin.net/" target="_parent" title="Ľubomír Polaščín">Ľubomír Polaščín</a>
 	</div>
 
@@ -76,7 +76,7 @@
 
 	<div>
 		<a href="https://www.amazon.com/stores/author/B07PN436VJ/about?ingress=0&visitId=c86fef74-be71-4951-8486-08f60b67d802&store_ref=ap_rdr&linkCode=ll2&tag=mobile0f21130-20&linkId=4e84ad9ae239b52e2b33aaadfb5a7ff8&language=en_US&ref_=as_li_ss_tl" target="_blank" rel="noopener noreferrer">
-			<em>Autorská stránka Ľubomír Polaščína na <strong>Amazon</strong>-ne v angličtine.</em>
+			<em>Autorská stránka Ľubomíra Polaščína na <strong>Amazone</strong> v angličtine.</em>
 		</a>
 	</div>
 
@@ -84,8 +84,8 @@
 
 <p style="text-align: center; font-variant: small-caps; ">
 	<a href="https://you.23andme.com/published/reports/a38bc14066464d3c863bcfba5eabfd37/?share_id=cdc1161135484f7a" target="_blank" title="23andme" rel="noopener noreferrer">
-		<img src="https://polascin.net/weblogo/23andme-logo.gif" alt="23andme">
+		<img src="/weblogo/23andme-logo.gif" alt="23andme">
 		&nbsp;&nbsp;&nbsp;
-		<img src="https://polascin.net/weblogo/chromo.gif" alt="23andme">
+		<img src="/weblogo/chromo.gif" alt="23andme">
 	</a>
 </p>

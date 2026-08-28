@@ -121,7 +121,7 @@ $richText = static function (mixed $value): string {
 	<?php if ($record['title'] !== null) { ?>
 
 		<div>
-			<em>Som našiel na strane <strong><?= $esc($record['bookpage']) ?></strong> v knihe</em>
+			<em>Našiel som na strane <strong><?= $esc($record['bookpage']) ?></strong> v knihe</em>
 		</div>
 		<br>
 		<h1><cite><?= $esc($record['title']) ?></cite></h1>

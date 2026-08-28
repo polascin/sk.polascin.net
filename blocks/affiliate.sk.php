@@ -13,17 +13,17 @@
 <!-- Affiliate Links https://www.websupport.sk/?ref=ND4sHF8x -->
 <p style="text-align: center;">
 	<a href="https://www.websupport.sk/?ref=ND4sHF8x" target="_blank" title="Websupport" rel="noopener noreferrer">
-		<img src="https://polascin.net/websupport_banners_sk/sk_SK/Domain/WS-Domain-320-100-SK.jpg" width="320" height="100" alt="Websupport">
+		<img src="/websupport_banners_sk/sk_SK/Domain/WS-Domain-320-100-SK.jpg" width="320" height="100" alt="Websupport">
 	</a>
 	<a href="https://www.websupport.sk/?ref=ND4sHF8x" target="_blank" title="Websupport" rel="noopener noreferrer">
-		<img src="https://polascin.net/websupport_banners_sk/sk_SK/Hosting/WS-Hosting-320-100-SK.jpg" width="320" height="100" alt="Websupport">
+		<img src="/websupport_banners_sk/sk_SK/Hosting/WS-Hosting-320-100-SK.jpg" width="320" height="100" alt="Websupport">
 	</a>
 	<a href="https://www.websupport.sk/?ref=ND4sHF8x" target="_blank" title="Websupport" rel="noopener noreferrer">
-		<img src="https://polascin.net/websupport_banners_sk/sk_SK/VPS/WS-VPS-320-100-SK.jpg" width="320" height="100" alt="Websupport">
+		<img src="/websupport_banners_sk/sk_SK/VPS/WS-VPS-320-100-SK.jpg" width="320" height="100" alt="Websupport">
 	</a>
 	<br>
 	<a href="https://www.websupport.sk/?ref=ND4sHF8x" target="_blank" title="Websupport" rel="noopener noreferrer">
-		<img src="https://polascin.net/websupport-ad-banners-sk/websupport-ad-banners-sk/freeweb-sk-1.png" alt="Websupport">
+		<img src="/websupport-ad-banners-sk/websupport-ad-banners-sk/freeweb-sk-1.png" alt="Websupport">
 	</a>
 </p>
 

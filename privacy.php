@@ -9,7 +9,7 @@
 
   <?php require "./blocks/favicon.php"; ?>
 
-  <meta name="date" content="2026-08-26T12:00:00+0200" >
+  <meta name="date" content="2026-08-28T12:00:00+0200" >
 	<meta name="description" content="Zásady ochrany súkromia a spracúvania osobných údajov (GDPR) webového sídla sk.polascin.net">
   <meta name="copyright" content="Ľubomír Polaščín">
 	<meta name="keywords" content="ochrana súkromia,ochrana osobných údajov,GDPR,zásady,sk.polascin.net,Ľubomír Polaščín">
@@ -22,7 +22,7 @@
 
   <title>Ochrana súkromia (sk.polascin.net)</title>
 
-  <link rel="stylesheet" href="styles.css?v=<?php echo time(); ?>">
+  <link rel="stylesheet" href="styles.css?v=<?php echo (int) @filemtime(__DIR__ . '/styles.css'); ?>">
 
 </head>
 
@@ -42,7 +42,7 @@
 	<h1>Ochrana súkromia</h1>
 
 	<p class="legal-updated">
-		<strong>Posledná aktualizácia: 26. augusta 2026</strong>
+		<strong>Posledná aktualizácia: 28. augusta 2026</strong>
 	</p>
 
 	<p>
@@ -370,7 +370,8 @@
 	<p>
 		Prenos údajov medzi vaším prehliadačom a serverom je chránený šifrovaním
 		<strong>HTTPS/TLS</strong>. Webové sídlo používa bezpečnostné HTTP hlavičky
-		(HSTS, X-Frame-Options, X-Content-Type-Options, Referrer-Policy, Permissions-Policy)
+		(HSTS, X-Frame-Options, X-Content-Type-Options, Referrer-Policy, Permissions-Policy,
+		Content-Security-Policy)
 		a prístup k interným adresárom a konfiguračným súborom je zablokovaný.
 		Žiadny prenos údajov cez internet však nie je možné zaručiť ako absolútne bezpečný.
 	</p>

@@ -1,22 +1,22 @@
 <div style="display: inline-table; width: 100%; max-width: 100%;">
-	<img src="https://polascin.net/pix/usgo.jpeg" alt="Renal Picture Banner" style="max-width: 5%;">
-	<img src="https://polascin.net/pix/bloodpurif.en.jpg" alt="Renal Picture Banner" style="max-width: 5%;">
-	<img src="https://polascin.net/pix/dialyza.jpeg" alt="Renal Picture Banner" style="max-width: 5%;">
-	<img src="https://polascin.net/pix/clinneph.en.jpg" alt="Renal Picture Banner" style="max-width: 5%;">
-	<img src="https://polascin.net/pix/bloodpurific.en.jpg" alt="Renal Picture Banner" style="max-width: 5%;">
-	<img src="https://polascin.net/pix/haemodial.en.jpg" alt="Renal Picture Banner" style="max-width: 5%;">
-	<img src="https://polascin.net/pix/kidneybiopsy.en.jpg" alt="Renal Picture Banner" style="max-width: 5%;">
-	<img src="https://polascin.net/pix/ktx.en.jpg" alt="Renal Picture Banner" style="max-width: 5%;">
-	<img src="https://polascin.net/pix/hemodialysis.en.jpg" alt="Renal Picture Banner" style="max-width: 5%;">
-	<img src="https://polascin.net/pix/kusg.en.jpg" alt="Renal Picture Banner" style="max-width: 5%;">
-	<img src="https://polascin.net/pix/nephrology.en.jpg" alt="Renal Picture Banner" style="max-width: 5%;">
-	<img src="https://polascin.net/pix/renaltransplant.en.jpg" alt="Renal Picture Banner" style="max-width: 5%;">
-	<img src="https://polascin.net/pix/renaltx.en.jpg" alt="Renal Picture Banner" style="max-width: 5%;">
-	<img src="https://polascin.net/pix/renalusg.en.jpg" alt="Renal Picture Banner" style="max-width: 5%;">
-	<img src="https://polascin.net/pix/peritoneald.en.jpg" alt="Renal Picture Banner" style="max-width: 5%;">
-	<img src="https://polascin.net/pix/renalx.en.jpg" alt="Renal Picture Banner" style="max-width: 5%;">
-	<img src="https://polascin.net/pix/renalusg1.en.jpg" alt="Renal Picture Banner" style="max-width: 5%;">
-	<img src="https://polascin.net/pix/renalusg2.en.jpg" alt="Renal Picture Banner" style="max-width: 5%;">
-	<img src="https://polascin.net/pix/dialysis.en.jpg" alt="Renal Picture Banner" style="max-width: 5%;">
-	<img src="https://polascin.net/pix/kidneybiopsy.en.jpg" alt="Renal Picture Banner" style="max-width: 5%;">
+	<img src="/pix/usgo.jpeg" alt="" loading="lazy" style="max-width: 5%;">
+	<img src="/pix/bloodpurif.en.jpg" alt="" loading="lazy" style="max-width: 5%;">
+	<img src="/pix/dialyza.jpeg" alt="" loading="lazy" style="max-width: 5%;">
+	<img src="/pix/clinneph.en.jpg" alt="" loading="lazy" style="max-width: 5%;">
+	<img src="/pix/bloodpurific.en.jpg" alt="" loading="lazy" style="max-width: 5%;">
+	<img src="/pix/haemodial.en.jpg" alt="" loading="lazy" style="max-width: 5%;">
+	<img src="/pix/kidneybiopsy.en.jpg" alt="" loading="lazy" style="max-width: 5%;">
+	<img src="/pix/ktx.en.jpg" alt="" loading="lazy" style="max-width: 5%;">
+	<img src="/pix/hemodialysis.en.jpg" alt="" loading="lazy" style="max-width: 5%;">
+	<img src="/pix/kusg.en.jpg" alt="" loading="lazy" style="max-width: 5%;">
+	<img src="/pix/nephrology.en.jpg" alt="" loading="lazy" style="max-width: 5%;">
+	<img src="/pix/renaltransplant.en.jpg" alt="" loading="lazy" style="max-width: 5%;">
+	<img src="/pix/renaltx.en.jpg" alt="" loading="lazy" style="max-width: 5%;">
+	<img src="/pix/renalusg.en.jpg" alt="" loading="lazy" style="max-width: 5%;">
+	<img src="/pix/peritoneald.en.jpg" alt="" loading="lazy" style="max-width: 5%;">
+	<img src="/pix/renalx.en.jpg" alt="" loading="lazy" style="max-width: 5%;">
+	<img src="/pix/renalusg1.en.jpg" alt="" loading="lazy" style="max-width: 5%;">
+	<img src="/pix/renalusg2.en.jpg" alt="" loading="lazy" style="max-width: 5%;">
+	<img src="/pix/dialysis.en.jpg" alt="" loading="lazy" style="max-width: 5%;">
+	<img src="/pix/kidneybiopsy.en.jpg" alt="" loading="lazy" style="max-width: 5%;">
 </div>

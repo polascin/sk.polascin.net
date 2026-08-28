@@ -8,11 +8,6 @@ function getDayOfYear(date) {
 	const oneDay = 1000 * 60 * 60 * 24;
 	return Math.floor(diff / oneDay);
 }
-function getWeekNumber(date) {
-	const firstDayOfYear = new Date(date.getFullYear(), 0, 1);
-	const pastDaysOfYear = (date - firstDayOfYear) / 86400000;
-	return Math.ceil((pastDaysOfYear + firstDayOfYear.getDay() + 1) / 7);
-}
 function getISOWeekNumber(date) {
 	const tempDate = new Date(date.valueOf());
 	const dayNumber = (date.getUTCDay() + 6) % 7;

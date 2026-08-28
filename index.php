@@ -19,7 +19,7 @@
 
   <title>Ľubomír Polaščín (webové sídlo)</title>
 
-  <link rel="stylesheet" href="styles.css?v=<?php echo time(); ?>">
+  <link rel="stylesheet" href="styles.css?v=<?php echo (int) @filemtime(__DIR__ . '/styles.css'); ?>">
 
 </head>
 
