@@ -20,8 +20,8 @@
   </div>
   <div style="display: inline-table; float: right;">
   	<br><br>
-  	<a href="https://www.linkedin.com/in/lubomirpolascin/" target="_blank" title="Lubomir Polacin's LinkedIn Profile" rel="noopener noreferrer">
-  		<img src="/weblogo/LinkedIn-logo.png" alt="LinkedIn Logo" style="height: 3em;">
+  	<a href="https://www.linkedin.com/in/lubomirpolascin/" target="_blank" title="LinkedIn profil Ľubomíra Polaščína" rel="noopener noreferrer">
+  		<img src="/weblogo/LinkedIn-logo.png" alt="LinkedIn" style="height: 3em;">
   	</a>
   	<br>
     <!--<a href="https://nemocnica-bory.sk/ambulancia/nefrologicka/" target="_blank" title="Nefrologická ambulancia Nemocnice Bory">-->
@@ -41,9 +41,9 @@
 			<small>https://<strong>nephro.site</strong>/</small>
 		</a>
 		<hr class="promohr">
-		<a href="https://www.amazon.com/stores/Lubomir-Polascin/author/B07PN436VJ?store_ref=ap_rdr&isDramIntegrated=true&shoppingPortalEnabled=true&linkCode=ll2&tag=mobile0f21130-20&linkId=857497f66a358285c30f667879e75f8e&language=en_US&ref_=as_li_ss_tl" target="_blank" title="Moje knihy na Amazon-e" rel="noopener noreferrer">
+		<a href="https://www.amazon.com/stores/Lubomir-Polascin/author/B07PN436VJ?store_ref=ap_rdr&isDramIntegrated=true&shoppingPortalEnabled=true&linkCode=ll2&tag=mobile0f21130-20&linkId=857497f66a358285c30f667879e75f8e&language=en_US&ref_=as_li_ss_tl" target="_blank" title="Moje knihy na Amazone" rel="noopener noreferrer">
 			<h3 style="border-block-end-color: gray; border-style: solid; border-width: thin; background-color: ghostwhite;">
-				Moje knihy na Amazon-e
+				Moje knihy na Amazone
 			</h3>
 		</a>
 		<br>

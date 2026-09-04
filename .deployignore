@@ -11,5 +11,6 @@ phpstan-baseline.neon
 tools
 .vscode
 .claude
+.cursor
 .trunk
 *.ps1

@@ -40,6 +40,10 @@ if ($quoteId !== false && $quoteId !== null) {
     }
 }
 
+if ($record === null) {
+    http_response_code(404);
+}
+
 $esc = static fn (mixed $value): string => htmlspecialchars((string) $value, ENT_QUOTES, 'UTF-8');
 
 /**

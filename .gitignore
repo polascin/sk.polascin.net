@@ -20,6 +20,9 @@ php_errors.log
 # Claude Code — celý adresár je lokálny
 .claude/
 
+# Cursor — lokálne nastavenia editora
+.cursor/
+
 # Citlivé súbory
 .env
 *.env

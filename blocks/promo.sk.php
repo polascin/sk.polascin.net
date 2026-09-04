@@ -244,7 +244,7 @@
 </a>
 
 <a href="https://www.who.int/" target="_blank" title="World Health Organization" lang="en" rel="noopener noreferrer">
-	<img src="/weblogo/who-logo.png" alt="World Health Organisation" class="imgpromo" loading="lazy">
+	<img src="/weblogo/who-logo.png" alt="World Health Organization" class="imgpromo" loading="lazy">
 </a>
 
 </div>
