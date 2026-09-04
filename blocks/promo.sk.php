@@ -1,6 +1,6 @@
 <span style="display: inline-table; border: solid thin gray; padding: 1em; background-color: whitesmoke;">
-	<a href="https://nephro.site/" target="_blank" title="NephroSite" lang="sk" rel="noopener noreferrer">
-		Ak chcete získať ďalšie informácie, navštívte webovú lokalitu https://<strong>nephro.site</strong>/ a dozviete sa viac.
+	<a href="https://nephrosite.polascin.net/" target="_blank" title="NephroSite" lang="sk" rel="noopener noreferrer">
+		Ak chcete získať ďalšie informácie, navštívte webovú lokalitu https://<strong>nephrosite.polascin.net</strong>/ a dozviete sa viac.
 		<br>
 		<img src="/weblogo/nspanel.png" alt="NephroSite" style="width: 60%;">
 	</a>

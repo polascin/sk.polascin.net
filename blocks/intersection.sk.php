@@ -21,10 +21,6 @@
 			{polascin.org}
 		</a>
 		&nbsp;&nbsp;&nbsp;
-		<a href="https://nephro.site/" target="_blank" hreflang="sk" rel="noopener noreferrer">
-			{nephro.site}
-		</a>
-		&nbsp;&nbsp;&nbsp;
 		<a href="https://nephrosite.polascin.net/" target="_blank" hreflang="sk" rel="noopener noreferrer">
 			{nephrosite.polascin.net}
 		</a>

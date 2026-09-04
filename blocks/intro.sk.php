@@ -35,10 +35,10 @@
 		<!--</a>-->
 		<br><br>
 		<hr class="promohr">
-   	<a href="https://nephro.site/" target="_blank" title="NephroSite" rel="noopener noreferrer">
+   	<a href="https://nephrosite.polascin.net/" target="_blank" title="NephroSite" rel="noopener noreferrer">
 			<img src="/weblogo/nspanelgray.png" height="50" alt="NephroSite">
 			<br>
-			<small>https://<strong>nephro.site</strong>/</small>
+			<small>https://<strong>nephrosite.polascin.net</strong>/</small>
 		</a>
 		<hr class="promohr">
 		<a href="https://www.amazon.com/stores/Lubomir-Polascin/author/B07PN436VJ?store_ref=ap_rdr&isDramIntegrated=true&shoppingPortalEnabled=true&linkCode=ll2&tag=mobile0f21130-20&linkId=857497f66a358285c30f667879e75f8e&language=en_US&ref_=as_li_ss_tl" target="_blank" title="Moje knihy na Amazone" rel="noopener noreferrer">
