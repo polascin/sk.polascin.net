@@ -20,8 +20,10 @@ php_errors.log
 # Claude Code — celý adresár je lokálny
 .claude/
 
-# Cursor — lokálne nastavenia editora
-.cursor/
+# Cursor — lokálne nastavenia editora; pravidlá pre agentov sa verzujú
+.cursor/*
+!.cursor/rules/
+!.cursor/rules/**
 
 # Citlivé súbory
 .env

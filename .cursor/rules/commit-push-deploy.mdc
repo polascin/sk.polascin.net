@@ -1,0 +1,16 @@
+---
+description: Po zmenách vždy commit, push na main a overenie deployu na Websupport
+alwaysApply: true
+---
+
+# Commit, push a deploy na Websupport
+
+Po dokončení zmien **vždy** (bez ďalšieho potvrdenia):
+
+1. Commitni všetky relevantné zmeny s výstižnou správou. **Nepoužívaj** `[skip deploy]`.
+2. Pushni na `main` (`git push origin main`). Push spustí GitHub Actions → FTPS na Websupport (pozri `DEPLOY.md`).
+3. Počkaj na zelený workflow: `gh run watch` / `gh run list --workflow=deploy.yml --limit 1`.
+4. Over produkciu `https://sk.polascin.net/`: kľúčové cesty 200, interné cesty 403, nové zmeny sú nažive.
+5. Ak deploy alebo produkcia zlyhá, oprav, commitni, znova pushni a over, kým to nie je zelené.
+
+Nikdy necommitni `db.config.php`, `tools/deploy.local.env` ani iné tajné hodnoty.

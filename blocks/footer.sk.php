@@ -18,9 +18,20 @@
 </div>
 <!-- The End of the Copyright Statement -->
 
+<!-- Identifikácia prevádzkovateľa -->
+<div class="operator-id">
+	<strong>MUDr. Ľubomír Polaščín – Nephroctor</strong>
+	<br>
+	IČO: 57 646 856
+	<span aria-hidden="true"> · </span>
+	E-mail:
+	<a href="mailto:lubomir@polascin.net" title="Pošli e-mail">lubomir@polascin.net</a>
+</div>
+<!-- Koniec identifikácie prevádzkovateľa -->
+
 <!-- Právne dokumenty -->
 <nav class="legal-nav" aria-label="Právne dokumenty">
-	<a href="/privacy.php" title="Zásady ochrany súkromia a osobných údajov (GDPR)">Ochrana súkromia</a>
+	<a href="/privacy.php" title="Zásady ochrany osobných údajov (GDPR)">Ochrana osobných údajov</a>
 	<span aria-hidden="true">|</span>
 	<a href="/terms.php" title="Podmienky používania webového sídla">Podmienky používania</a>
 </nav>

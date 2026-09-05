@@ -9,7 +9,7 @@
 
   <?php require "./blocks/favicon.php"; ?>
 
-  <meta name="date" content="2026-08-26T12:00:00+0200" >
+  <meta name="date" content="2026-09-05T02:00:00+0200" >
 	<meta name="description" content="Podmienky používania webového sídla sk.polascin.net vrátane zdravotného zrieknutia sa zodpovednosti">
   <meta name="copyright" content="Ľubomír Polaščín">
 	<meta name="keywords" content="podmienky používania,zrieknutie sa zodpovednosti,disclaimer,duševné vlastníctvo,sk.polascin.net,Ľubomír Polaščín">
@@ -42,7 +42,7 @@
 	<h1>Podmienky používania</h1>
 
 	<p class="legal-updated">
-		<strong>Posledná aktualizácia: 26. augusta 2026</strong>
+		<strong>Posledná aktualizácia: 5. septembra 2026</strong>
 	</p>
 
 	<h2 id="akceptacia">1. Akceptácia podmienok</h2>
@@ -58,11 +58,22 @@
 	<h2 id="prevadzkovatel">2. Prevádzkovateľ webového sídla</h2>
 
 	<div class="legal-box">
-		<strong>MUDr. Ľubomír Polaščín</strong>
+		<strong>MUDr. Ľubomír Polaščín – Nephroctor</strong>
+		<br>
+		fyzická osoba – podnikateľ (živnostník)
 		<br>
 		Lekár so špecializáciou v odbore nefrológia
 		<br>
-		Slovenská republika
+		Miesto podnikania: Kvetná 944/2I, 900 41 Rovinka, Slovenská republika
+		<br>
+		IČO: 57 646 856
+		<br>
+		DIČ: 1047524401
+		<br>
+		Nie je platiteľom DPH
+		<br>
+		Zápis: Živnostenský register Okresného úradu Senec, odbor živnostenského
+		podnikania, číslo 140-38318
 		<br>
 		E-mail:
 		<a href="mailto:lubomir@polascin.net" title="Pošli e-mail">lubomir@polascin.net</a>
@@ -175,7 +186,7 @@
 
 	<p>
 		Spracúvanie údajov pri kliknutí na odkazy tretích strán je opísané v
-		<a href="./privacy.php" target="_self">Zásadách ochrany súkromia</a>.
+		<a href="./privacy.php" target="_self">Zásadách ochrany osobných údajov</a>.
 	</p>
 
 	<h2 id="pravidla-pouzivania">7. Pravidlá používania webového sídla</h2>
@@ -232,7 +243,7 @@
 	<p>
 		Spracúvanie osobných údajov v súvislosti s návštevou webového sídla je podrobne
 		opísané v samostatnom dokumente
-		<a href="./privacy.php" target="_self"><strong>Ochrana súkromia</strong></a>,
+		<a href="./privacy.php" target="_self"><strong>Ochrana osobných údajov</strong></a>,
 		ktorý tvorí neoddeliteľnú súčasť týchto podmienok.
 	</p>
 
@@ -277,7 +288,7 @@
 	</p>
 
 	<p class="legal-seealso">
-		Pozri aj: <a href="./privacy.php" target="_self">Ochrana súkromia</a>
+		Pozri aj: <a href="./privacy.php" target="_self">Ochrana osobných údajov</a>
 	</p>
 
 </main>

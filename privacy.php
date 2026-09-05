@@ -9,10 +9,10 @@
 
   <?php require "./blocks/favicon.php"; ?>
 
-  <meta name="date" content="2026-08-28T12:00:00+0200" >
-	<meta name="description" content="Zásady ochrany súkromia a spracúvania osobných údajov (GDPR) webového sídla sk.polascin.net">
+  <meta name="date" content="2026-09-05T02:00:00+0200" >
+	<meta name="description" content="Zásady ochrany osobných údajov (GDPR) webového sídla sk.polascin.net">
   <meta name="copyright" content="Ľubomír Polaščín">
-	<meta name="keywords" content="ochrana súkromia,ochrana osobných údajov,GDPR,zásady,sk.polascin.net,Ľubomír Polaščín">
+	<meta name="keywords" content="ochrana osobných údajov,ochrana súkromia,GDPR,zásady,sk.polascin.net,Ľubomír Polaščín">
   <meta name="publisher" content="Lubomir Polascin">
 	<meta name="author" content="Ľubomír Polaščín" >
   <meta name="robots" content="noindex, follow">
@@ -20,7 +20,7 @@
 
   <link rel="canonical" href="https://sk.polascin.net/privacy.php">
 
-  <title>Ochrana súkromia (sk.polascin.net)</title>
+  <title>Ochrana osobných údajov (sk.polascin.net)</title>
 
   <link rel="stylesheet" href="styles.css?v=<?php echo (int) @filemtime(__DIR__ . '/styles.css'); ?>">
 
@@ -39,10 +39,10 @@
 
 <main class="info legal">
 
-	<h1>Ochrana súkromia</h1>
+	<h1>Ochrana osobných údajov</h1>
 
 	<p class="legal-updated">
-		<strong>Posledná aktualizácia: 28. augusta 2026</strong>
+		<strong>Posledná aktualizácia: 5. septembra 2026</strong>
 	</p>
 
 	<p>
@@ -60,9 +60,20 @@
 	</p>
 
 	<div class="legal-box">
-		<strong>MUDr. Ľubomír Polaščín</strong>
+		<strong>MUDr. Ľubomír Polaščín – Nephroctor</strong>
 		<br>
-		Slovenská republika
+		fyzická osoba – podnikateľ (živnostník)
+		<br>
+		Miesto podnikania: Kvetná 944/2I, 900 41 Rovinka, Slovenská republika
+		<br>
+		IČO: 57 646 856
+		<br>
+		DIČ: 1047524401
+		<br>
+		Nie je platiteľom DPH
+		<br>
+		Zápis: Živnostenský register Okresného úradu Senec, odbor živnostenského
+		podnikania, číslo 140-38318
 		<br>
 		E-mail:
 		<a href="mailto:lubomir@polascin.net" title="Pošli e-mail">lubomir@polascin.net</a>
