@@ -31,9 +31,9 @@
 
 <!-- Právne dokumenty -->
 <nav class="legal-nav" aria-label="Právne dokumenty">
-	<a href="/privacy.php" title="Zásady ochrany osobných údajov (GDPR)">Ochrana osobných údajov</a>
+	<a href="/privacy" title="Zásady ochrany osobných údajov (GDPR)">Ochrana osobných údajov</a>
 	<span aria-hidden="true">|</span>
-	<a href="/terms.php" title="Podmienky používania webového sídla">Podmienky používania</a>
+	<a href="/terms" title="Podmienky používania webového sídla">Podmienky používania</a>
 </nav>
 <!-- Koniec právnych dokumentov -->
 
