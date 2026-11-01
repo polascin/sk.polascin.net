@@ -1,5 +1,24 @@
 # Deploy – sk.polascin.net
 
+## Cielené lokálne nasadenie od 1. 11. 2026
+
+Pre samostatnú opravu `index.php` slúži `python tools/deploy-file.py
+--expected-sha256 HASH`. Bez `--apply` iba overí PHP syntax a porovná
+produkčný hash. S `--apply` vytvorí zálohu mimo web rootu v
+`codex-deploy-backups/CAS/sk/`, prenesie súbor cez SSH alias `websupport`,
+overí hash a atómovo ho premenuje. Následne overí HTTP 200 a SHA-256.
+Pri zlyhaní následnej kontroly obnoví pôvodný súbor. Výsledok a cestu zálohy
+vypíše do konzoly. Spúšťanie je ručné pri schválenom nasadení.
+
+GitHub workflow pri pushi do main alebo workflow_dispatch validuje PHP
+a cez FTPS prenáša checkout s DEPLOY_FTP_* secrets bez mazania. Spotrebiteľom
+je verejný web. Nový miestny nástroj vykonáva cielený prenos jedného súboru
+cez SSH s kontrolou integrity a zálohou. Nenahrádza synchronizáciu všetkých
+súborov ani všetky CI kontroly. Workflow zostáva zachovaný, pri lokálnej práci
+sa nasadzuje miestnymi nástrojmi. Commit lokálne nasadenej opravy môže použiť
+existujúcu značku `[skip deploy]`, aby push nespustil druhé nasadenie cez FTPS.
+Vzdialený repozitár a záznam review zostávajú na GitHube.
+
 Automatické nasadenie cez **GitHub Actions** (`.github/workflows/deploy.yml`):
 po každom pushi do `main` (alebo manuálne cez **Actions → Deploy → Run
 workflow**) sa najprv overí PHP (`php -l`) a potom sa obsah nahrá na WebSupport

@@ -19,6 +19,8 @@
 
   <title>Ľubomír Polaščín (webové sídlo)</title>
 
+  <link rel="canonical" href="https://sk.polascin.net/">
+
   <link rel="stylesheet" href="styles.css?v=<?php echo (int) @filemtime(__DIR__ . '/styles.css'); ?>">
 
 </head>
