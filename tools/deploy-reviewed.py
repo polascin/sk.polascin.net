@@ -56,7 +56,8 @@ def main():
   if item['old']!='missing':run(*SSH,'mkdir -p '+q(str(Path(backup+'/original/'+name).parent).replace('\\','/'))+' && cp -p '+q(target)+' '+q(backup+'/original/'+name))
  published=[]
  try:
-  for item in sorted(items,key=lambda i:i['name'].endswith('.htaccess')):
+  # Publish assets first, then CSP, then entry pages that reference them.
+  for item in sorted(items,key=lambda i: 1 if i['name'].endswith('.htaccess') else (2 if Path(i['name']).suffix in ['.html','.php'] else 0)):
    name=item['name'];target=remote+'/'+name;stage=backup+'/stage/'+name
    if remote_hash(target)!=item['old']:raise RuntimeError('Concurrent change: '+name)
    run(*SSH,'mkdir -p '+q(str(Path(target).parent).replace('\\','/'))+' && chmod 644 '+q(stage)+' && mv '+q(stage)+' '+q(target))
