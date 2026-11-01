@@ -42,7 +42,7 @@
 	<h1>Ochrana osobných údajov</h1>
 
 	<p class="legal-updated">
-		<strong>Posledná aktualizácia: 5. septembra 2026</strong>
+		<strong>Posledná aktualizácia: 1. novembra 2026</strong>
 	</p>
 
 	<p>
@@ -174,19 +174,8 @@
 
 	<h2 id="cookies">4. Súbory cookie a lokálne úložisko</h2>
 
-	<p>
-		Toto webové sídlo <strong>samo nenastavuje žiadne súbory cookie</strong>, nepoužíva
-		lokálne úložisko prehliadača (<em>localStorage</em>, <em>sessionStorage</em>),
-		nevytvára relácie (<em>session</em>) ani nepoužíva žiadne nástroje na analytiku
-		návštevnosti, remarketing či profilovanie.
-	</p>
-
-	<p>
-		Súbory cookie však môžu nastaviť <strong>tretie strany</strong>, ktorých obsah je
-		na stránke zobrazený alebo na ktoré vedú odkazy &mdash; pozri článok 5 týchto zásad.
-		Nastavenie súborov cookie viete spravovať a obmedziť aj priamo v nastaveniach
-		svojho internetového prehliadača.
-	</p>
+	<p>Web ukladá vašu voľbu analytiky v lokálnom úložisku prehliadača na 180 dní. Bez výslovného súhlasu sa Microsoft Clarity nenačíta a nenastaví analytické cookies. Voľbu môžete kedykoľvek zmeniť tlačidlom Nastavenia analytiky v pätičke.</p>
+	<p>Po súhlase sa na meranie návštevnosti, kliknutí, posúvania a priebehu používania verejných stránok používa Microsoft Clarity. Text stránky je maskovaný. Cookies <code>_clck</code> a <code>_clsk</code> rozlišujú návštevníkov a spájajú zobrazenia do relácií. Reklamný súhlas zostáva vypnutý. Pri odvolaní súhlasu sa meranie zastaví a dostupné cookies Clarity sa odstránia.</p>
 
 	<h2 id="tretie-strany">5. Príjemcovia údajov a tretie strany</h2>
 
@@ -203,15 +192,8 @@
 		poskytovania hostingových a technických služieb.
 	</p>
 
-	<h3>5.2 Žiadne nástroje na sledovanie návštevnosti</h3>
-
-	<p>
-		Webové sídlo <strong>nepoužíva žiadne nástroje na meranie a analýzu návštevnosti</strong>
-		(napríklad Google Analytics), žiadne reklamné, remarketingové ani sociálne moduly
-		a žiadne počítadlá návštev tretích strán. Prehľad o návštevnosti sa získava výlučne
-		zo serverových protokolov u poskytovateľa hostingu, teda bez odovzdávania údajov
-		komukoľvek ďalšiemu.
-	</p>
+	<h3>5.2 Microsoft Clarity</h3>
+	<p>Údaje o používaní webu prijíma spoločnosť Microsoft na účel analýzy a zlepšovania webu. Ide o voliteľné spracúvanie založené na vašom súhlase. Viac o spracúvaní údajov vrátane medzinárodných prenosov nájdete vo <a href="https://privacy.microsoft.com/privacystatement">vyhlásení spoločnosti Microsoft o ochrane osobných údajov</a>. Technické podrobnosti obsahuje <a href="https://learn.microsoft.com/en-us/clarity/setup-and-installation/clarity-cookies">dokumentácia cookies Clarity</a>.</p>
 
 	<h3>5.3 Reklamné bannery tretích strán</h3>
 
@@ -265,7 +247,7 @@
 	<h2 id="prenos">6. Prenos údajov do tretích krajín</h2>
 
 	<p>
-		Prevádzkovateľ sám neprenáša osobné údaje mimo Európskeho hospodárskeho priestoru.
+		Pri povolení Microsoft Clarity sa uplatňujú aj pravidlá spoločnosti Microsoft pre medzinárodné prenosy uvedené v jej vyhlásení o ochrane osobných údajov.
 		K takémuto prenosu môže dôjsť u služieb tretích strán uvedených v článku 5
 		(najmä pri načítaní partnerského bannera cez sieť Amazon CloudFront a u
 		prevádzkovateľov cieľových stránok partnerských odkazov),

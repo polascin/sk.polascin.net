@@ -131,3 +131,5 @@
 </div>
 
 <br><br><br>
+
+<script src="/js/clarity-consent.js?v=20261101" data-project="9bey9oyojd" data-paths="/,/index.php,/refbook.sk.php,/privacy.php,/terms.php" data-privacy="/privacy.php"></script>
