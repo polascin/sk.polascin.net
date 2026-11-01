@@ -27,9 +27,10 @@ def main():
   items=[]
   for name in args.file:
    q(name);p=root/name
-   if not p.is_file() or name.startswith(('.git/','private/')) or p.suffix not in ['.html','.php','.js','.css','.txt','.json','.map',''] and p.name!='.htaccess':raise ValueError('Not a public deploy file: '+name)
+   if not p.is_file() or name.startswith(('.git/','private/')) or p.name in ['.env','env.ini','db.config.php','db_config.php'] or p.suffix not in ['.html','.php','.js','.css','.txt','.json','.map',''] and p.name!='.htaccess':raise ValueError('Not a public deploy file: '+name)
    if p.suffix=='.php':run('php','-l',str(p))
-   items.append({'name':name,'old':remote_hash(remote+'/'+name),'new':digest(p)})
+   old_hash=remote_hash(remote+'/'+name);new_hash=digest(p)
+   if old_hash != new_hash: items.append({'name':name,'old':old_hash,'new':new_hash})
   if not items:raise ValueError('No files')
   args.plan.parent.mkdir(parents=True,exist_ok=True)
   args.plan.write_text(json.dumps({'root':str(root),'remote':remote,'url':url,'files':items},indent=2),encoding='utf-8')
