@@ -57,7 +57,7 @@
 			</a>
 			<br>
 			<a href="https://nemocnica-bory.sk/" target="_blank" title="Nemocnica Bory - Penta Hospitals" rel="noopener noreferrer">
-				<img src="/weblogo/nngb-logo.svg" height="50" alt="Nemocnica Bory - Penta Hospitals">
+				<img src="/weblogo/nngb-logo.svg" width="143" height="35" alt="Nemocnica Bory - Penta Hospitals" style="height: 50px; width: auto;" loading="lazy" decoding="async">
 			</a>
 			<a href="https://nemocnica-bory.sk/pacient/ambulancie/#objednanie" target="_blank" title="Ako sa objednať?" rel="noopener noreferrer">
 				<div style="font-weight: bold;"><hr class="promohr">0950 105 510<hr class="promohr"></div>

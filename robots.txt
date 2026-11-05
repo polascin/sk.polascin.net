@@ -1,10 +1,12 @@
 # robots.txt — sk.polascin.net
-# Aktualizované: 2026-11-05
+# Aktualizované: 2026-11-06
 # Poznámka: ďalšie interné cesty (.github, .kilo, .trunk, .claude, …)
 # sú blokované v .htaccess (403), nie cez Disallow (neadvertovať cestu).
+# docs/: adresár je Disallow; jediný verejný PDF mel.pdf je Allow (zhoda s .htaccess).
 
 User-agent: *
 Allow: /
+Allow: /docs/mel.pdf
 Disallow: /blocks/
 Disallow: /docs/
 Disallow: /files/

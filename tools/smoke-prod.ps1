@@ -31,6 +31,7 @@
 # Beh #32: refbook lang aliases cz→cs (and ua/gr/jp/cn).
 # Beh #33: Quotation isbn without ISBN prefix; Book inLanguage; PDF/XML Cache-Control; sitemap; iframe title.
 # Beh #34: educational article images lazy/decoding; color-scheme light in shared favicon head.
+# Beh #35: robots.txt Allow /docs/mel.pdf while Disallow /docs/; comment-block logo attrs.
 #
 # Spusti z koreňa:  .\tools\smoke-prod.ps1
 
@@ -186,6 +187,17 @@ try {
     $failed += Assert-BodyContains -Label 'sitemap' -Body $map.Body -Pattern '<lastmod>2026-11-06</lastmod>' -OkMessage 'sitemap lastmod 2026-11-06'
 } catch {
     Write-Host "FAIL PDF/sitemap cache probe - $($_.Exception.Message)" -ForegroundColor Red
+    $failed++
+}
+
+Write-Host ""
+Write-Host "robots.txt: Allow public mel.pdf" -ForegroundColor Cyan
+try {
+    $robots = Get-PageProbe -Path '/robots.txt' -UserAgent $ua
+    $failed += Assert-BodyContains -Label 'robots' -Body $robots.Body -Pattern '(?m)^Allow:\s*/docs/mel\.pdf\s*$' -OkMessage 'robots Allow /docs/mel.pdf'
+    $failed += Assert-BodyContains -Label 'robots' -Body $robots.Body -Pattern '(?m)^Disallow:\s*/docs/\s*$' -OkMessage 'robots Disallow /docs/'
+} catch {
+    Write-Host "FAIL robots.txt probe - $($_.Exception.Message)" -ForegroundColor Red
     $failed++
 }
 

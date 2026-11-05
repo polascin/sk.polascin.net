@@ -77,7 +77,7 @@ $skTermsCurrent = in_array($skLegalPath, ['/terms', '/terms.php'], true) ? ' ari
 	<small><i>Webstránky vytvárané aj pomocou</i></small>
 	<br>
 	<a href="https://bluefish.openoffice.nl/" target="_blank" title="Bluefish" rel="noopener noreferrer">
-		<img src="/weblogo/bluefish_gb.png" alt="Bluefish">
+		<img src="/weblogo/bluefish_gb.png" alt="Bluefish" width="184" height="56" loading="lazy" decoding="async">
 	</a>
 </p> -->
 <div style="display: inline-table; border-width: thin; border-style: solid;">
