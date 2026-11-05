@@ -13,6 +13,7 @@
 # Beh #15: na GET / overí aj kľúčové bezpečnostné hlavičky a počet
 # kidneybiopsy.en.jpg (2 pixbanner strips × 1 img = 2).
 # Beh #18: root-absolútne /styles.css; na privacy/terms krížové odkazy.
+# Beh #19: refbook ?data=1 dynamický <title>/description; /styles.css; 404 generický title.
 #
 # Spusti z koreňa:  .\tools\smoke-prod.ps1
 
@@ -70,15 +71,26 @@ function Get-HttpStatus {
 function Get-PageProbe {
     param(
         [string]$Path,
-        [string]$UserAgent
+        [string]$UserAgent,
+        [int]$ExpectedStatus = 200
     )
     $req = [System.Net.HttpWebRequest]::Create("$base$Path")
     $req.Method = 'GET'
     $req.UserAgent = $UserAgent
     $req.AllowAutoRedirect = $false
     $req.Timeout = 30000
-    $resp = $req.GetResponse()
+    $resp = $null
     try {
+        $resp = $req.GetResponse()
+    } catch [System.Net.WebException] {
+        $resp = $_.Exception.Response
+        if ($null -eq $resp) { throw }
+    }
+    try {
+        $code = [int]$resp.StatusCode
+        if ($code -ne $ExpectedStatus) {
+            throw "Unexpected status $code (expected $ExpectedStatus) for $Path"
+        }
         $headers = @{}
         foreach ($name in $resp.Headers.AllKeys) {
             $headers[$name] = $resp.Headers[$name]
@@ -86,7 +98,7 @@ function Get-PageProbe {
         $reader = New-Object System.IO.StreamReader($resp.GetResponseStream())
         $body = $reader.ReadToEnd()
         $reader.Close()
-        return @{ Headers = $headers; Body = $body }
+        return @{ Headers = $headers; Body = $body; StatusCode = $code }
     } finally {
         $resp.Close()
     }
@@ -183,11 +195,39 @@ try {
     $failed++
 }
 
+Write-Host ""
+Write-Host "Refbook GET: dynamic title/description + stylesheet" -ForegroundColor Cyan
+$genericTitle = 'Kniha, z ktorej je citát \(sk\.polascin\.net\)'
+try {
+    $refOk = Get-PageProbe -Path '/refbook.sk.php?data=1' -UserAgent $ua
+    if ($refOk.Body -match $genericTitle) {
+        Write-Host "FAIL refbook data=1 still has generic <title>" -ForegroundColor Red
+        $failed++
+    } else {
+        Write-Host "OK refbook data=1 dynamic <title> (not generic)" -ForegroundColor Green
+    }
+    # data=1 is a stable fixture (Isaac Bashevis Singer); assert author + non-empty snippet in <title>
+    $failed += Assert-BodyContains -Label 'refbook' -Body $refOk.Body -Pattern '<title>Isaac Bashevis Singer:\s+[^<]{10,}</title>' -OkMessage 'refbook data=1 title has author + snippet'
+    $failed += Assert-BodyContains -Label 'refbook' -Body $refOk.Body -Pattern 'name="description" content="Citát od autora Isaac Bashevis Singer' -OkMessage 'refbook data=1 description names author'
+    $failed += Assert-BodyContains -Label 'refbook' -Body $refOk.Body -Pattern 'href="/styles\.css\?v=\d+"' -OkMessage 'refbook stylesheet /styles.css?v='
+
+    $ref404 = Get-PageProbe -Path '/refbook.sk.php?data=abc' -UserAgent $ua -ExpectedStatus 404
+    if ($ref404.Body -match $genericTitle) {
+        Write-Host "OK refbook 404 keeps generic <title>" -ForegroundColor Green
+    } else {
+        Write-Host "FAIL refbook 404 missing generic <title>" -ForegroundColor Red
+        $failed++
+    }
+} catch {
+    Write-Host "FAIL refbook GET probe — $($_.Exception.Message)" -ForegroundColor Red
+    $failed++
+}
+
 if ($failed -gt 0) {
     Write-Host ""
     Write-Host "Smoke zlyhal: $failed kontrol(y)." -ForegroundColor Red
     exit 1
 }
 Write-Host ""
-Write-Host "Smoke OK (403 = Apache; 509 = OpenResty edge; headers + pixbanner + legal)." -ForegroundColor Green
+Write-Host "Smoke OK (403 = Apache; 509 = OpenResty edge; headers + pixbanner + legal + refbook title)." -ForegroundColor Green
 exit 0

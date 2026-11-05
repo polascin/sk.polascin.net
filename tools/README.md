@@ -33,7 +33,8 @@ Kontroluje 200 / 301 / 403 / 404 a **509** na `/.github` (OpenResty edge,
 nie chyba `.htaccess`). Na GET `/` overí aj CORP / CSP / nosniff / Referrer-Policy,
 počet `kidneybiopsy.en.jpg` (2 strips) a root-absolútne `/styles.css` + `/docs/mel.pdf`.
 Na `privacy.php` / `terms.php` overí krížové odkazy (`/terms`, `/privacy`, `/refbook.sk.php`).
-Skrátený User-Agent môže dostať HTTP 466.
+Na `refbook.sk.php?data=1` overí dynamický `<title>` / description a `/styles.css`;
+pri `?data=abc` (404) generický title. Skrátený User-Agent môže dostať HTTP 466.
 Detaily: `docs/manual-steps-clarity-and-polascin-sk.md` sekcia C.
 
 ## Konfigurácia
