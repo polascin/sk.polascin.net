@@ -5,7 +5,7 @@
 				<h1 style="font-variant: small-caps;">Ľubomír Polaščín</h1>
 			</a>
     	<a href="https://sk.polascin.net/" target="_top" title="Ľubomír Polaščín - fotografia">
-	   		<img src="/pix/lpsk2.jpg" alt="Ľubomír Polaščín - fotografia" width="400" height="400" fetchpriority="high" decoding="async" style="border: 0; max-width: 100%; height: auto;">
+	   		<img src="/pix/lpsk2.jpg" alt="Ľubomír Polaščín - fotografia" width="400" height="400" fetchpriority="high" loading="eager" decoding="async" style="border: 0; max-width: 100%; height: auto;">
 			</a>
 		</div>
     <div>

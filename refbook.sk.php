@@ -58,6 +58,25 @@ $richText = static function (mixed $value): string {
     return preg_replace('#<\s*(/?)\s*(em|i|strong|b|br)\b[^>]*>#i', '<$1$2>', $allowed) ?? '';
 };
 
+$pageTitle = 'Kniha, z ktorej je citát (sk.polascin.net)';
+$pageDescription = 'Ľubomír Polaščín — kniha, z ktorej je citát, stránka v slovenskom jazyku.';
+if (is_array($record)) {
+    $authorName = trim((string) ($record['author'] ?? ''));
+    $quoteText = preg_replace('/\s+/u', ' ', trim((string) ($record['quote'] ?? ''))) ?? '';
+    $snippet = function_exists('mb_substr')
+        ? mb_substr($quoteText, 0, 90, 'UTF-8')
+        : substr($quoteText, 0, 90);
+    if ($snippet !== $quoteText) {
+        $snippet .= '…';
+    }
+    if ($snippet !== '') {
+        $pageTitle = ($authorName !== '' ? $authorName . ': ' : 'Citát: ') . $snippet;
+    }
+    $pageDescription = $authorName !== ''
+        ? 'Citát od autora ' . $authorName . ' a bibliografický odkaz na knihu (sk.polascin.net).'
+        : 'Citát a bibliografický odkaz na knihu (sk.polascin.net).';
+}
+
 ?>
 <!DOCTYPE html>
 
@@ -70,8 +89,8 @@ $richText = static function (mixed $value): string {
 
   <?php require "./blocks/favicon.php"; ?>
 
-  <meta name="date" content="2026-11-05T21:00:00+0100" >
-	<meta name="description" content="Ľubomír Polaščín - kniha, z ktorej je citát, stránka v slovenskom jazyku">
+  <meta name="date" content="2026-11-05T22:05:00+0100" >
+	<meta name="description" content="<?= $esc($pageDescription) ?>">
   <meta name="copyright" content="Ľubomír Polaščín">
 	<meta name="keywords" content="Ľubomír Polaščín,Ľubomír,Polaščín,polascin,lubomir,kniha,citát,citat,citácia,citacia">
   <meta name="publisher" content="Lubomir Polascin">
@@ -80,7 +99,7 @@ $richText = static function (mixed $value): string {
   <meta name="theme-color" content="#f5fffa">
   <meta name="robots" content="noindex, follow">
 
-  <title>Kniha, z ktorej je citát (sk.polascin.net)</title>
+  <title><?= $esc($pageTitle) ?></title>
 
   <?php require "./blocks/styles.sk.css.php"; ?>
 

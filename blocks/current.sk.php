@@ -13,5 +13,5 @@
 	</a>
 </div>
 
-<script src="/js/current.js?v=<?php echo @filemtime(__DIR__ . '/../js/current.js'); ?>" defer></script>
+<script src="/js/current.js?v=<?php echo (int) @filemtime(__DIR__ . '/../js/current.js'); ?>" defer></script>
 
