@@ -15,6 +15,7 @@
 # Beh #18: root-absolútne /styles.css; na privacy/terms krížové odkazy.
 # Beh #19: refbook ?data=1 dynamický <title>/description; /styles.css; 404 generický title.
 # Beh #20: skip-link focus #6a0dad; Clarity paths /privacy,/terms; orphan styles.sk.css.php removed.
+# Beh #21: Cache-Control on css/js/images; refbook canonical when quote found; no duplicate Fedora logo.
 #
 # Spusti z koreňa:  .\tools\smoke-prod.ps1
 
@@ -181,6 +182,16 @@ try {
     if ($probe.Body -match 'href="(/styles\.css\?v=\d+)"') {
         $styles = Get-PageProbe -Path $Matches[1] -UserAgent $ua
         $failed += Assert-BodyContains -Label 'styles.css' -Body $styles.Body -Pattern 'skip-link:focus[\s\S]{0,160}#6a0dad' -OkMessage 'skip-link focus outline #6a0dad (versioned CSS)'
+        $cc = $null
+        foreach ($key in $styles.Headers.Keys) {
+            if ($key -ieq 'Cache-Control') { $cc = $styles.Headers[$key]; break }
+        }
+        if ($cc -and ($cc -match 'max-age=')) {
+            Write-Host ('OK styles.css Cache-Control={0}' -f $cc) -ForegroundColor Green
+        } else {
+            Write-Host 'FAIL styles.css missing Cache-Control max-age' -ForegroundColor Red
+            $failed++
+        }
     } else {
         Write-Host 'FAIL home missing versioned /styles.css?v= for CSS probe' -ForegroundColor Red
         $failed++
@@ -221,6 +232,7 @@ try {
     $failed += Assert-BodyContains -Label 'refbook' -Body $refOk.Body -Pattern '<title>Isaac Bashevis Singer:\s+[^<]{10,}</title>' -OkMessage 'refbook data=1 title has author + snippet'
     $failed += Assert-BodyContains -Label 'refbook' -Body $refOk.Body -Pattern 'name="description" content="Citát od autora Isaac Bashevis Singer' -OkMessage 'refbook data=1 description names author'
     $failed += Assert-BodyContains -Label 'refbook' -Body $refOk.Body -Pattern 'href="/styles\.css\?v=\d+"' -OkMessage 'refbook stylesheet /styles.css?v='
+    $failed += Assert-BodyContains -Label 'refbook' -Body $refOk.Body -Pattern 'rel="canonical" href="https://sk\.polascin\.net/refbook\.sk\.php\?data=1"' -OkMessage 'refbook data=1 canonical'
 
     $ref404 = Get-PageProbe -Path '/refbook.sk.php?data=abc' -UserAgent $ua -ExpectedStatus 404
     if ($ref404.Body -match $genericTitle) {
@@ -228,6 +240,12 @@ try {
     } else {
         Write-Host "FAIL refbook 404 missing generic title" -ForegroundColor Red
         $failed++
+    }
+    if ($ref404.Body -match 'rel="canonical"') {
+        Write-Host 'FAIL refbook 404 should not expose canonical' -ForegroundColor Red
+        $failed++
+    } else {
+        Write-Host 'OK refbook 404 has no canonical' -ForegroundColor Green
     }
 } catch {
     Write-Host "FAIL refbook GET probe - $($_.Exception.Message)" -ForegroundColor Red

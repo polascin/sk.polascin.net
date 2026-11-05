@@ -113,9 +113,6 @@ $skTermsCurrent = in_array($skLegalPath, ['/terms', '/terms.php'], true) ? ' ari
 		<img src="/weblogo/neon-logo.svg" alt="KDE Neon" class="imgpromo" width="48" height="48" loading="lazy" decoding="async">
 	</a>
 	<a href="https://fedoraproject.org/" target="_blank" title="Fedora" rel="noopener noreferrer">
-		<img src="/weblogo/fedora-logo.png" alt="Fedora" class="imgpromo" width="144" height="144" loading="lazy" decoding="async">
-	</a>
-	<a href="https://fedoraproject.org/" target="_blank" title="Fedora" rel="noopener noreferrer">
 		<img src="/weblogo/fedora-blue.png" alt="Fedora" class="imgpromo" width="501" height="146" loading="lazy" decoding="async">
 	</a>
 	<br>

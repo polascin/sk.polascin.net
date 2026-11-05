@@ -89,7 +89,7 @@ if (is_array($record)) {
 
   <?php require "./blocks/favicon.php"; ?>
 
-  <meta name="date" content="2026-11-05T22:15:00+0100" >
+  <meta name="date" content="2026-11-05T22:40:00+0100" >
 	<meta name="description" content="<?= $esc($pageDescription) ?>">
   <meta name="copyright" content="Ľubomír Polaščín">
 	<meta name="keywords" content="Ľubomír Polaščín,Ľubomír,Polaščín,polascin,lubomir,kniha,citát,citat,citácia,citacia">
@@ -100,6 +100,9 @@ if (is_array($record)) {
   <meta name="robots" content="noindex, follow">
 
   <title><?= $esc($pageTitle) ?></title>
+<?php if (is_array($record) && is_int($quoteId)) { ?>
+  <link rel="canonical" href="https://sk.polascin.net/refbook.sk.php?data=<?= $quoteId ?>">
+<?php } ?>
 
   <link rel="stylesheet" href="/styles.css?v=<?php echo (int) @filemtime(__DIR__ . '/styles.css'); ?>">
 

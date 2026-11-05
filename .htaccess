@@ -22,6 +22,14 @@ ServerSignature Off
 
     Header always unset X-Powered-By
     Header unset X-Powered-By
+
+    # Cacheovanie statiky (stránky už verziujú CSS/JS cez ?v=filemtime).
+    <FilesMatch "\.(css|js)$">
+        Header set Cache-Control "public, max-age=86400, must-revalidate"
+    </FilesMatch>
+    <FilesMatch "\.(png|jpe?g|gif|svg|webp|ico|woff2?)$">
+        Header set Cache-Control "public, max-age=604800"
+    </FilesMatch>
 </IfModule>
 
 # Blokovanie .git a citlivých súborov
