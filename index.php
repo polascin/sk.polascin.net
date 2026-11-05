@@ -22,6 +22,40 @@
 
   <link rel="canonical" href="https://sk.polascin.net/">
 
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="sk_SK">
+  <meta property="og:site_name" content="sk.polascin.net">
+  <meta property="og:title" content="Ľubomír Polaščín (webové sídlo)">
+  <meta property="og:description" content="MUDr. Ľubomír Polaščín, nefrológ a internista — odborné texty o dialýze, transplantácii obličiek a nefrológii.">
+  <meta property="og:url" content="https://sk.polascin.net/">
+  <meta property="og:image" content="https://sk.polascin.net/pix/lpsk2.jpg">
+  <meta property="og:image:width" content="400">
+  <meta property="og:image:height" content="400">
+  <meta property="og:image:alt" content="Fotografia Ľubomíra Polaščína">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Ľubomír Polaščín (webové sídlo)">
+  <meta name="twitter:description" content="MUDr. Ľubomír Polaščín, nefrológ a internista — dialýza, transplantácia obličiek a nefrológia.">
+  <meta name="twitter:image" content="https://sk.polascin.net/pix/lpsk2.jpg">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "Ľubomír Polaščín",
+    "honorificPrefix": "MUDr.",
+    "jobTitle": "Nefrológ a internista",
+    "url": "https://sk.polascin.net/",
+    "image": "https://sk.polascin.net/pix/lpsk2.jpg",
+    "email": "mailto:lubomir@polascin.net",
+    "sameAs": [
+      "https://www.linkedin.com/in/lubomirpolascin/",
+      "https://polascin.net/",
+      "https://nephrosite.polascin.net/",
+      "https://books.polascin.net/"
+    ]
+  }
+  </script>
+
   <link rel="stylesheet" href="styles.css?v=<?php echo (int) @filemtime(__DIR__ . '/styles.css'); ?>">
 
 </head>
@@ -29,11 +63,15 @@
 
 <body>
 
+<a class="skip-link" href="#obsah">Preskočiť na obsah</a>
+
 <hr>
 
 <?php require "./blocks/intersection.sk.php"; ?>
 
 <hr>
+
+<main id="obsah" tabindex="-1">
 
 <?php require "./blocks/current.sk.php"; ?>
 
@@ -78,6 +116,8 @@
 <br><br><br><br><br>
 
 <?php include "./blocks/affiliate.sk.php"; ?>
+
+</main>
 
 <br><br>
 

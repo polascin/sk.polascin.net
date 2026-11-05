@@ -77,6 +77,8 @@ $richText = static function (mixed $value): string {
   <meta name="publisher" content="Lubomir Polascin">
 	<meta name="author" content="Ľubomír Polaščín" >
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#f5fffa">
+  <meta name="robots" content="noindex, follow">
 
   <title>Kniha, z ktorej je citát (sk.polascin.net)</title>
 
@@ -87,11 +89,15 @@ $richText = static function (mixed $value): string {
 
 <body>
 
+<a class="skip-link" href="#obsah">Preskočiť na obsah</a>
+
 <hr>
 
 <?php require "./blocks/intersection.sk.php"; ?>
 
 <hr>
+
+<main id="obsah" tabindex="-1">
 
 <?php require "./blocks/current.sk.php"; ?>
 
@@ -160,6 +166,8 @@ $richText = static function (mixed $value): string {
 <?php require "./blocks/pixbanner.php"; ?>
 
 <br><br><br><br>
+
+</main>
 
 <?php require "./blocks/footer.sk.php"; ?>
 

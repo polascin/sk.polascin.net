@@ -17,6 +17,7 @@
 	<meta name="author" content="Ľubomír Polaščín" >
   <meta name="robots" content="noindex, follow">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#f5fffa">
 
   <link rel="canonical" href="https://sk.polascin.net/privacy.php">
 
@@ -29,6 +30,8 @@
 
 <body>
 
+<a class="skip-link" href="#obsah">Preskočiť na obsah</a>
+
 <hr>
 
 <?php require "./blocks/intersection.sk.php"; ?>
@@ -37,7 +40,7 @@
 
 <br>
 
-<main class="info legal">
+<main id="obsah" class="info legal" tabindex="-1">
 
 	<h1>Ochrana osobných údajov</h1>
 

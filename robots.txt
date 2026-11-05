@@ -1,5 +1,7 @@
 # robots.txt — sk.polascin.net
 # Aktualizované: 2026-11-05
+# Poznámka: ďalšie interné cesty (.github, .kilo, .trunk, .claude, …)
+# sú blokované v .htaccess (403), nie cez Disallow (neadvertovať cestu).
 
 User-agent: *
 Allow: /
