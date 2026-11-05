@@ -9,7 +9,7 @@
 
   <?php require "./blocks/favicon.php"; ?>
 
-  <meta name="date" content="2026-11-05T21:00:00+0100" >
+  <meta name="date" content="2026-11-05T21:45:00+0100" >
 	<meta name="description" content="Podmienky používania webového sídla sk.polascin.net vrátane zdravotného zrieknutia sa zodpovednosti">
   <meta name="copyright" content="Ľubomír Polaščín">
 	<meta name="keywords" content="podmienky používania,zrieknutie sa zodpovednosti,disclaimer,duševné vlastníctvo,sk.polascin.net,Ľubomír Polaščín">
@@ -189,7 +189,7 @@
 
 	<p>
 		Spracúvanie údajov pri kliknutí na odkazy tretích strán je opísané v
-		<a href="./privacy.php" target="_self">Zásadách ochrany osobných údajov</a>.
+		<a href="/privacy" target="_self">Zásadách ochrany osobných údajov</a>.
 	</p>
 
 	<h2 id="pravidla-pouzivania">7. Pravidlá používania webového sídla</h2>
@@ -246,7 +246,7 @@
 	<p>
 		Spracúvanie osobných údajov v súvislosti s návštevou webového sídla je podrobne
 		opísané v samostatnom dokumente
-		<a href="./privacy.php" target="_self"><strong>Ochrana osobných údajov</strong></a>,
+		<a href="/privacy" target="_self"><strong>Ochrana osobných údajov</strong></a>,
 		ktorý tvorí neoddeliteľnú súčasť týchto podmienok.
 	</p>
 
@@ -291,7 +291,7 @@
 	</p>
 
 	<p class="legal-seealso">
-		Pozri aj: <a href="./privacy.php" target="_self">Ochrana osobných údajov</a>
+		Pozri aj: <a href="/privacy" target="_self">Ochrana osobných údajov</a>
 	</p>
 
 </main>

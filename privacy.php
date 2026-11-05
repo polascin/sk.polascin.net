@@ -9,7 +9,7 @@
 
   <?php require "./blocks/favicon.php"; ?>
 
-  <meta name="date" content="2026-11-01T12:00:00+0100" >
+  <meta name="date" content="2026-11-05T21:45:00+0100" >
 	<meta name="description" content="Zásady ochrany osobných údajov (GDPR) webového sídla sk.polascin.net">
   <meta name="copyright" content="Ľubomír Polaščín">
 	<meta name="keywords" content="ochrana osobných údajov,ochrana súkromia,GDPR,zásady,sk.polascin.net,Ľubomír Polaščín">
@@ -168,7 +168,7 @@
 	<h3>3.3 Databáza citátov a bibliografických údajov</h3>
 
 	<p>
-		Stránka <a href="./refbook.sk.php" target="_self">refbook.sk.php</a> zobrazuje
+		Stránka <a href="/refbook.sk.php" target="_self">refbook.sk.php</a> zobrazuje
 		citáty a bibliografické údaje o knihách (názov, autori, jazyk, vydanie, ISBN)
 		z databázy prevádzkovanej pre potreby tohto webového sídla. Ide o údaje
 		o publikáciách, nie o osobné údaje návštevníkov. O návštevníkoch sa do tejto
@@ -237,7 +237,7 @@
 		NordVPN, Surfshark, Blinkist, G2, Grammarly, Skillmea, 23andMe, W3C, W3Schools,
 		DistroWatch, Wikipédia, Národné centrum zdravotníckych informácií a ďalšie).
 		Časť z nich sú <strong>partnerské (affiliate) odkazy</strong> &mdash; pozri
-		<a href="./terms.php" target="_self">Podmienky používania</a>.
+		<a href="/terms" target="_self">Podmienky používania</a>.
 	</p>
 
 	<p>
@@ -397,7 +397,7 @@
 	</p>
 
 	<p class="legal-seealso">
-		Pozri aj: <a href="./terms.php" target="_self">Podmienky používania</a>
+		Pozri aj: <a href="/terms" target="_self">Podmienky používania</a>
 	</p>
 
 </main>
