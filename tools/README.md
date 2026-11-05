@@ -55,6 +55,7 @@ no-cache, must-revalidate` na PHP, Quotation JSON-LD na refbooku (Book `isbn`
 bez textového prefixu `ISBN `, Book aj Quotation `inLanguage` vrátane mapovania
 cz→cs), Cache-Control pre `mel.pdf` a `sitemap.xml`, `color-scheme: light`,
 `loading=lazy` na odborných obrázkoch (`dial.jpeg`, `klinef.jpeg`, …),
+nadpisy bez preskoku úrovní (Amazon knihy `h2`, podsekcie nefamb `h3`),
 `robots.txt` s `Allow: /docs/mel.pdf` pri `Disallow: /docs/`, a verziovaný
 `clarity-consent.js` s `aria-modal`, Escape, focus trap, `aria-describedby` /
 `aria-expanded`, `data-css-v` pre cache-bust CSS a obnovenie focusu na tlačidlo

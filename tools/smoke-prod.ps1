@@ -32,6 +32,7 @@
 # Beh #33: Quotation isbn without ISBN prefix; Book inLanguage; PDF/XML Cache-Control; sitemap; iframe title.
 # Beh #34: educational article images lazy/decoding; color-scheme light in shared favicon head.
 # Beh #35: robots.txt Allow /docs/mel.pdf while Disallow /docs/; comment-block logo attrs.
+# Beh #36: heading hierarchy — Amazon books h2 (not h3); nefamb subsection h3 (not h4).
 #
 # Spusti z koreňa:  .\tools\smoke-prod.ps1
 
@@ -259,6 +260,16 @@ try {
     $failed += Assert-BodyContains -Label 'home' -Body $probe.Body -Pattern 'src="/pix/dial\.jpeg"[^>]*loading="lazy"' -OkMessage 'home dial.jpeg loading=lazy'
     $failed += Assert-BodyContains -Label 'home' -Body $probe.Body -Pattern 'src="/pix/klinef\.jpeg"[^>]*loading="lazy"' -OkMessage 'home klinef.jpeg loading=lazy'
     $failed += Assert-BodyContains -Label 'home' -Body $probe.Body -Pattern 'src="/pix/transplantoblicky\.jpeg"[^>]*loading="lazy"' -OkMessage 'home transplantoblicky.jpeg loading=lazy'
+    $failed += Assert-BodyContains -Label 'home' -Body $probe.Body -Pattern '<h2[^>]*>\s*Moje knihy na Amazone\s*</h2>' -OkMessage 'home Amazon books heading is h2'
+    if ($probe.Body -match '<h3[^>]*>\s*Moje knihy na Amazone\s*</h3>') {
+        Write-Host 'FAIL home Amazon books still uses h3' -ForegroundColor Red
+        $failed++
+    }
+    $failed += Assert-BodyContains -Label 'home' -Body $probe.Body -Pattern '<h3><em>Služby</em>, ktoré môže nefrologická ambulancia poskytovať:</h3>' -OkMessage 'home nefamb Služby heading is h3'
+    if ($probe.Body -match '<h4><em>Služby</em>, ktoré môže nefrologická ambulancia poskytovať:</h4>') {
+        Write-Host 'FAIL home nefamb Služby still uses h4' -ForegroundColor Red
+        $failed++
+    }
     $failed += Assert-BodyContains -Label 'home' -Body $probe.Body -Pattern 'href="/styles\.css\?v=' -OkMessage 'home stylesheet /styles.css'
     $failed += Assert-BodyContains -Label 'home' -Body $probe.Body -Pattern 'src="/js/current\.js\?v=\d+"' -OkMessage 'home script /js/current.js?v='
     $failed += Assert-BodyContains -Label 'home' -Body $probe.Body -Pattern 'name="twitter:image:alt" content="Fotografia' -OkMessage 'home twitter:image:alt'

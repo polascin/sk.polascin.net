@@ -46,9 +46,9 @@
 		</a>
 		<hr class="promohr">
 		<a href="https://www.amazon.com/stores/Lubomir-Polascin/author/B07PN436VJ?store_ref=ap_rdr&isDramIntegrated=true&shoppingPortalEnabled=true&linkCode=ll2&tag=mobile0f21130-20&linkId=857497f66a358285c30f667879e75f8e&language=en_US&ref_=as_li_ss_tl" target="_blank" title="Moje knihy na Amazone" rel="noopener noreferrer">
-			<h3 style="border-block-end-color: gray; border-style: solid; border-width: thin; background-color: ghostwhite;">
+			<h2 style="border-block-end-color: gray; border-style: solid; border-width: thin; background-color: ghostwhite;">
 				Moje knihy na Amazone
-			</h3>
+			</h2>
 		</a>
 		<br>
 		<!--<div style="border-style: solid; border-width: thin; border-color: gray; padding: 0.3em;">
