@@ -5,7 +5,10 @@
   if (!config || !/^[a-z0-9]+$/.test(config.dataset.project || "")) return;
   const allowed = (config.dataset.paths || "/,/index.php").split(",");
   if (!allowed.includes(location.pathname)) return;
-  if ([...new URLSearchParams(location.search).keys()].some(k => !["lang", "slug", "page", "category"].includes(k))) return;
+  // Quote pages use public ?data=<id>; allow that key only on refbook, still block private tokens.
+  const allowedQuery = ["lang", "slug", "page", "category"];
+  if (location.pathname === "/refbook.sk.php") allowedQuery.push("data");
+  if ([...new URLSearchParams(location.search).keys()].some(k => !allowedQuery.includes(k))) return;
   const project = config.dataset.project;
   const external = config.dataset.consent === "external";
   const key = "clarity-consent-v1-" + project;
