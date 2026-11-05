@@ -19,6 +19,7 @@
 # Beh #22: twitter:image:alt; webmanifest theme #f5fffa; MIME application/manifest+json; start_url/lang.
 # Beh #23: current.js immediate tick, formatToParts TZ, null-safe DOM.
 # Beh #24: current.js refreshes day/week/year/TZ each tick; local ISO week; age sprintf.
+#          JS body asserts require versioned ?v= (no bare fallback); age decimal on home.
 #
 # Spusti z koreňa:  .\tools\smoke-prod.ps1
 
@@ -219,39 +220,45 @@ try {
         $failed++
     }
     # Bare /js/current.js may be edge-cached; homepage uses ?v=filemtime - probe that URL for body.
-    $clockPath = '/js/current.js'
+    # Do not fall back to bare path: stale edge body falsely fails daynumber/getUTCDay asserts.
     if ($probe.Body -match 'src="(/js/current\.js\?v=\d+)"') {
         $clockPath = $Matches[1]
-    }
-    $clock = Get-PageProbe -Path $clockPath -UserAgent $ua
-    if ($clock.Body -match 'updateDateTime\(\);\s*setInterval\(updateDateTime') {
-        Write-Host 'OK current.js calls updateDateTime before setInterval' -ForegroundColor Green
+        $clock = Get-PageProbe -Path $clockPath -UserAgent $ua
+        Write-Host ("OK current.js body probe via {0}" -f $clockPath) -ForegroundColor Green
+        if ($clock.Body -match 'updateDateTime\(\);\s*setInterval\(updateDateTime') {
+            Write-Host 'OK current.js calls updateDateTime before setInterval' -ForegroundColor Green
+        } else {
+            Write-Host 'FAIL current.js missing immediate updateDateTime() before setInterval' -ForegroundColor Red
+            $failed++
+        }
+        if (($clock.Body -match 'formatToParts') -and ($clock.Body -match 'getElementById')) {
+            Write-Host 'OK current.js uses formatToParts and getElementById guards' -ForegroundColor Green
+        } else {
+            Write-Host 'FAIL current.js missing formatToParts/getElementById hardening' -ForegroundColor Red
+            $failed++
+        }
+        if (($clock.Body -match "setText\('daynumber'") -and ($clock.Body -match 'function updateDateTime') -and ($clock.Body -notmatch 'getUTCDay')) {
+            Write-Host 'OK current.js refreshes daynumber in updateDateTime with local ISO week' -ForegroundColor Green
+        } else {
+            Write-Host 'FAIL current.js missing daynumber refresh or still uses getUTCDay' -ForegroundColor Red
+            $failed++
+        }
+        $clockCc = $null
+        foreach ($key in $clock.Headers.Keys) {
+            if ($key -ieq 'Cache-Control') { $clockCc = $clock.Headers[$key]; break }
+        }
+        if ($clockCc -and ($clockCc -match 'max-age=')) {
+            Write-Host ('OK current.js Cache-Control={0}' -f $clockCc) -ForegroundColor Green
+        } else {
+            Write-Host 'FAIL current.js missing Cache-Control max-age' -ForegroundColor Red
+            $failed++
+        }
     } else {
-        Write-Host 'FAIL current.js missing immediate updateDateTime() before setInterval' -ForegroundColor Red
+        Write-Host 'FAIL home missing versioned /js/current.js?v= for JS body probe' -ForegroundColor Red
         $failed++
     }
-    if (($clock.Body -match 'formatToParts') -and ($clock.Body -match 'getElementById')) {
-        Write-Host 'OK current.js uses formatToParts and getElementById guards' -ForegroundColor Green
-    } else {
-        Write-Host 'FAIL current.js missing formatToParts/getElementById hardening' -ForegroundColor Red
-        $failed++
-    }
-    if (($clock.Body -match "setText\('daynumber'") -and ($clock.Body -match 'function updateDateTime') -and ($clock.Body -notmatch 'getUTCDay')) {
-        Write-Host 'OK current.js refreshes daynumber in updateDateTime with local ISO week' -ForegroundColor Green
-    } else {
-        Write-Host 'FAIL current.js missing daynumber refresh or still uses getUTCDay' -ForegroundColor Red
-        $failed++
-    }
-    $clockCc = $null
-    foreach ($key in $clock.Headers.Keys) {
-        if ($key -ieq 'Cache-Control') { $clockCc = $clock.Headers[$key]; break }
-    }
-    if ($clockCc -and ($clockCc -match 'max-age=')) {
-        Write-Host ('OK current.js Cache-Control={0}' -f $clockCc) -ForegroundColor Green
-    } else {
-        Write-Host 'FAIL current.js missing Cache-Control max-age' -ForegroundColor Red
-        $failed++
-    }
+    # Age fraction must keep a decimal point (sprintf %.3f); whole ages used to drop the fraction.
+    $failed += Assert-BodyContains -Label 'home' -Body $probe.Body -Pattern '\(\d+<small>\.\d{3}</small>\)' -OkMessage 'home age keeps decimal fraction via sprintf'
     # Bare /styles.css may be edge-cached; pages use ?v=filemtime - probe that URL.
     if ($probe.Body -match 'href="(/styles\.css\?v=\d+)"') {
         $styles = Get-PageProbe -Path $Matches[1] -UserAgent $ua

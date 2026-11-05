@@ -42,9 +42,11 @@ outline `#6a0dad` a `Cache-Control max-age` idú cez versioned `/styles.css?v=`
 `application/manifest+json`, Cache-Control). Overí `/js/current.js` (okamžitý
 `updateDateTime` pred `setInterval`, `formatToParts`, null-safe DOM, obnovu
 `daynumber` v každom ticku, lokálny ISO týždeň bez `getUTCDay`, Cache-Control;
-telo JS sa číta z verziovaného `?v=` URL, nie z holého `/js/current.js` kvôli edge cache)
-a na homepage verziovaný `src="/js/current.js?v="`. Súbor `smoke-prod.ps1` musí
-ostať UTF-8 s BOM (Windows PowerShell 5.1 + slovenské znaky). Skrátený UA → 466.
+telo JS sa číta výhradne z verziovaného `?v=` URL, bez fallbacku na holé
+`/js/current.js` kvôli edge cache) a na homepage verziovaný
+`src="/js/current.js?v="` plus vek so zachovanou desatinnou časťou
+(`(N<small>.xxx</small>)`). Súbor `smoke-prod.ps1` musí ostať UTF-8 s BOM
+(Windows PowerShell 5.1 + slovenské znaky). Skrátený UA → 466.
 Detaily: `docs/manual-steps-clarity-and-polascin-sk.md` sekcia C.
 
 ## Konfigurácia

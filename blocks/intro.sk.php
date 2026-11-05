@@ -14,7 +14,8 @@
 					// sprintf('%.3f') always keeps a decimal point; round()+substr broke on whole ages.
 					$vek = (time() - mktime(8, 30, 0, 3, 4, 1971)) / (60 * 60 * 24 * 365.25);
 					$vekFloor = (int) floor($vek);
-					$vekFrac = substr(sprintf('%.3f', $vek), strpos(sprintf('%.3f', $vek), '.'));
+					$vekFormatted = sprintf('%.3f', $vek);
+					$vekFrac = substr($vekFormatted, strpos($vekFormatted, '.'));
 					echo "<span style='font-weight: bold; font-size: 2.5em;'>" . $vekFloor . "</span>\n";
 					echo "<br>(" . $vekFloor . "<small>" . $vekFrac . "</small>)<br>\n";
 				?>
