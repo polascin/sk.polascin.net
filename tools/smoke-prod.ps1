@@ -175,6 +175,13 @@ try {
         Write-Host ('FAIL kidneybiopsy.en.jpg count={0} expected 2' -f $kbCount) -ForegroundColor Red
         $failed++
     }
+    $fedoraCount = ([regex]::Matches($probe.Body, 'fedoraproject\.org')).Count
+    if ($fedoraCount -eq 1) {
+        Write-Host ('OK fedora footer link count={0}' -f $fedoraCount) -ForegroundColor Green
+    } else {
+        Write-Host ('FAIL fedora footer link count={0} expected 1' -f $fedoraCount) -ForegroundColor Red
+        $failed++
+    }
     $failed += Assert-BodyContains -Label 'home' -Body $probe.Body -Pattern 'href="/docs/mel\.pdf"' -OkMessage 'home link /docs/mel.pdf'
     $failed += Assert-BodyContains -Label 'home' -Body $probe.Body -Pattern 'href="/styles\.css\?v=' -OkMessage 'home stylesheet /styles.css'
     $failed += Assert-BodyContains -Label 'home' -Body $probe.Body -Pattern 'data-paths="[^"]*/privacy[^"]*/terms"' -OkMessage 'home clarity paths include /privacy and /terms'

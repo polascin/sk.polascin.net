@@ -33,11 +33,13 @@ Kontroluje 200 / 301 / 403 / 404 a **509** na `/.github` (OpenResty edge,
 nie chyba `.htaccess`). Na GET `/` overí aj CORP / CSP / nosniff / Referrer-Policy,
 počet `kidneybiopsy.en.jpg` (2 strips) a root-absolútne `/styles.css` + `/docs/mel.pdf`.
 Na `privacy.php` / `terms.php` overí krížové odkazy (`/terms`, `/privacy`, `/refbook.sk.php`).
-Na `refbook.sk.php?data=1` overí dynamický `<title>` / description a `/styles.css`;
-pri `?data=abc` (404) generický title. Skip-link outline `#6a0dad` ide cez versioned
-`/styles.css?v=` (holé `/styles.css` môže byť edge-cached). Súbor `smoke-prod.ps1`
-musí ostať UTF-8 s BOM (Windows PowerShell 5.1 + slovenské znaky). Skrátený UA → 466.
-Detaily: `docs/manual-steps-clarity-and-polascin-sk.md` sekcia C.
+Na `refbook.sk.php?data=1` overí dynamický `<title>` / description, `/styles.css`,
+`rel=canonical`; pri `?data=abc` (404) generický title bez canonical. Skip-link
+outline `#6a0dad` a `Cache-Control max-age` idú cez versioned `/styles.css?v=`
+(holé `/styles.css` môže byť edge-cached). Overí aj jeden Fedora odkaz v pätičke.
+Súbor `smoke-prod.ps1` musí ostať UTF-8 s BOM (Windows PowerShell 5.1 + slovenské
+znaky). Skrátený UA → 466. Detaily: `docs/manual-steps-clarity-and-polascin-sk.md`
+sekcia C.
 
 ## Konfigurácia
 
