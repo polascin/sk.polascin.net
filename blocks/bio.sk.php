@@ -14,7 +14,7 @@
 		<span style="font-style: italic; color: gray; display: block;">Kontakty</span>
 		<span style="font-size: small; font-style: italic; color: gray;">E-Mail: </span>
 		&nbsp;
-		<a href="mailto:lubomir@polascin.net">
+		<a href="mailto:lubomir@polascin.net" title="Pošli e-mail">
 			<strong>lubomir@polascin.net</strong>
 		</a>
 		<br>

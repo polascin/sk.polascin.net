@@ -25,6 +25,8 @@
 # Beh #27: versioned webmanifest + description/purpose; root favicon.ico link; legal OG/Twitter.
 # Beh #28: refbook OG/Twitter (dynamic title); versioned favicon PNG/ICO; /favicon.ico HEAD 200.
 # Beh #29: PHP HTML Cache-Control no-cache; JSON-LD description/inLanguage/knowsAbout; hreflang.
+# Beh #30: Clarity settings focus restore after Allow/Decline from settings.
+# Beh #31: refbook Quotation JSON-LD; optional ISO lang on blockquote; bio mailto title.
 # Beh #30: Clarity apply() restores focus to settings when openedFromSettings (non-reload).
 #
 # Spusti z koreňa:  .\tools\smoke-prod.ps1
@@ -381,6 +383,12 @@ try {
     $failed += Assert-BodyContains -Label 'refbook' -Body $refOk.Body -Pattern 'rel="canonical" href="https://sk\.polascin\.net/refbook\.sk\.php\?data=1"' -OkMessage 'refbook data=1 canonical'
     $failed += Assert-BodyContains -Label 'refbook' -Body $refOk.Body -Pattern 'property="og:title" content="Isaac Bashevis Singer:' -OkMessage 'refbook data=1 og:title'
     $failed += Assert-BodyContains -Label 'refbook' -Body $refOk.Body -Pattern 'property="og:url" content="https://sk\.polascin\.net/refbook\.sk\.php\?data=1"' -OkMessage 'refbook data=1 og:url'
+    $failed += Assert-BodyContains -Label 'refbook' -Body $refOk.Body -Pattern '"@type":\s*"Quotation"' -OkMessage 'refbook Quotation JSON-LD'
+    $failed += Assert-BodyContains -Label 'refbook' -Body $refOk.Body -Pattern '"author"\s*:\s*\{\s*"@type"\s*:\s*"Person"' -OkMessage 'refbook Quotation author Person'
+    if ($refOk.Body -match '"@type":\s*"Quotation"' -and $refOk.Body -notmatch 'application/ld\+json') {
+        Write-Host 'FAIL refbook Quotation JSON-LD missing script type' -ForegroundColor Red
+        $failed++
+    }
     $failed += Assert-BodyContains -Label 'refbook' -Body $refOk.Body -Pattern 'name="twitter:image:alt"' -OkMessage 'refbook twitter:image:alt'
 
     $ref404 = Get-PageProbe -Path '/refbook.sk.php?data=abc' -UserAgent $ua -ExpectedStatus 404

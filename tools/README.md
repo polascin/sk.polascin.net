@@ -51,7 +51,7 @@ telo JS sa číta výhradne z verziovaného `?v=` URL, bez fallbacku na holé
 `src="/js/current.js?v="` plus vek so zachovanou desatinnou časťou
 (`(N<small>.xxx</small>)`), JSON-LD e-mail bez `mailto:` plus `description` /
 `inLanguage` / `knowsAbout`, `hreflang` sk/x-default, HTML `Cache-Control:
-no-cache, must-revalidate` na PHP, a verziovaný
+no-cache, must-revalidate` na PHP, Quotation JSON-LD na refbooku, a verziovaný
 `clarity-consent.js` s `aria-modal`, Escape, focus trap, `aria-describedby` /
 `aria-expanded`, `data-css-v` pre cache-bust CSS a obnovenie focusu na tlačidlo
 nastavení po Allow/Decline, keď dialóg otvorili nastavenia: `returnToSettings`

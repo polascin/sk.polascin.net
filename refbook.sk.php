@@ -60,6 +60,7 @@ $richText = static function (mixed $value): string {
 
 $pageTitle = 'Kniha, z ktorej je citát (sk.polascin.net)';
 $pageDescription = 'Ľubomír Polaščín: kniha, z ktorej je citát, stránka v slovenskom jazyku.';
+$quoteLang = '';
 if (is_array($record)) {
     $authorName = trim((string) ($record['author'] ?? ''));
     $quoteText = preg_replace('/\s+/u', ' ', trim((string) ($record['quote'] ?? ''))) ?? '';
@@ -75,6 +76,11 @@ if (is_array($record)) {
     $pageDescription = $authorName !== ''
         ? 'Citát od autora ' . $authorName . ' a bibliografický odkaz na knihu (sk.polascin.net).'
         : 'Citát a bibliografický odkaz na knihu (sk.polascin.net).';
+    // Only ISO-like codes belong in lang= / JSON-LD inLanguage (not free-text "slovenčina").
+    $rawLang = trim((string) ($record['lang'] ?? ''));
+    if (preg_match('/^[a-z]{2}(?:-[A-Za-z0-9]{2,8})?$/i', $rawLang) === 1) {
+        $quoteLang = strtolower($rawLang);
+    }
 }
 
 ?>
@@ -89,7 +95,7 @@ if (is_array($record)) {
 
   <?php require "./blocks/favicon.php"; ?>
 
-  <meta name="date" content="2026-11-05T23:55:00+0100" >
+  <meta name="date" content="2026-11-06T00:20:00+0100" >
 	<meta name="description" content="<?= $esc($pageDescription) ?>">
   <meta name="copyright" content="Ľubomír Polaščín">
 	<meta name="keywords" content="Ľubomír Polaščín,Ľubomír,Polaščín,polascin,lubomir,kniha,citát,citat,citácia,citacia">
@@ -121,6 +127,43 @@ if (is_array($record)) {
   <meta name="twitter:description" content="<?= $esc($pageDescription) ?>">
   <meta name="twitter:image" content="https://sk.polascin.net/pix/lpsk2.jpg">
   <meta name="twitter:image:alt" content="Fotografia Ľubomíra Polaščína">
+<?php if (is_array($record) && is_int($quoteId)) {
+    $quotationLd = [
+        '@context' => 'https://schema.org',
+        '@type' => 'Quotation',
+        'text' => (string) ($record['quote'] ?? ''),
+        'url' => 'https://sk.polascin.net/refbook.sk.php?data=' . $quoteId,
+    ];
+    $authorNameLd = trim((string) ($record['author'] ?? ''));
+    if ($authorNameLd !== '') {
+        $quotationLd['author'] = [
+            '@type' => 'Person',
+            'name' => $authorNameLd,
+        ];
+    }
+    $bookTitleLd = trim((string) ($record['title'] ?? ''));
+    if ($bookTitleLd !== '') {
+        $bookLd = [
+            '@type' => 'Book',
+            'name' => $bookTitleLd,
+        ];
+        $isbnLd = trim((string) ($record['isbn'] ?? ''));
+        if ($isbnLd !== '') {
+            $bookLd['isbn'] = $isbnLd;
+        }
+        $quotationLd['isPartOf'] = $bookLd;
+    }
+    if ($quoteLang !== '') {
+        $quotationLd['inLanguage'] = $quoteLang;
+    }
+    $quotationJson = json_encode(
+        $quotationLd,
+        JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS
+    );
+    if (is_string($quotationJson)) {
+        echo "\n  <script type=\"application/ld+json\">" . $quotationJson . "</script>\n";
+    }
+} ?>
 
   <link rel="stylesheet" href="/styles.css?v=<?php echo (int) @filemtime(__DIR__ . '/styles.css'); ?>">
 
@@ -161,7 +204,7 @@ if (is_array($record)) {
 
 	<div><em>Citát</em></div>
 	<br>
-	<blockquote class="quotebox" style="display: block; width: auto; margin: 0; text-align: left;">
+	<blockquote class="quotebox" style="display: block; width: auto; margin: 0; text-align: left;"<?= $quoteLang !== '' ? ' lang="' . $esc($quoteLang) . '"' : '' ?>>
 		<p class="quote" style="margin: 0;"><?= $esc($record['quote']) ?></p>
 		<footer>
 			<div class="author"><?= $esc($record['author']) ?></div>
