@@ -124,6 +124,6 @@ $skTermsCurrent = in_array($skLegalPath, ['/terms', '/terms.php'], true) ? ' ari
 
 <br><br><br>
 
-<script src="/js/clarity-consent.js?v=<?php echo (int) @filemtime(__DIR__ . '/../js/clarity-consent.js'); ?>" data-project="9bey9oyojd" data-paths="/,/index.php,/refbook.sk.php,/privacy.php,/terms.php,/privacy,/terms" data-privacy="/privacy"></script>
+<script src="/js/clarity-consent.js?v=<?php echo (int) @filemtime(__DIR__ . '/../js/clarity-consent.js'); ?>" data-project="9bey9oyojd" data-paths="/,/index.php,/refbook.sk.php,/privacy.php,/terms.php,/privacy,/terms" data-privacy="/privacy" data-css-v="<?php echo (int) @filemtime(__DIR__ . '/../js/clarity-consent.css'); ?>"></script>
 
 </footer>

@@ -18,15 +18,41 @@
   let openedFromSettings = false;
   const read = () => { try { return JSON.parse(localStorage.getItem(key)); } catch { return null; } };
   const save = granted => { try { localStorage.setItem(key, JSON.stringify({granted, expires: Date.now() + 180 * 86400000})); } catch { /* Consent still applies for this page. */ } };
+  function focusables() {
+    if (!banner) return [];
+    return [...banner.querySelectorAll('a[href], button:not([disabled])')].filter(
+      el => !el.hasAttribute("disabled") && el.tabIndex !== -1
+    );
+  }
+  function setExpanded(open) {
+    settings.setAttribute("aria-expanded", open ? "true" : "false");
+  }
   function onKey(e) {
-    if (e.key !== "Escape" || !banner) return;
-    e.preventDefault();
-    if (openedFromSettings) {
-      closeBanner();
-      settings.focus();
-    } else {
-      // First-visit Escape is an explicit dismiss → decline and persist.
-      apply(false);
+    if (!banner) return;
+    if (e.key === "Escape") {
+      e.preventDefault();
+      if (openedFromSettings) {
+        closeBanner();
+        settings.focus();
+      } else {
+        // First-visit Escape is an explicit dismiss → decline and persist.
+        apply(false);
+      }
+      return;
+    }
+    if (e.key !== "Tab") return;
+    const items = focusables();
+    if (items.length === 0) return;
+    const first = items[0];
+    const last = items[items.length - 1];
+    if (e.shiftKey) {
+      if (document.activeElement === first || !banner.contains(document.activeElement)) {
+        e.preventDefault();
+        last.focus();
+      }
+    } else if (document.activeElement === last || !banner.contains(document.activeElement)) {
+      e.preventDefault();
+      first.focus();
     }
   }
   function closeBanner() {
@@ -34,6 +60,7 @@
     banner.remove();
     banner = null;
     openedFromSettings = false;
+    setExpanded(false);
     window.removeEventListener("keydown", onKey);
   }
   function apply(granted, persist = true) {
@@ -74,26 +101,37 @@
   }
   const css = document.createElement("link");
   css.rel = "stylesheet";
-  css.href = new URL("clarity-consent.css", config.src).href;
+  const cssHref = new URL("clarity-consent.css", config.src);
+  const cssV = (config.dataset.cssV || "").replace(/\D/g, "");
+  if (cssV) cssHref.searchParams.set("v", cssV);
+  css.href = cssHref.href;
   document.head.appendChild(css);
   const settings = document.createElement("button");
   settings.type = "button";
   settings.className = "clarity-settings";
+  settings.setAttribute("aria-expanded", "false");
+  settings.setAttribute("aria-haspopup", "dialog");
   settings.textContent = sk ? "Nastavenia analytiky" : "Analytics settings";
   settings.addEventListener("click", () => show(true));
   (document.querySelector("footer") || document.body).appendChild(settings);
-  function show(focus = false) {
-    if (banner) { if (focus) banner.querySelector("button").focus(); return; }
-    openedFromSettings = focus;
+  function show(fromSettings = false) {
+    if (banner) {
+      const items = focusables();
+      if (items.length) items[0].focus();
+      return;
+    }
+    openedFromSettings = fromSettings;
     banner = document.createElement("section");
     banner.className = "clarity-consent";
     banner.setAttribute("role", "dialog");
     banner.setAttribute("aria-modal", "true");
     banner.setAttribute("aria-labelledby", "clarity-consent-title");
+    banner.setAttribute("aria-describedby", "clarity-consent-desc");
     const title = document.createElement("h2");
     title.id = "clarity-consent-title";
     title.textContent = sk ? "Voliteľná analytika" : "Optional analytics";
     const text = document.createElement("p");
+    text.id = "clarity-consent-desc";
     text.textContent = sk
       ? "S vaším súhlasom používame Microsoft Clarity na meranie návštevnosti, kliknutí, posúvania a záznamov používania verejných stránok. Text je maskovaný. Bez súhlasu sa Clarity nenačíta. Reklamný súhlas zostáva vypnutý. Voľbu môžete kedykoľvek zmeniť v nastaveniach analytiky."
       : "With your consent, we use Microsoft Clarity for visits, clicks, scrolling and session recordings on public pages. Text is masked. Clarity does not load without consent. Advertising consent stays denied. You can change your choice in Analytics settings at any time.";
@@ -110,8 +148,10 @@
     accept.addEventListener("click", () => apply(true));
     banner.append(title, text, link, decline, accept);
     document.body.appendChild(banner);
+    setExpanded(true);
     window.addEventListener("keydown", onKey);
-    if (focus) decline.focus();
+    // Always move focus into the modal (first-visit and settings reopen).
+    decline.focus();
   }
   const stored = read();
   if (stored && stored.expires > Date.now() && typeof stored.granted === "boolean") apply(stored.granted, false);

@@ -21,6 +21,7 @@
 # Beh #24: current.js refreshes day/week/year/TZ each tick; local ISO week; age sprintf.
 #          JS body asserts require versioned ?v= (no bare fallback); age decimal on home.
 # Beh #25: JSON-LD email without mailto:; Clarity dialog aria-modal + Escape.
+# Beh #26: modal focus trap / aria-describedby / aria-expanded; versioned clarity CSS.
 #
 # Spusti z koreňa:  .\tools\smoke-prod.ps1
 
@@ -194,6 +195,7 @@ try {
     $failed += Assert-BodyContains -Label 'home' -Body $probe.Body -Pattern 'src="/js/current\.js\?v=\d+"' -OkMessage 'home script /js/current.js?v='
     $failed += Assert-BodyContains -Label 'home' -Body $probe.Body -Pattern 'name="twitter:image:alt" content="Fotografia' -OkMessage 'home twitter:image:alt'
     $failed += Assert-BodyContains -Label 'home' -Body $probe.Body -Pattern 'data-paths="[^"]*/privacy[^"]*/terms"' -OkMessage 'home clarity paths include /privacy and /terms'
+    $failed += Assert-BodyContains -Label 'home' -Body $probe.Body -Pattern 'data-css-v="\d+"' -OkMessage 'home clarity consent data-css-v cache buster'
     $failed += Assert-BodyContains -Label 'home' -Body $probe.Body -Pattern '"email":\s*"lubomir@polascin\.net"' -OkMessage 'home JSON-LD email without mailto:'
     if ($probe.Body -match '"email":\s*"mailto:') {
         Write-Host 'FAIL home JSON-LD email still uses mailto:' -ForegroundColor Red
@@ -265,13 +267,16 @@ try {
     }
     # Age fraction must keep a decimal point (sprintf %.3f); whole ages used to drop the fraction.
     $failed += Assert-BodyContains -Label 'home' -Body $probe.Body -Pattern '\(\d+<small>\.\d{3}</small>\)' -OkMessage 'home age keeps decimal fraction via sprintf'
-    # Clarity consent a11y: aria-modal + Escape (versioned script; bare path may be edge-cached).
+    # Clarity consent a11y: modal pattern (versioned script; bare path may be edge-cached).
     if ($probe.Body -match 'src="(/js/clarity-consent\.js\?v=\d+)"') {
         $consent = Get-PageProbe -Path $Matches[1] -UserAgent $ua
-        if (($consent.Body -match 'aria-modal') -and ($consent.Body -match 'Escape')) {
-            Write-Host 'OK clarity-consent.js has aria-modal and Escape dismiss' -ForegroundColor Green
+        $hasModal = ($consent.Body -match 'aria-modal') -and ($consent.Body -match 'Escape')
+        $hasFocus = ($consent.Body -match 'aria-describedby') -and ($consent.Body -match 'aria-expanded') -and ($consent.Body -match 'e\.key !== "Tab"')
+        $hasCssV = ($consent.Body -match 'dataset\.cssV') -and ($consent.Body -match 'searchParams\.set\("v"')
+        if ($hasModal -and $hasFocus -and $hasCssV) {
+            Write-Host 'OK clarity-consent.js modal a11y (Escape, focus trap, describedby, css ?v=)' -ForegroundColor Green
         } else {
-            Write-Host 'FAIL clarity-consent.js missing aria-modal or Escape handler' -ForegroundColor Red
+            Write-Host 'FAIL clarity-consent.js missing modal a11y/focus trap/css versioning' -ForegroundColor Red
             $failed++
         }
     } else {

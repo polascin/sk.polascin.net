@@ -46,7 +46,8 @@ telo JS sa číta výhradne z verziovaného `?v=` URL, bez fallbacku na holé
 `/js/current.js` kvôli edge cache) a na homepage verziovaný
 `src="/js/current.js?v="` plus vek so zachovanou desatinnou časťou
 (`(N<small>.xxx</small>)`), JSON-LD e-mail bez `mailto:`, a verziovaný
-`clarity-consent.js` s `aria-modal` + Escape). Súbor `smoke-prod.ps1` musí ostať UTF-8 s BOM
+`clarity-consent.js` s `aria-modal`, Escape, focus trap, `aria-describedby` /
+`aria-expanded` a `data-css-v` pre cache-bust CSS). Súbor `smoke-prod.ps1` musí ostať UTF-8 s BOM
 (Windows PowerShell 5.1 + slovenské znaky). Skrátený UA → 466.
 Detaily: `docs/manual-steps-clarity-and-polascin-sk.md` sekcia C.
 
