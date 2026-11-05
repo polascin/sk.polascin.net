@@ -88,10 +88,6 @@
 
 <?php require "./blocks/info.sk.php"; ?>
 
-<br><br>
-
-<?php require "./blocks/pixbanner.php"; ?>
-
 <hr>
 
 <br><br><br><br>
@@ -103,10 +99,6 @@
 <?php include "./blocks/promotions.sk.php"; ?>
 
 <br><br><br><br><br>
-
-<?php require "./blocks/pixbanner.php"; ?>
-
-<br><br>
 
 <?php require "./blocks/bio.sk.php"; ?>
 

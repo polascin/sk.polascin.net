@@ -167,10 +167,6 @@ $richText = static function (mixed $value): string {
 
 <br><br>
 
-<?php require "./blocks/pixbanner.php"; ?>
-
-<br><br><br><br>
-
 </main>
 
 <?php require "./blocks/footer.sk.php"; ?>
