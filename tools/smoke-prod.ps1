@@ -22,6 +22,7 @@
 #          JS body asserts require versioned ?v= (no bare fallback); age decimal on home.
 # Beh #25: JSON-LD email without mailto:; Clarity dialog aria-modal + Escape.
 # Beh #26: modal focus trap / aria-describedby / aria-expanded; versioned clarity CSS.
+# Beh #27: versioned webmanifest + description/purpose; root favicon.ico link; legal OG/Twitter.
 #
 # Spusti z koreňa:  .\tools\smoke-prod.ps1
 
@@ -201,30 +202,41 @@ try {
         Write-Host 'FAIL home JSON-LD email still uses mailto:' -ForegroundColor Red
         $failed++
     }
-    $manifest = Get-PageProbe -Path '/favicon/site.webmanifest' -UserAgent $ua
-    $failed += Assert-BodyContains -Label 'manifest' -Body $manifest.Body -Pattern '"theme_color":\s*"#f5fffa"' -OkMessage 'webmanifest theme_color #f5fffa'
-    $failed += Assert-BodyContains -Label 'manifest' -Body $manifest.Body -Pattern '"background_color":\s*"#f5fffa"' -OkMessage 'webmanifest background_color #f5fffa'
-    $failed += Assert-BodyContains -Label 'manifest' -Body $manifest.Body -Pattern '"start_url":\s*"/"' -OkMessage 'webmanifest start_url /'
-    $failed += Assert-BodyContains -Label 'manifest' -Body $manifest.Body -Pattern '"id":\s*"/"' -OkMessage 'webmanifest id /'
-    $failed += Assert-BodyContains -Label 'manifest' -Body $manifest.Body -Pattern '"lang":\s*"sk"' -OkMessage 'webmanifest lang sk'
-    $failed += Assert-BodyContains -Label 'manifest' -Body $manifest.Body -Pattern '"scope":\s*"/"' -OkMessage 'webmanifest scope /'
-    $manifestCt = $null
-    $manifestCc = $null
-    foreach ($key in $manifest.Headers.Keys) {
-        if ($key -ieq 'Content-Type') { $manifestCt = $manifest.Headers[$key] }
-        if ($key -ieq 'Cache-Control') { $manifestCc = $manifest.Headers[$key] }
-    }
-    # Media type may include optional charset parameter.
-    if ($manifestCt -and ($manifestCt -match '(?i)^application/manifest\+json(\s*;|$)')) {
-        Write-Host ('OK webmanifest Content-Type={0}' -f $manifestCt) -ForegroundColor Green
+    $failed += Assert-BodyContains -Label 'home' -Body $probe.Body -Pattern 'href="/favicon\.ico"' -OkMessage 'home link /favicon.ico'
+    # Bare webmanifest may be edge-cached; pages use ?v=filemtime.
+    if ($probe.Body -match 'href="(/favicon/site\.webmanifest\?v=\d+)"') {
+        $manifestPath = $Matches[1]
+        Write-Host ('OK home webmanifest href {0}' -f $manifestPath) -ForegroundColor Green
+        $manifest = Get-PageProbe -Path $manifestPath -UserAgent $ua
+        $failed += Assert-BodyContains -Label 'manifest' -Body $manifest.Body -Pattern '"theme_color":\s*"#f5fffa"' -OkMessage 'webmanifest theme_color #f5fffa'
+        $failed += Assert-BodyContains -Label 'manifest' -Body $manifest.Body -Pattern '"background_color":\s*"#f5fffa"' -OkMessage 'webmanifest background_color #f5fffa'
+        $failed += Assert-BodyContains -Label 'manifest' -Body $manifest.Body -Pattern '"start_url":\s*"/"' -OkMessage 'webmanifest start_url /'
+        $failed += Assert-BodyContains -Label 'manifest' -Body $manifest.Body -Pattern '"id":\s*"/"' -OkMessage 'webmanifest id /'
+        $failed += Assert-BodyContains -Label 'manifest' -Body $manifest.Body -Pattern '"lang":\s*"sk"' -OkMessage 'webmanifest lang sk'
+        $failed += Assert-BodyContains -Label 'manifest' -Body $manifest.Body -Pattern '"scope":\s*"/"' -OkMessage 'webmanifest scope /'
+        $failed += Assert-BodyContains -Label 'manifest' -Body $manifest.Body -Pattern '"description":\s*"Webové sídlo' -OkMessage 'webmanifest description'
+        $failed += Assert-BodyContains -Label 'manifest' -Body $manifest.Body -Pattern '"purpose":\s*"any"' -OkMessage 'webmanifest icon purpose any'
+        $manifestCt = $null
+        $manifestCc = $null
+        foreach ($key in $manifest.Headers.Keys) {
+            if ($key -ieq 'Content-Type') { $manifestCt = $manifest.Headers[$key] }
+            if ($key -ieq 'Cache-Control') { $manifestCc = $manifest.Headers[$key] }
+        }
+        # Media type may include optional charset parameter.
+        if ($manifestCt -and ($manifestCt -match '(?i)^application/manifest\+json(\s*;|$)')) {
+            Write-Host ('OK webmanifest Content-Type={0}' -f $manifestCt) -ForegroundColor Green
+        } else {
+            Write-Host ('FAIL webmanifest Content-Type missing application/manifest+json (got {0})' -f $manifestCt) -ForegroundColor Red
+            $failed++
+        }
+        if ($manifestCc -and ($manifestCc -match 'max-age=')) {
+            Write-Host ('OK webmanifest Cache-Control={0}' -f $manifestCc) -ForegroundColor Green
+        } else {
+            Write-Host 'FAIL webmanifest missing Cache-Control max-age' -ForegroundColor Red
+            $failed++
+        }
     } else {
-        Write-Host ('FAIL webmanifest Content-Type missing application/manifest+json (got {0})' -f $manifestCt) -ForegroundColor Red
-        $failed++
-    }
-    if ($manifestCc -and ($manifestCc -match 'max-age=')) {
-        Write-Host ('OK webmanifest Cache-Control={0}' -f $manifestCc) -ForegroundColor Green
-    } else {
-        Write-Host 'FAIL webmanifest missing Cache-Control max-age' -ForegroundColor Red
+        Write-Host 'FAIL home missing versioned /favicon/site.webmanifest?v=' -ForegroundColor Red
         $failed++
     }
     # Bare /js/current.js may be edge-cached; homepage uses ?v=filemtime - probe that URL for body.
@@ -313,10 +325,14 @@ try {
     $failed += Assert-BodyContains -Label 'privacy' -Body $privacy.Body -Pattern 'href="/styles\.css\?v=' -OkMessage 'privacy stylesheet /styles.css'
     $failed += Assert-BodyContains -Label 'privacy' -Body $privacy.Body -Pattern 'href="/terms"' -OkMessage 'privacy link /terms'
     $failed += Assert-BodyContains -Label 'privacy' -Body $privacy.Body -Pattern 'href="/refbook\.sk\.php"' -OkMessage 'privacy link /refbook.sk.php'
+    $failed += Assert-BodyContains -Label 'privacy' -Body $privacy.Body -Pattern 'property="og:title" content="Ochrana osobných údajov' -OkMessage 'privacy og:title'
+    $failed += Assert-BodyContains -Label 'privacy' -Body $privacy.Body -Pattern 'name="twitter:image:alt"' -OkMessage 'privacy twitter:image:alt'
 
     $terms = Get-PageProbe -Path '/terms.php' -UserAgent $ua
     $failed += Assert-BodyContains -Label 'terms' -Body $terms.Body -Pattern 'href="/styles\.css\?v=' -OkMessage 'terms stylesheet /styles.css'
     $failed += Assert-BodyContains -Label 'terms' -Body $terms.Body -Pattern 'href="/privacy"' -OkMessage 'terms link /privacy'
+    $failed += Assert-BodyContains -Label 'terms' -Body $terms.Body -Pattern 'property="og:title" content="Podmienky používania' -OkMessage 'terms og:title'
+    $failed += Assert-BodyContains -Label 'terms' -Body $terms.Body -Pattern 'name="twitter:image:alt"' -OkMessage 'terms twitter:image:alt'
 } catch {
     Write-Host "FAIL legal GET probe - $($_.Exception.Message)" -ForegroundColor Red
     $failed++

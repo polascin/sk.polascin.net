@@ -9,7 +9,7 @@
 
   <?php require "./blocks/favicon.php"; ?>
 
-  <meta name="date" content="2026-11-05T21:45:00+0100" >
+  <meta name="date" content="2026-11-05T23:50:00+0100" >
 	<meta name="description" content="Zásady ochrany osobných údajov (GDPR) webového sídla sk.polascin.net">
   <meta name="copyright" content="Ľubomír Polaščín">
 	<meta name="keywords" content="ochrana osobných údajov,ochrana súkromia,GDPR,zásady,sk.polascin.net,Ľubomír Polaščín">
@@ -22,6 +22,23 @@
   <link rel="canonical" href="https://sk.polascin.net/privacy.php">
 
   <title>Ochrana osobných údajov (sk.polascin.net)</title>
+
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="sk_SK">
+  <meta property="og:site_name" content="sk.polascin.net">
+  <meta property="og:title" content="Ochrana osobných údajov (sk.polascin.net)">
+  <meta property="og:description" content="Zásady ochrany osobných údajov (GDPR) webového sídla sk.polascin.net">
+  <meta property="og:url" content="https://sk.polascin.net/privacy.php">
+  <meta property="og:image" content="https://sk.polascin.net/pix/lpsk2.jpg">
+  <meta property="og:image:width" content="400">
+  <meta property="og:image:height" content="400">
+  <meta property="og:image:alt" content="Fotografia Ľubomíra Polaščína">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Ochrana osobných údajov (sk.polascin.net)">
+  <meta name="twitter:description" content="Zásady ochrany osobných údajov (GDPR) webového sídla sk.polascin.net">
+  <meta name="twitter:image" content="https://sk.polascin.net/pix/lpsk2.jpg">
+  <meta name="twitter:image:alt" content="Fotografia Ľubomíra Polaščína">
+
 
   <link rel="stylesheet" href="/styles.css?v=<?php echo (int) @filemtime(__DIR__ . '/styles.css'); ?>">
 
