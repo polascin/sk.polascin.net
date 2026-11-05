@@ -11,9 +11,12 @@
     <div>
     	<a href="https://sk.wikipedia.org/wiki/Dospelos%C5%A5" target="_blank" title="Vek v rokoch" rel="noopener noreferrer">
 				<?php
-        	$vek = (time() - mktime(8,30,0,3,4,1971)) / (60 * 60 * 24 * 365.25) ;
-  		  	echo "<span style='font-weight: bold; font-size: 2.5em;'>".floor($vek)."</span>"."\n" ;
-  		  	echo "<br>(".floor($vek)."<small>".substr(round($vek, 3), strpos(round($vek, 3), "."))."</small>)<br>"."\n" ;
+					// sprintf('%.3f') always keeps a decimal point; round()+substr broke on whole ages.
+					$vek = (time() - mktime(8, 30, 0, 3, 4, 1971)) / (60 * 60 * 24 * 365.25);
+					$vekFloor = (int) floor($vek);
+					$vekFrac = substr(sprintf('%.3f', $vek), strpos(sprintf('%.3f', $vek), '.'));
+					echo "<span style='font-weight: bold; font-size: 2.5em;'>" . $vekFloor . "</span>\n";
+					echo "<br>(" . $vekFloor . "<small>" . $vekFrac . "</small>)<br>\n";
 				?>
 			</a>
 		</div>

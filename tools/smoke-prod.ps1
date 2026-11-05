@@ -18,6 +18,7 @@
 # Beh #21: Cache-Control on css/js/images; refbook canonical when quote found; no duplicate Fedora logo.
 # Beh #22: twitter:image:alt; webmanifest theme #f5fffa; MIME application/manifest+json; start_url/lang.
 # Beh #23: current.js immediate tick, formatToParts TZ, null-safe DOM.
+# Beh #24: current.js refreshes day/week/year/TZ each tick; local ISO week; age sprintf.
 #
 # Spusti z koreňa:  .\tools\smoke-prod.ps1
 
@@ -228,6 +229,12 @@ try {
         Write-Host 'OK current.js uses formatToParts and getElementById guards' -ForegroundColor Green
     } else {
         Write-Host 'FAIL current.js missing formatToParts/getElementById hardening' -ForegroundColor Red
+        $failed++
+    }
+    if (($clock.Body -match "setText\('daynumber'") -and ($clock.Body -match 'function updateDateTime') -and ($clock.Body -notmatch 'getUTCDay')) {
+        Write-Host 'OK current.js refreshes daynumber in updateDateTime with local ISO week' -ForegroundColor Green
+    } else {
+        Write-Host 'FAIL current.js missing daynumber refresh or still uses getUTCDay' -ForegroundColor Red
         $failed++
     }
     $clockCc = $null

@@ -10,15 +10,16 @@ function getDayOfYear(date) {
 }
 
 function getISOWeekNumber(date) {
-	const tempDate = new Date(date.valueOf());
-	const dayNumber = (date.getUTCDay() + 6) % 7;
-	tempDate.setUTCDate(tempDate.getUTCDate() - dayNumber + 3);
-	const firstThursday = tempDate.valueOf();
-	tempDate.setUTCMonth(0, 1);
-	if (tempDate.getUTCDay() !== 4) {
-		tempDate.setUTCMonth(0, 1 + ((4 - tempDate.getUTCDay()) + 7) % 7);
+	// Local calendar (Mon=0); UTC getters mis-count ISO weeks near Bratislava midnight.
+	const d = new Date(date.getFullYear(), date.getMonth(), date.getDate());
+	const dayNumber = (d.getDay() + 6) % 7;
+	d.setDate(d.getDate() - dayNumber + 3);
+	const firstThursday = d.valueOf();
+	d.setMonth(0, 1);
+	if (d.getDay() !== 4) {
+		d.setMonth(0, 1 + ((4 - d.getDay()) + 7) % 7);
 	}
-	return 1 + Math.ceil((firstThursday - tempDate) / (7 * 24 * 60 * 60 * 1000));
+	return 1 + Math.round((firstThursday - d.valueOf()) / (7 * 24 * 60 * 60 * 1000));
 }
 
 function getTimeZoneName(date) {
@@ -47,12 +48,12 @@ function updateDateTime() {
 	const now = new Date();
 	setText('current', now.toLocaleString('sk-SK', { dateStyle: 'full', timeStyle: 'long' }));
 	setText('internettime', getInternetTime(now));
+	// Refresh calendar fields every tick so a tab left open past midnight stays correct.
+	setText('daynumber', String(getDayOfYear(now)));
+	setText('weeknumber', String(getISOWeekNumber(now)));
+	setText('yearnumber', String(now.getFullYear()));
+	setText('timezone', getTimeZoneName(now));
 }
 
-const today = new Date();
-setText('daynumber', String(getDayOfYear(today)));
-setText('weeknumber', String(getISOWeekNumber(today)));
-setText('yearnumber', String(today.getFullYear()));
-setText('timezone', getTimeZoneName(today));
 updateDateTime();
 setInterval(updateDateTime, 1000);

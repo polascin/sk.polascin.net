@@ -40,7 +40,8 @@ outline `#6a0dad` a `Cache-Control max-age` idú cez versioned `/styles.css?v=`
 `twitter:image:alt` a `/favicon/site.webmanifest` (`theme_color` /
 `background_color` `#f5fffa`, `start_url`, `id`, `scope`, `lang`, `Content-Type`
 `application/manifest+json`, Cache-Control). Overí `/js/current.js` (okamžitý
-`updateDateTime` pred `setInterval`, `formatToParts`, null-safe DOM, Cache-Control)
+`updateDateTime` pred `setInterval`, `formatToParts`, null-safe DOM, obnovu
+`daynumber` v každom ticku, lokálny ISO týždeň bez `getUTCDay`, Cache-Control)
 a na homepage verziovaný `src="/js/current.js?v="`. Súbor `smoke-prod.ps1` musí
 ostať UTF-8 s BOM (Windows PowerShell 5.1 + slovenské znaky). Skrátený UA → 466.
 Detaily: `docs/manual-steps-clarity-and-polascin-sk.md` sekcia C.
