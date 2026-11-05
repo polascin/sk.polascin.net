@@ -23,6 +23,8 @@
 # Beh #25: JSON-LD email without mailto:; Clarity dialog aria-modal + Escape.
 # Beh #26: modal focus trap / aria-describedby / aria-expanded; versioned clarity CSS.
 # Beh #27: versioned webmanifest + description/purpose; root favicon.ico link; legal OG/Twitter.
+# Beh #28: refbook OG; versioned favicon PNG/ICO.
+# Beh #29: PHP HTML Cache-Control no-cache; JSON-LD description/inLanguage/knowsAbout; hreflang.
 # Beh #28: refbook OG/Twitter (dynamic title); versioned favicon PNG/ICO; /favicon.ico HEAD 200.
 #
 # Spusti z koreňa:  .\tools\smoke-prod.ps1
@@ -179,6 +181,16 @@ try {
             Write-Host "OK header $hName" -ForegroundColor Green
         }
     }
+    $homeCc = $null
+    foreach ($key in $probe.Headers.Keys) {
+        if ($key -ieq 'Cache-Control') { $homeCc = $probe.Headers[$key]; break }
+    }
+    if ($homeCc -and ($homeCc -match 'no-cache') -and ($homeCc -match 'must-revalidate')) {
+        Write-Host ('OK home Cache-Control={0}' -f $homeCc) -ForegroundColor Green
+    } else {
+        Write-Host ('FAIL home Cache-Control missing no-cache/must-revalidate (got {0})' -f $homeCc) -ForegroundColor Red
+        $failed++
+    }
     $kbCount = ([regex]::Matches($probe.Body, 'kidneybiopsy\.en\.jpg')).Count
     if ($kbCount -eq 2) {
         Write-Host ('OK kidneybiopsy.en.jpg count={0} two pixbanner strips' -f $kbCount) -ForegroundColor Green
@@ -204,6 +216,11 @@ try {
         Write-Host 'FAIL home JSON-LD email still uses mailto:' -ForegroundColor Red
         $failed++
     }
+    $failed += Assert-BodyContains -Label 'home' -Body $probe.Body -Pattern '"description":\s*"MUDr\.' -OkMessage 'home JSON-LD Person description'
+    $failed += Assert-BodyContains -Label 'home' -Body $probe.Body -Pattern '"inLanguage":\s*"sk"' -OkMessage 'home JSON-LD inLanguage sk'
+    $failed += Assert-BodyContains -Label 'home' -Body $probe.Body -Pattern '"knowsAbout"' -OkMessage 'home JSON-LD knowsAbout'
+    $failed += Assert-BodyContains -Label 'home' -Body $probe.Body -Pattern 'rel="alternate" hreflang="sk"' -OkMessage 'home hreflang sk'
+    $failed += Assert-BodyContains -Label 'home' -Body $probe.Body -Pattern 'rel="alternate" hreflang="x-default"' -OkMessage 'home hreflang x-default'
     $failed += Assert-BodyContains -Label 'home' -Body $probe.Body -Pattern 'href="/favicon\.ico\?v=\d+"' -OkMessage 'home versioned /favicon.ico?v='
     $failed += Assert-BodyContains -Label 'home' -Body $probe.Body -Pattern 'href="/favicon/apple-touch-icon\.png\?v=\d+"' -OkMessage 'home versioned apple-touch-icon'
     # Bare webmanifest may be edge-cached; pages use ?v=filemtime.

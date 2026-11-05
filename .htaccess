@@ -35,6 +35,10 @@ ServerSignature Off
     <FilesMatch "\.(png|jpe?g|gif|svg|webp|ico|woff2?)$">
         Header set Cache-Control "public, max-age=604800"
     </FilesMatch>
+    # HTML z PHP: po deployi nesmie edge držať starý dokument (CSS/JS majú vlastné ?v=).
+    <FilesMatch "\.php$">
+        Header set Cache-Control "no-cache, must-revalidate"
+    </FilesMatch>
 </IfModule>
 
 # Blokovanie .git a citlivých súborov
