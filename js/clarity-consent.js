@@ -64,6 +64,8 @@
     window.removeEventListener("keydown", onKey);
   }
   function apply(granted, persist = true) {
+    // Capture before closeBanner() clears the flag (Escape path already restores focus).
+    const returnToSettings = openedFromSettings;
     if (persist && !external) save(granted);
     if (granted) {
       if (!loaded) {
@@ -91,9 +93,17 @@
         }
       }
       // Stop the already loaded SDK, including its cookieless mode.
-      if (loaded && persist) location.reload();
+      // Same boolean that gates reload: do not focus then reload.
+      if (loaded && persist) {
+        closeBanner();
+        location.reload();
+        return;
+      }
     }
     closeBanner();
+    if (returnToSettings && document.contains(settings)) {
+      settings.focus();
+    }
   }
   if (external) {
     window.addEventListener("site:analytics-consent", e => apply(e.detail === true));

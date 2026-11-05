@@ -53,7 +53,10 @@ telo JS sa číta výhradne z verziovaného `?v=` URL, bez fallbacku na holé
 `inLanguage` / `knowsAbout`, `hreflang` sk/x-default, HTML `Cache-Control:
 no-cache, must-revalidate` na PHP, a verziovaný
 `clarity-consent.js` s `aria-modal`, Escape, focus trap, `aria-describedby` /
-`aria-expanded` a `data-css-v` pre cache-bust CSS). Súbor `smoke-prod.ps1` musí ostať UTF-8 s BOM
+`aria-expanded`, `data-css-v` pre cache-bust CSS a obnovenie focusu na tlačidlo
+nastavení po Allow/Decline, keď dialóg otvorili nastavenia: `returnToSettings`
+pred `closeBanner()`, `settings.focus()` len na vetve bez `location.reload()`).
+Súbor `smoke-prod.ps1` musí ostať UTF-8 s BOM
 (Windows PowerShell 5.1 + slovenské znaky). Skrátený UA → 466.
 Detaily: `docs/manual-steps-clarity-and-polascin-sk.md` sekcia C.
 

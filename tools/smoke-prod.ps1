@@ -25,6 +25,7 @@
 # Beh #27: versioned webmanifest + description/purpose; root favicon.ico link; legal OG/Twitter.
 # Beh #28: refbook OG/Twitter (dynamic title); versioned favicon PNG/ICO; /favicon.ico HEAD 200.
 # Beh #29: PHP HTML Cache-Control no-cache; JSON-LD description/inLanguage/knowsAbout; hreflang.
+# Beh #30: Clarity apply() restores focus to settings when openedFromSettings (non-reload).
 #
 # Spusti z koreňa:  .\tools\smoke-prod.ps1
 
@@ -304,10 +305,15 @@ try {
         $hasModal = ($consent.Body -match 'aria-modal') -and ($consent.Body -match 'Escape')
         $hasFocus = ($consent.Body -match 'aria-describedby') -and ($consent.Body -match 'aria-expanded') -and ($consent.Body -match 'e\.key !== "Tab"')
         $hasCssV = ($consent.Body -match 'dataset\.cssV') -and ($consent.Body -match 'searchParams\.set\("v"')
-        if ($hasModal -and $hasFocus -and $hasCssV) {
-            Write-Host 'OK clarity-consent.js modal a11y (Escape, focus trap, describedby, css ?v=)' -ForegroundColor Green
+        # Apply-path restore: flag before closeBanner; settings.focus only on non-reload branch.
+        # Loose "settings.focus" alone matches Escape and would stay green with the bug.
+        $hasApplyRestore = ($consent.Body -match 'const returnToSettings = openedFromSettings') -and
+            ($consent.Body -match 'if \(loaded && persist\) \{\s*closeBanner\(\);\s*location\.reload\(\);\s*return;') -and
+            ($consent.Body -match 'if \(returnToSettings && document\.contains\(settings\)\) \{\s*settings\.focus\(\);')
+        if ($hasModal -and $hasFocus -and $hasCssV -and $hasApplyRestore) {
+            Write-Host 'OK clarity-consent.js modal a11y (Escape, focus trap, apply focus restore, css ?v=)' -ForegroundColor Green
         } else {
-            Write-Host 'FAIL clarity-consent.js missing modal a11y/focus trap/css versioning' -ForegroundColor Red
+            Write-Host 'FAIL clarity-consent.js missing modal a11y/focus trap/apply restore/css versioning' -ForegroundColor Red
             $failed++
         }
     } else {
