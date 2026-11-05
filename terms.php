@@ -61,9 +61,9 @@
 	<h2 id="prevadzkovatel">2. Prevádzkovateľ webového sídla</h2>
 
 	<div class="legal-box">
-		<strong>MUDr. Ľubomír Polaščín – Nephroctor</strong>
+		<strong>MUDr. Ľubomír Polaščín, Nephroctor</strong>
 		<br>
-		fyzická osoba – podnikateľ (živnostník)
+		fyzická osoba, podnikateľ (živnostník)
 		<br>
 		Lekár so špecializáciou v odbore nefrológia
 		<br>

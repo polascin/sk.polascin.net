@@ -24,7 +24,7 @@ ServerSignature Off
     Header unset X-Powered-By
 
     # Cacheovanie statiky (stránky už verziujú CSS/JS cez ?v=filemtime).
-    <FilesMatch "\.(css|js)$">
+    <FilesMatch "\.(css|js|webmanifest)$">
         Header set Cache-Control "public, max-age=86400, must-revalidate"
     </FilesMatch>
     <FilesMatch "\.(png|jpe?g|gif|svg|webp|ico|woff2?)$">

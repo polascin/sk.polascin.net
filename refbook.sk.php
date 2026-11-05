@@ -59,7 +59,7 @@ $richText = static function (mixed $value): string {
 };
 
 $pageTitle = 'Kniha, z ktorej je citát (sk.polascin.net)';
-$pageDescription = 'Ľubomír Polaščín — kniha, z ktorej je citát, stránka v slovenskom jazyku.';
+$pageDescription = 'Ľubomír Polaščín: kniha, z ktorej je citát, stránka v slovenskom jazyku.';
 if (is_array($record)) {
     $authorName = trim((string) ($record['author'] ?? ''));
     $quoteText = preg_replace('/\s+/u', ' ', trim((string) ($record['quote'] ?? ''))) ?? '';

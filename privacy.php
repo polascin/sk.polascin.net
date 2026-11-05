@@ -63,9 +63,9 @@
 	</p>
 
 	<div class="legal-box">
-		<strong>MUDr. Ľubomír Polaščín – Nephroctor</strong>
+		<strong>MUDr. Ľubomír Polaščín, Nephroctor</strong>
 		<br>
-		fyzická osoba – podnikateľ (živnostník)
+		fyzická osoba, podnikateľ (živnostník)
 		<br>
 		Miesto podnikania: Kvetná 944/2I, 900 41 Rovinka, Slovenská republika
 		<br>

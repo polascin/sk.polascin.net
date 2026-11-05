@@ -16,6 +16,7 @@
 # Beh #19: refbook ?data=1 dynamický <title>/description; /styles.css; 404 generický title.
 # Beh #20: skip-link focus #6a0dad; Clarity paths /privacy,/terms; orphan styles.sk.css.php removed.
 # Beh #21: Cache-Control on css/js/images; refbook canonical when quote found; no duplicate Fedora logo.
+# Beh #22: twitter:image:alt; webmanifest theme #f5fffa; no em/en dashes in public copy.
 #
 # Spusti z koreňa:  .\tools\smoke-prod.ps1
 
@@ -32,6 +33,7 @@ $checks = [ordered]@{
     '/docs/mel.pdf'            = 200
     '/js/clarity-consent.js'   = 200
     '/styles.css'              = 200
+    '/favicon/site.webmanifest'= 200
     '/refbook.sk.php?data=1'   = 200
     '/refbook.sk.php?data=abc' = 404
     '/privacy'                 = 301
@@ -184,7 +186,10 @@ try {
     }
     $failed += Assert-BodyContains -Label 'home' -Body $probe.Body -Pattern 'href="/docs/mel\.pdf"' -OkMessage 'home link /docs/mel.pdf'
     $failed += Assert-BodyContains -Label 'home' -Body $probe.Body -Pattern 'href="/styles\.css\?v=' -OkMessage 'home stylesheet /styles.css'
+    $failed += Assert-BodyContains -Label 'home' -Body $probe.Body -Pattern 'name="twitter:image:alt" content="Fotografia' -OkMessage 'home twitter:image:alt'
     $failed += Assert-BodyContains -Label 'home' -Body $probe.Body -Pattern 'data-paths="[^"]*/privacy[^"]*/terms"' -OkMessage 'home clarity paths include /privacy and /terms'
+    $manifest = Get-PageProbe -Path '/favicon/site.webmanifest' -UserAgent $ua
+    $failed += Assert-BodyContains -Label 'manifest' -Body $manifest.Body -Pattern '"theme_color":\s*"#f5fffa"' -OkMessage 'webmanifest theme_color #f5fffa'
     # Bare /styles.css may be edge-cached; pages use ?v=filemtime - probe that URL.
     if ($probe.Body -match 'href="(/styles\.css\?v=\d+)"') {
         $styles = Get-PageProbe -Path $Matches[1] -UserAgent $ua

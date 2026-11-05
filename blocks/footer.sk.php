@@ -21,7 +21,7 @@
 
 <!-- Identifikácia prevádzkovateľa -->
 <div class="operator-id">
-	<strong>MUDr. Ľubomír Polaščín – Nephroctor</strong>
+	<strong>MUDr. Ľubomír Polaščín, Nephroctor</strong>
 	<br>
 	IČO: 57 646 856
 	<span aria-hidden="true"> · </span>

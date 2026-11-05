@@ -9,8 +9,8 @@
 
   <?php require "./blocks/favicon.php"; ?>
 
-  <meta name="date" content="2026-11-05T21:15:00+0100" >
-	<meta name="description" content="MUDr. Ľubomír Polaščín, nefrológ a internista — slovenské webové sídlo: odborné texty o dialýze, transplantácii obličiek a nefrológii, kontakty a odkazy.">
+  <meta name="date" content="2026-11-05T22:50:00+0100" >
+	<meta name="description" content="MUDr. Ľubomír Polaščín, nefrológ a internista: slovenské webové sídlo, odborné texty o dialýze, transplantácii obličiek a nefrológii, kontakty a odkazy.">
   <meta name="copyright" content="Ľubomír Polaščín">
 	<meta name="keywords" content="Ľubomír Polaščín,Ľubomír,Polaščín,nefrológ,internista,nefrológia,dialýza,interná medicína,medicína,vnútorné lekárstvo,lekárstvo">
   <meta name="publisher" content="Lubomir Polascin">
@@ -27,7 +27,7 @@
   <meta property="og:locale" content="sk_SK">
   <meta property="og:site_name" content="sk.polascin.net">
   <meta property="og:title" content="Ľubomír Polaščín (webové sídlo)">
-  <meta property="og:description" content="MUDr. Ľubomír Polaščín, nefrológ a internista — odborné texty o dialýze, transplantácii obličiek a nefrológii.">
+  <meta property="og:description" content="MUDr. Ľubomír Polaščín, nefrológ a internista: odborné texty o dialýze, transplantácii obličiek a nefrológii.">
   <meta property="og:url" content="https://sk.polascin.net/">
   <meta property="og:image" content="https://sk.polascin.net/pix/lpsk2.jpg">
   <meta property="og:image:width" content="400">
@@ -35,8 +35,9 @@
   <meta property="og:image:alt" content="Fotografia Ľubomíra Polaščína">
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="Ľubomír Polaščín (webové sídlo)">
-  <meta name="twitter:description" content="MUDr. Ľubomír Polaščín, nefrológ a internista — dialýza, transplantácia obličiek a nefrológia.">
+  <meta name="twitter:description" content="MUDr. Ľubomír Polaščín, nefrológ a internista: dialýza, transplantácia obličiek a nefrológia.">
   <meta name="twitter:image" content="https://sk.polascin.net/pix/lpsk2.jpg">
+  <meta name="twitter:image:alt" content="Fotografia Ľubomíra Polaščína">
 
   <script type="application/ld+json">
   {

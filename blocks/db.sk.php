@@ -7,7 +7,7 @@
  * súčasťou repozitára. Hľadá sa najprv mimo document root (bezpečnejšie),
  * potom priamo v koreňovom adresári webu.
  *
- * Vracia `null`, ak konfigurácia chýba alebo sa pripojenie nepodarí — volajúci
+ * Vracia `null`, ak konfigurácia chýba alebo sa pripojenie nepodarí: volajúci
  * kód musí tento stav ošetriť a zobraziť náhradný obsah. Podrobnosti o chybe sa
  * zapisujú do chybového protokolu servera, nikdy sa nevypisujú návštevníkovi.
  */
