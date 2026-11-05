@@ -29,8 +29,7 @@
 # Beh #31: refbook Quotation JSON-LD; optional ISO lang on blockquote; bio mailto title.
 # Beh #30: Clarity apply() restores focus to settings when openedFromSettings (non-reload).
 # Beh #32: refbook lang aliases cz→cs (and ua/gr/jp/cn).
-# Beh #33: Quotation isbn without ISBN prefix; PDF/XML Cache-Control; sitemap lastmod; iframe title.
-# Beh #32: Quotation Book isbn without "ISBN " label; Book inLanguage; cz→cs already on tip.
+# Beh #33: Quotation isbn without ISBN prefix; Book inLanguage; PDF/XML Cache-Control; sitemap; iframe title.
 #
 # Spusti z koreňa:  .\tools\smoke-prod.ps1
 
@@ -426,14 +425,9 @@ try {
         Write-Host 'FAIL refbook still emits invalid inLanguage cz' -ForegroundColor Red
         $failed++
     }
-    $failed += Assert-BodyContains -Label 'refbook' -Body $refOk.Body -Pattern '"isbn":\s*"978-' -OkMessage 'refbook Quotation isbn without ISBN prefix'
-    if ($refOk.Body -match '"isbn":\s*"ISBN') {
-        Write-Host 'FAIL refbook Quotation isbn still has ISBN label prefix' -ForegroundColor Red
-        $failed++
-    }
     # data=1 isbn is stored with an "ISBN " label; JSON-LD isbn must be the identifier only.
     $failed += Assert-BodyContains -Label 'refbook' -Body $refOk.Body -Pattern '"isbn":\s*"978-' -OkMessage 'refbook Book isbn without ISBN label'
-    if ($refOk.Body -match '"isbn":\s*"ISBN\s') {
+    if ($refOk.Body -match '"isbn":\s*"ISBN') {
         Write-Host 'FAIL refbook JSON-LD isbn still has ISBN label prefix' -ForegroundColor Red
         $failed++
     }

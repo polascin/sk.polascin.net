@@ -165,6 +165,9 @@ if (is_array($record)) {
         if ($isbnLd !== '') {
             $bookLd['isbn'] = $isbnLd;
         }
+        if ($quoteLang !== '') {
+            $bookLd['inLanguage'] = $quoteLang;
+        }
         $quotationLd['isPartOf'] = $bookLd;
     }
     if ($quoteLang !== '') {
