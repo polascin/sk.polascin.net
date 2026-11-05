@@ -3,15 +3,15 @@
 # Vyžaduje Windows PowerShell 5.1+.
 #
 # Očakávané kódy (Beh #13 / #14):
-#   200  — verejné stránky
-#   301  — /privacy, /terms aliasy
-#   403  — Apache .htaccess [F] (blocks/, tools/, db.config.php, …)
-#   404  — neplatný refbook ?data=
-#   509  — OpenResty edge na /.github (aj /.git, …); NIE chyba .htaccess
-#   466  — OpenResty edge na niektorých cestách (/.env, /.codex/, /.trunk/)
+#   200  - verejné stránky
+#   301  - /privacy, /terms aliasy
+#   403  - Apache .htaccess [F] (blocks/, tools/, db.config.php, ...)
+#   404  - neplatný refbook ?data=
+#   509  - OpenResty edge na /.github (aj /.git, ...); NIE chyba .htaccess
+#   466  - OpenResty edge na niektorých cestách (/.env, /.codex/, /.trunk/)
 #
 # Beh #15: na GET / overí aj kľúčové bezpečnostné hlavičky a počet
-# kidneybiopsy.en.jpg (2 pixbanner strips × 1 img = 2).
+# kidneybiopsy.en.jpg (2 pixbanner strips x 1 img = 2).
 # Beh #18: root-absolútne /styles.css; na privacy/terms krížové odkazy.
 # Beh #19: refbook ?data=1 dynamický <title>/description; /styles.css; 404 generický title.
 # Beh #20: skip-link focus #6a0dad; Clarity paths /privacy,/terms; orphan styles.sk.css.php removed.
@@ -128,7 +128,7 @@ foreach ($path in $checks.Keys) {
     try {
         $code = Get-HttpStatus -Uri $url -UserAgent $ua
     } catch {
-        Write-Host "FAIL $url — $($_.Exception.Message)" -ForegroundColor Red
+        Write-Host "FAIL $url - $($_.Exception.Message)" -ForegroundColor Red
         $failed++
         continue
     }
@@ -169,15 +169,15 @@ try {
     }
     $kbCount = ([regex]::Matches($probe.Body, 'kidneybiopsy\.en\.jpg')).Count
     if ($kbCount -eq 2) {
-        Write-Host ("OK kidneybiopsy.en.jpg count={0} (2 pixbanner strips)" -f $kbCount) -ForegroundColor Green
+        Write-Host ('OK kidneybiopsy.en.jpg count={0} two pixbanner strips' -f $kbCount) -ForegroundColor Green
     } else {
-        Write-Host ("FAIL kidneybiopsy.en.jpg count={0} (expected 2)" -f $kbCount) -ForegroundColor Red
+        Write-Host ('FAIL kidneybiopsy.en.jpg count={0} expected 2' -f $kbCount) -ForegroundColor Red
         $failed++
     }
     $failed += Assert-BodyContains -Label 'home' -Body $probe.Body -Pattern 'href="/docs/mel\.pdf"' -OkMessage 'home link /docs/mel.pdf'
     $failed += Assert-BodyContains -Label 'home' -Body $probe.Body -Pattern 'href="/styles\.css\?v=' -OkMessage 'home stylesheet /styles.css'
     $failed += Assert-BodyContains -Label 'home' -Body $probe.Body -Pattern 'data-paths="[^"]*/privacy[^"]*/terms"' -OkMessage 'home clarity paths include /privacy and /terms'
-    # Bare /styles.css may be edge-cached; pages use ?v=filemtime — probe that URL.
+    # Bare /styles.css may be edge-cached; pages use ?v=filemtime - probe that URL.
     if ($probe.Body -match 'href="(/styles\.css\?v=\d+)"') {
         $styles = Get-PageProbe -Path $Matches[1] -UserAgent $ua
         $failed += Assert-BodyContains -Label 'styles.css' -Body $styles.Body -Pattern 'skip-link:focus[\s\S]{0,160}#6a0dad' -OkMessage 'skip-link focus outline #6a0dad (versioned CSS)'
@@ -186,7 +186,7 @@ try {
         $failed++
     }
 } catch {
-    Write-Host "FAIL home GET probe — $($_.Exception.Message)" -ForegroundColor Red
+    Write-Host "FAIL home GET probe - $($_.Exception.Message)" -ForegroundColor Red
     $failed++
 }
 
@@ -202,7 +202,7 @@ try {
     $failed += Assert-BodyContains -Label 'terms' -Body $terms.Body -Pattern 'href="/styles\.css\?v=' -OkMessage 'terms stylesheet /styles.css'
     $failed += Assert-BodyContains -Label 'terms' -Body $terms.Body -Pattern 'href="/privacy"' -OkMessage 'terms link /privacy'
 } catch {
-    Write-Host "FAIL legal GET probe — $($_.Exception.Message)" -ForegroundColor Red
+    Write-Host "FAIL legal GET probe - $($_.Exception.Message)" -ForegroundColor Red
     $failed++
 }
 
@@ -212,10 +212,10 @@ $genericTitle = 'Kniha, z ktorej je citát \(sk\.polascin\.net\)'
 try {
     $refOk = Get-PageProbe -Path '/refbook.sk.php?data=1' -UserAgent $ua
     if ($refOk.Body -match $genericTitle) {
-        Write-Host "FAIL refbook data=1 still has generic <title>" -ForegroundColor Red
+        Write-Host "FAIL refbook data=1 still has generic title" -ForegroundColor Red
         $failed++
     } else {
-        Write-Host "OK refbook data=1 dynamic <title> (not generic)" -ForegroundColor Green
+        Write-Host "OK refbook data=1 dynamic title (not generic)" -ForegroundColor Green
     }
     # data=1 is a stable fixture (Isaac Bashevis Singer); assert author + non-empty snippet in <title>
     $failed += Assert-BodyContains -Label 'refbook' -Body $refOk.Body -Pattern '<title>Isaac Bashevis Singer:\s+[^<]{10,}</title>' -OkMessage 'refbook data=1 title has author + snippet'
@@ -224,21 +224,21 @@ try {
 
     $ref404 = Get-PageProbe -Path '/refbook.sk.php?data=abc' -UserAgent $ua -ExpectedStatus 404
     if ($ref404.Body -match $genericTitle) {
-        Write-Host "OK refbook 404 keeps generic <title>" -ForegroundColor Green
+        Write-Host "OK refbook 404 keeps generic title" -ForegroundColor Green
     } else {
-        Write-Host "FAIL refbook 404 missing generic <title>" -ForegroundColor Red
+        Write-Host "FAIL refbook 404 missing generic title" -ForegroundColor Red
         $failed++
     }
 } catch {
-    Write-Host "FAIL refbook GET probe — $($_.Exception.Message)" -ForegroundColor Red
+    Write-Host "FAIL refbook GET probe - $($_.Exception.Message)" -ForegroundColor Red
     $failed++
 }
 
 if ($failed -gt 0) {
     Write-Host ""
-    Write-Host "Smoke zlyhal: $failed kontrol(y)." -ForegroundColor Red
+    Write-Host ('Smoke zlyhal: {0} kontrol(y).' -f $failed) -ForegroundColor Red
     exit 1
 }
 Write-Host ""
-Write-Host "Smoke OK (403 = Apache; 509 = OpenResty edge; headers + pixbanner + legal + refbook title)." -ForegroundColor Green
+Write-Host 'Smoke OK: 403 Apache, 509 OpenResty edge; headers, pixbanner, legal, refbook title.' -ForegroundColor Green
 exit 0
