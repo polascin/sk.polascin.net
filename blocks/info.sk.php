@@ -47,7 +47,7 @@
 		</a>
 	</div>
 	<br>
-	<iframe src="https://sk.polascin.net/docs/mel.pdf" style="border:3px solid teal; width: 100%; height: 50em;" title="Mimotelová eliminačná liečba. &copy; 2009"></iframe>
+	<iframe src="https://sk.polascin.net/docs/mel.pdf" loading="lazy" style="border:3px solid teal; width: 100%; height: 50em;" title="Mimotelová eliminačná liečba. &copy; 2009"></iframe>
 </div>
 
 <br>

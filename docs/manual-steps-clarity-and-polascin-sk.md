@@ -53,3 +53,18 @@ nie je verejne dostupný.
 
 - Nemená DNS záznamy A/AAAA/CNAME.
 - Nepresmerúva cez tento repo (`.htaccess` na `sk.polascin.net` nie je miesto pre `polascin.sk`).
+
+---
+
+## C. Edge odpovede OpenResty (509 / 466) na citlivé cesty
+
+Overené plným browser UA (2026-11-05):
+
+| Cesta | Stav | Kde |
+| --- | --- | --- |
+| `/.github`, `/.github/`, `/.git`, `/.gitignore`, `/.gitattributes` | **509** | OpenResty (Websupport), HTML „temporarily unavailable“ |
+| `/.env` | **466** | OpenResty edge |
+| `/.codex/`, `/.trunk/` (s lomkou) | **466** | OpenResty edge |
+| `/tools/`, `/.codex`, `/.cursor`, `/blocks/`, `db.config.php` | **403** | Apache `.htaccess` `[F]` |
+
+**Záver:** 509 na `/.github` nie je chyba `.htaccess`. Pravidlo Forbidden v `.htaccess` ostáva (kde request dorazí k Apache). Edge 509/466 nie je možné z repa zmeniť na 403; netreba meniť DNS ani WAF bez výslovného pokynu.

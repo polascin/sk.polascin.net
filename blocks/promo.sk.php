@@ -2,7 +2,7 @@
 	<a href="https://nephrosite.polascin.net/" target="_blank" title="NephroSite" lang="sk" rel="noopener noreferrer">
 		Ak chcete získať ďalšie informácie, navštívte webovú lokalitu https://<strong>nephrosite.polascin.net</strong>/ a dozviete sa viac.
 		<br>
-		<img src="/weblogo/nspanel.png" alt="NephroSite" width="790" height="131" style="width: 60%; height: auto;" loading="lazy">
+		<img src="/weblogo/nspanel.png" alt="NephroSite" width="790" height="131" style="width: 60%; height: auto;" loading="lazy" decoding="async">
 	</a>
 </span>
 

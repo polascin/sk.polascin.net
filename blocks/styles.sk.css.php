@@ -170,4 +170,9 @@ a.quote-link cite {
 	text-decoration: underline;
 }
 
+.legal-nav a[aria-current="page"] {
+	font-weight: bold;
+	color: #333;
+}
+
 </style>

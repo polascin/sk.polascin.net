@@ -2,7 +2,7 @@
 $skPath = parse_url($_SERVER['REQUEST_URI'] ?? '/', PHP_URL_PATH);
 $skAriaCurrent = ($skPath === '/' || $skPath === '/index.php') ? ' aria-current="page"' : '';
 ?>
-<div style="text-align: center; color: gray; ">
+<nav aria-label="Súvisiace weby" style="text-align: center; color: gray; ">
 	<small>
 		&nbsp;
 		<a href="https://polascin.net/" target="_blank" hreflang="en" rel="noopener noreferrer">
@@ -30,4 +30,4 @@ $skAriaCurrent = ($skPath === '/' || $skPath === '/index.php') ? ' aria-current=
 		</a>
 		&nbsp;
 	</small>
-</div>
+</nav>

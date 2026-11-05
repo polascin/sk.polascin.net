@@ -31,10 +31,15 @@
 <!-- Koniec identifikácie prevádzkovateľa -->
 
 <!-- Právne dokumenty -->
+<?php
+$skLegalPath = parse_url($_SERVER['REQUEST_URI'] ?? '/', PHP_URL_PATH) ?: '/';
+$skPrivacyCurrent = in_array($skLegalPath, ['/privacy', '/privacy.php'], true) ? ' aria-current="page"' : '';
+$skTermsCurrent = in_array($skLegalPath, ['/terms', '/terms.php'], true) ? ' aria-current="page"' : '';
+?>
 <nav class="legal-nav" aria-label="Právne dokumenty">
-	<a href="/privacy" title="Zásady ochrany osobných údajov (GDPR)">Ochrana osobných údajov</a>
+	<a href="/privacy" title="Zásady ochrany osobných údajov (GDPR)"<?= $skPrivacyCurrent ?>>Ochrana osobných údajov</a>
 	<span aria-hidden="true">|</span>
-	<a href="/terms" title="Podmienky používania webového sídla">Podmienky používania</a>
+	<a href="/terms" title="Podmienky používania webového sídla"<?= $skTermsCurrent ?>>Podmienky používania</a>
 </nav>
 <!-- Koniec právnych dokumentov -->
 
@@ -77,17 +82,17 @@
 </p> -->
 <div style="display: inline-table; border-width: thin; border-style: solid;">
   <a href="https://www.w3schools.com/" target="_blank" title="W3 Schools" rel="noopener noreferrer">
-    <img src="/weblogo/w3schools-logo.png" alt="W3 Schools" width="500" height="500" style="height: 5em; width: auto;" loading="lazy">
+    <img src="/weblogo/w3schools-logo.png" alt="W3 Schools" width="500" height="500" style="height: 5em; width: auto;" loading="lazy" decoding="async">
   </a>
 </div>
 <p>
   <a href="https://validator.w3.org/" target="_blank" title="W3C Markup Validation Service" rel="noopener noreferrer">
-    <img src="/weblogo/w3c_home_nb.png" alt="W3C Markup Validation Service" width="72" height="47" loading="lazy">
+    <img src="/weblogo/w3c_home_nb.png" alt="W3C Markup Validation Service" width="72" height="47" loading="lazy" decoding="async">
   </a>
 </p>
 <br>
 
-<div style="display: inline-table; border: thin solid gray; padding: 1em; background-color: whitesmoke;">
+<div lang="en" style="display: inline-table; border: thin solid gray; padding: 1em; background-color: whitesmoke;">
 	<div>Last But Not Least: My Thanks are due to the FOSS Community Creators and Contributors and among them also to</div>
 	<a href="https://www.opensuse.org/" target="_blank" title="openSUSE" rel="noopener noreferrer">
 		<img src="/weblogo/OIP.jpg" alt="openSUSE" class="imgpromo" width="474" height="300" loading="lazy" decoding="async">
@@ -115,7 +120,7 @@
 	</a>
 	<br>
 	<a href="https://www.distrowatch.com/" target="_blank" title="DistroWatch" rel="noopener noreferrer">
-		<img src="/weblogo/dwbanner.png" alt="DistroWatch" width="468" height="60" style="width: 300px; max-width: 50%; height: auto;" loading="lazy">
+		<img src="/weblogo/dwbanner.png" alt="DistroWatch" width="468" height="60" style="width: 300px; max-width: 50%; height: auto;" loading="lazy" decoding="async">
 	</a>
 	<div>and many others. I apologize for not mentioning them all ;-).</div>
 </div>
