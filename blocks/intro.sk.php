@@ -21,7 +21,7 @@
   <div style="display: inline-table; float: right;">
   	<br><br>
   	<a href="https://www.linkedin.com/in/lubomirpolascin/" target="_blank" title="LinkedIn profil Ľubomíra Polaščína" rel="noopener noreferrer">
-  		<img src="/weblogo/LinkedIn-logo.png" alt="LinkedIn" style="height: 3em;">
+  		<img src="/weblogo/LinkedIn-logo.png" alt="LinkedIn" style="height: 3em;" loading="lazy">
   	</a>
   	<br>
     <!--<a href="https://nemocnica-bory.sk/ambulancia/nefrologicka/" target="_blank" title="Nefrologická ambulancia Nemocnice Bory">-->
@@ -36,7 +36,7 @@
 		<br><br>
 		<hr class="promohr">
    	<a href="https://nephrosite.polascin.net/" target="_blank" title="NephroSite" rel="noopener noreferrer">
-			<img src="/weblogo/nspanelgray.png" height="50" alt="NephroSite">
+			<img src="/weblogo/nspanelgray.png" height="50" alt="NephroSite" loading="lazy">
 			<br>
 			<small>https://<strong>nephrosite.polascin.net</strong>/</small>
 		</a>

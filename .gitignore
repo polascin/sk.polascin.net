@@ -46,3 +46,10 @@ tools/deploy.local.env
 
 # Session handoffs (local durable state)
 .codex/
+
+# Lokálne výstupy inventúry odkazov
+tools/_url-inventory.txt
+tools/_url-check-results.csv
+tools/_link-inventory-tmp.txt
+tools/_link-check-tmp.csv
+tools/_grok-review-prompt.txt

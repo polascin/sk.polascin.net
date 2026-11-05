@@ -9,7 +9,7 @@
 	<a href="https://surfshark.club/friend/csHzbBw6" target="_blank" title="Surfshark" rel="noopener noreferrer">
 		<img src="/weblogo/surfshark-logo.svg" alt="Surfshark" class="imgpromo" loading="lazy">
 	</a>
-	<a href="http://blinki.st/78cb5b9641f7" target="_blank" title="Blinkist" rel="noopener noreferrer">
+	<a href="https://blinki.st/78cb5b9641f7" target="_blank" title="Blinkist" rel="noopener noreferrer">
 		<img src="/weblogo/blinkist-logo.png" alt="Blinkist" class="imgpromo" loading="lazy">
 	</a>
 	<a href="https://www.g2.com/" target="_blank" title="G2" rel="noopener noreferrer">

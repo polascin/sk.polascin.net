@@ -17,7 +17,7 @@
 			{Books}
 		</a>
 		&nbsp;&nbsp;&nbsp;
-		<a href="http://polascin.org/" target="_blank" hreflang="en" rel="noopener noreferrer">
+		<a href="https://polascin.org/" target="_blank" hreflang="en" rel="noopener noreferrer">
 			{polascin.org}
 		</a>
 		&nbsp;&nbsp;&nbsp;

@@ -2,7 +2,7 @@
 	<a href="https://nephrosite.polascin.net/" target="_blank" title="NephroSite" lang="sk" rel="noopener noreferrer">
 		Ak chcete získať ďalšie informácie, navštívte webovú lokalitu https://<strong>nephrosite.polascin.net</strong>/ a dozviete sa viac.
 		<br>
-		<img src="/weblogo/nspanel.png" alt="NephroSite" style="width: 60%;">
+		<img src="/weblogo/nspanel.png" alt="NephroSite" style="width: 60%;" loading="lazy">
 	</a>
 </span>
 
@@ -64,11 +64,11 @@
 	<img src="/weblogo/isn-logo.png" alt="ISN" class="imgpromo" loading="lazy">
 </a>
 
-<a href="https://www.ispd.org/" target="_blank" title="International Society for Peritoneal Dialysis" lang="en" rel="noopener noreferrer">
+<a href="https://ispd.org/" target="_blank" title="International Society for Peritoneal Dialysis" lang="en" rel="noopener noreferrer">
 	<img src="/weblogo/ispd-logo.png" alt="ISPD" class="imgpromo" loading="lazy">
 </a>
 
-<a href="https://www.europd.com/" target="_blank" title="EuroPD" lang="en" rel="noopener noreferrer">
+<a href="https://europd.com/" target="_blank" title="EuroPD" lang="en" rel="noopener noreferrer">
 	<img src="/weblogo/europd-logo.gif" alt="EuroPD" class="imgpromo" loading="lazy">
 </a>
 
@@ -135,8 +135,8 @@
 	<img src="/weblogo/logo-unb.svg" alt="UN Bratislava" class="imgpromo" loading="lazy">
 </a>
 
-<a href="https://www.milosrdni.eu/" target="_blank" title="Milosrdní bratia" lang="sk" rel="noopener noreferrer">
-	<img src="/weblogo/milosrdni-logo.jpg" alt="Milosrdní bratia" class="imgpromo" loading="lazy">
+<a href="https://nemocnicamilosrdni.agel.sk/" target="_blank" title="Nemocnica Milosrdných bratov (Agel)" lang="sk" rel="noopener noreferrer">
+	<img src="/weblogo/milosrdni-logo.jpg" alt="Nemocnica Milosrdných bratov" class="imgpromo" loading="lazy">
 </a>
 
 <a href="https://www.lubovnianskanemocnica.sk/" target="_blank" title="Ľubovnianska nemocnica, n.o." lang="sk" rel="noopener noreferrer">

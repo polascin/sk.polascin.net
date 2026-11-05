@@ -20,11 +20,14 @@
   function apply(granted, persist = true) {
     if (persist && !external) save(granted);
     if (granted) {
+      if (!loaded) {
+        // Mask text before the Clarity tag runs, including quote pages with ?data=.
+        document.documentElement.setAttribute("data-clarity-mask", "true");
+        if (document.body) document.body.setAttribute("data-clarity-mask", "true");
+      }
       if (!window.clarity) window.clarity = function () { (window.clarity.q = window.clarity.q || []).push(arguments); };
       window.clarity("consentv2", {analytics_Storage: "granted", ad_Storage: "denied"});
       if (!loaded) {
-        // Mask all page text, including any content entered by a visitor.
-        document.body.setAttribute("data-clarity-mask", "true");
         const script = document.createElement("script");
         script.async = true;
         script.src = "https://www.clarity.ms/tag/" + project;
