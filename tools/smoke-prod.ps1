@@ -385,6 +385,12 @@ try {
     $failed += Assert-BodyContains -Label 'refbook' -Body $refOk.Body -Pattern 'property="og:url" content="https://sk\.polascin\.net/refbook\.sk\.php\?data=1"' -OkMessage 'refbook data=1 og:url'
     $failed += Assert-BodyContains -Label 'refbook' -Body $refOk.Body -Pattern '"@type":\s*"Quotation"' -OkMessage 'refbook Quotation JSON-LD'
     $failed += Assert-BodyContains -Label 'refbook' -Body $refOk.Body -Pattern '"author"\s*:\s*\{\s*"@type"\s*:\s*"Person"' -OkMessage 'refbook Quotation author Person'
+    # data=1 book lang is stored as "cz" in DB; JSON-LD/lang must emit ISO 639-1 "cs".
+    $failed += Assert-BodyContains -Label 'refbook' -Body $refOk.Body -Pattern '"inLanguage":\s*"cs"' -OkMessage 'refbook Quotation inLanguage cs (not cz)'
+    if ($refOk.Body -match '"inLanguage":\s*"cz"') {
+        Write-Host 'FAIL refbook still emits invalid inLanguage cz' -ForegroundColor Red
+        $failed++
+    }
     if ($refOk.Body -match '"@type":\s*"Quotation"' -and $refOk.Body -notmatch 'application/ld\+json') {
         Write-Host 'FAIL refbook Quotation JSON-LD missing script type' -ForegroundColor Red
         $failed++

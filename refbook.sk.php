@@ -77,9 +77,21 @@ if (is_array($record)) {
         ? 'Citát od autora ' . $authorName . ' a bibliografický odkaz na knihu (sk.polascin.net).'
         : 'Citát a bibliografický odkaz na knihu (sk.polascin.net).';
     // Only ISO-like codes belong in lang= / JSON-LD inLanguage (not free-text "slovenčina").
+    // Map common country-code mistakes (cz/ua/…) to ISO 639-1 language codes.
     $rawLang = trim((string) ($record['lang'] ?? ''));
     if (preg_match('/^[a-z]{2}(?:-[A-Za-z0-9]{2,8})?$/i', $rawLang) === 1) {
         $quoteLang = strtolower($rawLang);
+        $langAliases = [
+            'cz' => 'cs',
+            'ua' => 'uk',
+            'gr' => 'el',
+            'jp' => 'ja',
+            'cn' => 'zh',
+        ];
+        $parts = explode('-', $quoteLang, 2);
+        if (isset($langAliases[$parts[0]])) {
+            $quoteLang = $langAliases[$parts[0]] . (isset($parts[1]) ? '-' . $parts[1] : '');
+        }
     }
 }
 
