@@ -162,7 +162,7 @@ $richText = static function (mixed $value): string {
 </div>
 
 <p style="margin-top: 1.5em;">
-	<a href="https://sk.polascin.net/" target="_self" title="Späť na úvodnú stránku sk.polascin.net">Späť na úvod</a>
+	<a href="/" target="_self" title="Späť na úvodnú stránku sk.polascin.net">Späť na úvod</a>
 </p>
 
 <br><br>

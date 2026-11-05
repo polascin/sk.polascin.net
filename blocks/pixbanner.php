@@ -1,4 +1,4 @@
-<div style="display: inline-table; width: 100%; max-width: 100%;">
+<div role="presentation" aria-hidden="true" style="display: inline-table; width: 100%; max-width: 100%;">
 	<img src="/pix/usgo.jpeg" alt="" width="1024" height="1024" loading="lazy" decoding="async" style="max-width: 5%; height: auto;">
 	<img src="/pix/bloodpurif.en.jpg" alt="" width="1024" height="1024" loading="lazy" decoding="async" style="max-width: 5%; height: auto;">
 	<img src="/pix/dialyza.jpeg" alt="" width="1024" height="1024" loading="lazy" decoding="async" style="max-width: 5%; height: auto;">

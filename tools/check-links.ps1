@@ -3,7 +3,7 @@
 .SYNOPSIS
   Inventúra a HTTP kontrola unikátnych http(s) odkazov v živom obsahu sk.polascin.net.
 .DESCRIPTION
-  Extrahuje URL z PHP/HTML/JS/CSS/XML (bez .git, tools, node_modules, .codex, .kilo).
+  Extrahuje URL z PHP/HTML/JS/CSS/XML (bez .git, tools, node_modules, .codex, .kilo, .trunk).
   Kontroluje cez Invoke-WebRequest (spoľahlivejší TLS na Windows než curl/schannel).
   Exit 0 = žiadne skutočné zlyhania mimo známe výnimky; exit 1 = nálezy na posúdenie.
 #>
@@ -17,7 +17,7 @@ param(
 $ErrorActionPreference = 'Continue'
 $UA = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
 
-$excludeRe = '\\(\.git|tools|node_modules|\.codex|\.kilo)\\'
+$excludeRe = '\\(\.git|tools|node_modules|\.codex|\.kilo|\.trunk)\\'
 $files = Get-ChildItem -Path $Root -Recurse -File -ErrorAction SilentlyContinue |
   Where-Object {
     $_.Extension -match '\.(php|html|xml|webmanifest|js|css)$' -and

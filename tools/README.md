@@ -30,8 +30,9 @@ Stiahne `phpstan.phar` + `php-cs-fixer.phar` do `tools/` a vygeneruje
 ```
 
 Kontroluje 200 / 301 / 403 / 404 a **509** na `/.github` (OpenResty edge,
-nie chyba `.htaccess`). Skrátený User-Agent môže dostať HTTP 466. Detaily:
-`docs/manual-steps-clarity-and-polascin-sk.md` sekcia C.
+nie chyba `.htaccess`). Na GET `/` overí aj CORP / CSP / nosniff / Referrer-Policy
+a počet `kidneybiopsy.en.jpg` (2 strips). Skrátený User-Agent môže dostať HTTP 466.
+Detaily: `docs/manual-steps-clarity-and-polascin-sk.md` sekcia C.
 
 ## Konfigurácia
 

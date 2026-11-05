@@ -10,6 +10,9 @@
 #   509  — OpenResty edge na /.github (aj /.git, …); NIE chyba .htaccess
 #   466  — OpenResty edge na niektorých cestách (/.env, /.codex/, /.trunk/)
 #
+# Beh #15: na GET / overí aj kľúčové bezpečnostné hlavičky a počet
+# kidneybiopsy.en.jpg (2 pixbanner strips × 1 img = 2).
+#
 # Spusti z koreňa:  .\tools\smoke-prod.ps1
 
 $ErrorActionPreference = 'Stop'
@@ -63,6 +66,28 @@ function Get-HttpStatus {
     }
 }
 
+function Get-HomeProbe {
+    param([string]$UserAgent)
+    $req = [System.Net.HttpWebRequest]::Create("$base/")
+    $req.Method = 'GET'
+    $req.UserAgent = $UserAgent
+    $req.AllowAutoRedirect = $false
+    $req.Timeout = 30000
+    $resp = $req.GetResponse()
+    try {
+        $headers = @{}
+        foreach ($name in $resp.Headers.AllKeys) {
+            $headers[$name] = $resp.Headers[$name]
+        }
+        $reader = New-Object System.IO.StreamReader($resp.GetResponseStream())
+        $body = $reader.ReadToEnd()
+        $reader.Close()
+        return @{ Headers = $headers; Body = $body }
+    } finally {
+        $resp.Close()
+    }
+}
+
 $failed = 0
 foreach ($path in $checks.Keys) {
     $expected = [int]$checks[$path]
@@ -81,11 +106,57 @@ foreach ($path in $checks.Keys) {
     if (-not $ok) { $failed++ }
 }
 
+Write-Host ""
+Write-Host "Home GET: security headers + pixbanner count" -ForegroundColor Cyan
+try {
+    $probe = Get-HomeProbe -UserAgent $ua
+    $requiredHeaders = [ordered]@{
+        'X-Content-Type-Options'      = 'nosniff'
+        'Cross-Origin-Resource-Policy' = 'same-origin'
+        'Content-Security-Policy'     = $null  # presence only
+        'Referrer-Policy'             = 'strict-origin-when-cross-origin'
+    }
+    foreach ($hName in $requiredHeaders.Keys) {
+        $actual = $null
+        foreach ($key in $probe.Headers.Keys) {
+            if ($key -ieq $hName) { $actual = $probe.Headers[$key]; break }
+        }
+        if ([string]::IsNullOrEmpty($actual)) {
+            Write-Host "FAIL header missing: $hName" -ForegroundColor Red
+            $failed++
+            continue
+        }
+        $want = $requiredHeaders[$hName]
+        if ($null -ne $want -and ($actual -notlike "*$want*")) {
+            Write-Host "FAIL header $hName = '$actual' (expected contains '$want')" -ForegroundColor Red
+            $failed++
+        } else {
+            Write-Host "OK header $hName" -ForegroundColor Green
+        }
+    }
+    $kbCount = ([regex]::Matches($probe.Body, 'kidneybiopsy\.en\.jpg')).Count
+    if ($kbCount -eq 2) {
+        Write-Host "OK kidneybiopsy.en.jpg count=$kbCount (2 pixbanner strips)" -ForegroundColor Green
+    } else {
+        Write-Host "FAIL kidneybiopsy.en.jpg count=$kbCount (expected 2)" -ForegroundColor Red
+        $failed++
+    }
+    if ($probe.Body -notmatch 'href="/docs/mel\.pdf"') {
+        Write-Host "FAIL home missing absolute /docs/mel.pdf link" -ForegroundColor Red
+        $failed++
+    } else {
+        Write-Host "OK home link /docs/mel.pdf" -ForegroundColor Green
+    }
+} catch {
+    Write-Host "FAIL home GET probe — $($_.Exception.Message)" -ForegroundColor Red
+    $failed++
+}
+
 if ($failed -gt 0) {
     Write-Host ""
     Write-Host "Smoke zlyhal: $failed kontrol(y)." -ForegroundColor Red
     exit 1
 }
 Write-Host ""
-Write-Host "Smoke OK (403 = Apache; 509 = OpenResty edge)." -ForegroundColor Green
+Write-Host "Smoke OK (403 = Apache; 509 = OpenResty edge; headers + pixbanner)." -ForegroundColor Green
 exit 0

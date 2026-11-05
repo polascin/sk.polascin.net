@@ -42,7 +42,7 @@
 
 <div class="info" style="background-color: honeydew; display: inline-table;">
 	<div style="font-size: 3em; font-variant: small-caps; text-align: center;">
-		<a href="./docs/mel.pdf" target="_blank" rel="noopener noreferrer">
+		<a href="/docs/mel.pdf" target="_blank" rel="noopener noreferrer">
 			Mimotelová eliminačná liečba. &copy; 2009.
 		</a>
 	</div>

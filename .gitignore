@@ -47,6 +47,10 @@ tools/deploy.local.env
 # Session handoffs (local durable state)
 .codex/
 
+# Local agent / Trunk worktrees (nested copies poison recursive scans)
+.kilo/
+.trunk/
+
 # Lokálne výstupy inventúry odkazov
 tools/_url-inventory.txt
 tools/_url-check-results.csv
