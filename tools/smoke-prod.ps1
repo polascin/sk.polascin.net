@@ -23,6 +23,7 @@
 # Beh #25: JSON-LD email without mailto:; Clarity dialog aria-modal + Escape.
 # Beh #26: modal focus trap / aria-describedby / aria-expanded; versioned clarity CSS.
 # Beh #27: versioned webmanifest + description/purpose; root favicon.ico link; legal OG/Twitter.
+# Beh #28: refbook OG/Twitter (dynamic title); versioned favicon PNG/ICO; /favicon.ico HEAD 200.
 #
 # Spusti z koreňa:  .\tools\smoke-prod.ps1
 
@@ -41,6 +42,7 @@ $checks = [ordered]@{
     '/js/current.js'           = 200
     '/styles.css'              = 200
     '/favicon/site.webmanifest'= 200
+    '/favicon.ico'             = 200
     '/refbook.sk.php?data=1'   = 200
     '/refbook.sk.php?data=abc' = 404
     '/privacy'                 = 301
@@ -202,7 +204,8 @@ try {
         Write-Host 'FAIL home JSON-LD email still uses mailto:' -ForegroundColor Red
         $failed++
     }
-    $failed += Assert-BodyContains -Label 'home' -Body $probe.Body -Pattern 'href="/favicon\.ico"' -OkMessage 'home link /favicon.ico'
+    $failed += Assert-BodyContains -Label 'home' -Body $probe.Body -Pattern 'href="/favicon\.ico\?v=\d+"' -OkMessage 'home versioned /favicon.ico?v='
+    $failed += Assert-BodyContains -Label 'home' -Body $probe.Body -Pattern 'href="/favicon/apple-touch-icon\.png\?v=\d+"' -OkMessage 'home versioned apple-touch-icon'
     # Bare webmanifest may be edge-cached; pages use ?v=filemtime.
     if ($probe.Body -match 'href="(/favicon/site\.webmanifest\?v=\d+)"') {
         $manifestPath = $Matches[1]
@@ -354,6 +357,9 @@ try {
     $failed += Assert-BodyContains -Label 'refbook' -Body $refOk.Body -Pattern 'name="description" content="Citát od autora Isaac Bashevis Singer' -OkMessage 'refbook data=1 description names author'
     $failed += Assert-BodyContains -Label 'refbook' -Body $refOk.Body -Pattern 'href="/styles\.css\?v=\d+"' -OkMessage 'refbook stylesheet /styles.css?v='
     $failed += Assert-BodyContains -Label 'refbook' -Body $refOk.Body -Pattern 'rel="canonical" href="https://sk\.polascin\.net/refbook\.sk\.php\?data=1"' -OkMessage 'refbook data=1 canonical'
+    $failed += Assert-BodyContains -Label 'refbook' -Body $refOk.Body -Pattern 'property="og:title" content="Isaac Bashevis Singer:' -OkMessage 'refbook data=1 og:title'
+    $failed += Assert-BodyContains -Label 'refbook' -Body $refOk.Body -Pattern 'property="og:url" content="https://sk\.polascin\.net/refbook\.sk\.php\?data=1"' -OkMessage 'refbook data=1 og:url'
+    $failed += Assert-BodyContains -Label 'refbook' -Body $refOk.Body -Pattern 'name="twitter:image:alt"' -OkMessage 'refbook twitter:image:alt'
 
     $ref404 = Get-PageProbe -Path '/refbook.sk.php?data=abc' -UserAgent $ua -ExpectedStatus 404
     if ($ref404.Body -match $genericTitle) {
@@ -368,6 +374,13 @@ try {
     } else {
         Write-Host 'OK refbook 404 has no canonical' -ForegroundColor Green
     }
+    if ($ref404.Body -match 'property="og:url"') {
+        Write-Host 'FAIL refbook 404 should not expose og:url' -ForegroundColor Red
+        $failed++
+    } else {
+        Write-Host 'OK refbook 404 has no og:url' -ForegroundColor Green
+    }
+    $failed += Assert-BodyContains -Label 'refbook404' -Body $ref404.Body -Pattern 'property="og:title" content="Kniha, z ktorej je citát' -OkMessage 'refbook 404 generic og:title'
 } catch {
     Write-Host "FAIL refbook GET probe - $($_.Exception.Message)" -ForegroundColor Red
     $failed++

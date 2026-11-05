@@ -37,10 +37,12 @@ Na `refbook.sk.php?data=1` overí dynamický `<title>` / description, `/styles.c
 `rel=canonical`; pri `?data=abc` (404) generický title bez canonical. Skip-link
 outline `#6a0dad` a `Cache-Control max-age` idú cez versioned `/styles.css?v=`
 (holé `/styles.css` môže byť edge-cached). Overí aj jeden Fedora odkaz v pätičke,
-`twitter:image:alt`, `/favicon.ico` a versioned `/favicon/site.webmanifest?v=`
-(`theme_color` / `background_color` `#f5fffa`, `start_url`, `id`, `scope`,
-`lang`, `description`, icon `purpose`, `Content-Type`
-`application/manifest+json`, Cache-Control). Overí OG/Twitter na privacy/terms
+`twitter:image:alt`, versioned `/favicon.ico?v=` + apple-touch-icon a versioned
+`/favicon/site.webmanifest?v=` (`theme_color` / `background_color` `#f5fffa`,
+`start_url`, `id`, `scope`, `lang`, `description`, icon `purpose`, `Content-Type`
+`application/manifest+json`, Cache-Control). HEAD `/favicon.ico` → 200. Overí
+OG/Twitter na privacy/terms a na `refbook.sk.php` (dynamický `og:title` /
+`og:url` pri `?data=1`; 404 bez `og:url` s generickým `og:title`)
 a `/js/current.js` (okamžitý
 `updateDateTime` pred `setInterval`, `formatToParts`, null-safe DOM, obnovu
 `daynumber` v každom ticku, lokálny ISO týždeň bez `getUTCDay`, Cache-Control;
