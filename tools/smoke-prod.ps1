@@ -1,4 +1,4 @@
-# Produkčný smoke sk.polascin.net s plným browser User-Agent.
+﻿# Produkčný smoke sk.polascin.net s plným browser User-Agent.
 # Skrátený UA môže dostať HTTP 466 (ochrana hostingu).
 # Vyžaduje Windows PowerShell 5.1+.
 #
