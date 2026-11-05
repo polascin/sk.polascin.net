@@ -16,7 +16,7 @@
 # Beh #19: refbook ?data=1 dynamický <title>/description; /styles.css; 404 generický title.
 # Beh #20: skip-link focus #6a0dad; Clarity paths /privacy,/terms; orphan styles.sk.css.php removed.
 # Beh #21: Cache-Control on css/js/images; refbook canonical when quote found; no duplicate Fedora logo.
-# Beh #22: twitter:image:alt; webmanifest theme #f5fffa; no em/en dashes in public copy.
+# Beh #22: twitter:image:alt; webmanifest theme #f5fffa; MIME application/manifest+json; start_url/lang.
 #
 # Spusti z koreňa:  .\tools\smoke-prod.ps1
 
@@ -190,6 +190,29 @@ try {
     $failed += Assert-BodyContains -Label 'home' -Body $probe.Body -Pattern 'data-paths="[^"]*/privacy[^"]*/terms"' -OkMessage 'home clarity paths include /privacy and /terms'
     $manifest = Get-PageProbe -Path '/favicon/site.webmanifest' -UserAgent $ua
     $failed += Assert-BodyContains -Label 'manifest' -Body $manifest.Body -Pattern '"theme_color":\s*"#f5fffa"' -OkMessage 'webmanifest theme_color #f5fffa'
+    $failed += Assert-BodyContains -Label 'manifest' -Body $manifest.Body -Pattern '"background_color":\s*"#f5fffa"' -OkMessage 'webmanifest background_color #f5fffa'
+    $failed += Assert-BodyContains -Label 'manifest' -Body $manifest.Body -Pattern '"start_url":\s*"/"' -OkMessage 'webmanifest start_url /'
+    $failed += Assert-BodyContains -Label 'manifest' -Body $manifest.Body -Pattern '"id":\s*"/"' -OkMessage 'webmanifest id /'
+    $failed += Assert-BodyContains -Label 'manifest' -Body $manifest.Body -Pattern '"lang":\s*"sk"' -OkMessage 'webmanifest lang sk'
+    $manifestCt = $null
+    $manifestCc = $null
+    foreach ($key in $manifest.Headers.Keys) {
+        if ($key -ieq 'Content-Type') { $manifestCt = $manifest.Headers[$key] }
+        if ($key -ieq 'Cache-Control') { $manifestCc = $manifest.Headers[$key] }
+    }
+    # Media type may include optional charset parameter.
+    if ($manifestCt -and ($manifestCt -match '(?i)^application/manifest\+json(\s*;|$)')) {
+        Write-Host ('OK webmanifest Content-Type={0}' -f $manifestCt) -ForegroundColor Green
+    } else {
+        Write-Host ('FAIL webmanifest Content-Type missing application/manifest+json (got {0})' -f $manifestCt) -ForegroundColor Red
+        $failed++
+    }
+    if ($manifestCc -and ($manifestCc -match 'max-age=')) {
+        Write-Host ('OK webmanifest Cache-Control={0}' -f $manifestCc) -ForegroundColor Green
+    } else {
+        Write-Host 'FAIL webmanifest missing Cache-Control max-age' -ForegroundColor Red
+        $failed++
+    }
     # Bare /styles.css may be edge-cached; pages use ?v=filemtime - probe that URL.
     if ($probe.Body -match 'href="(/styles\.css\?v=\d+)"') {
         $styles = Get-PageProbe -Path $Matches[1] -UserAgent $ua

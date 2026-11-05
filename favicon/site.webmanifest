@@ -1,6 +1,9 @@
 {
   "name": "Ľubomír Polaščín",
   "short_name": "Polaščín",
+  "lang": "sk",
+  "start_url": "/",
+  "id": "/",
   "icons": [
     {
       "src": "/favicon/android-chrome-192x192.png",
