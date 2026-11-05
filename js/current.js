@@ -1,6 +1,6 @@
-// sk.polascin.net — dátum, čas, ISO týždeň a Swatch Internet Time.
-// Vyňaté z inline <script> v blocks/current.sk.php kvôli Content-Security-Policy
-// (script-src 'self' bez 'unsafe-inline'). Načítava sa s atribútom defer.
+// sk.polascin.net - datum, cas, ISO tyzden a Swatch Internet Time.
+// Vynate z inline <script> v blocks/current.sk.php kvoli Content-Security-Policy
+// (script-src 'self' bez 'unsafe-inline'). Nacitava sa s atributom defer.
 
 function getDayOfYear(date) {
 	const start = new Date(date.getFullYear(), 0, 0);
@@ -8,6 +8,7 @@ function getDayOfYear(date) {
 	const oneDay = 1000 * 60 * 60 * 24;
 	return Math.floor(diff / oneDay);
 }
+
 function getISOWeekNumber(date) {
 	const tempDate = new Date(date.valueOf());
 	const dayNumber = (date.getUTCDay() + 6) % 7;
@@ -19,28 +20,39 @@ function getISOWeekNumber(date) {
 	}
 	return 1 + Math.ceil((firstThursday - tempDate) / (7 * 24 * 60 * 60 * 1000));
 }
-const today = new Date();
-const currentYear = new Date().getFullYear();
-const timeZone = new Intl.DateTimeFormat('sk-SK', { timeZoneName: 'long' }).format(new Date());
-document.querySelector('#daynumber').textContent = getDayOfYear(today);
-document.querySelector('#weeknumber').textContent = getISOWeekNumber(today);
-document.querySelector('#yearnumber').textContent = currentYear;
-document.querySelector('#timezone').textContent = timeZone;
+
+function getTimeZoneName(date) {
+	const parts = new Intl.DateTimeFormat('sk-SK', { timeZoneName: 'long' }).formatToParts(date);
+	const zone = parts.find(function (part) { return part.type === 'timeZoneName'; });
+	return zone ? zone.value : '';
+}
+
+function getInternetTime(date) {
+	const timezoneOffset = date.getTimezoneOffset() * 60000;
+	const bielTime = new Date(date.getTime() + timezoneOffset + 3600000); // Biel Mean Time UTC+1
+	const beats = Math.floor(
+		(bielTime.getUTCHours() * 3600 + bielTime.getUTCMinutes() * 60 + bielTime.getUTCSeconds()) / 86.4
+	) % 1000;
+	return '@' + beats.toString().padStart(3, '0');
+}
+
+function setText(id, value) {
+	const el = document.getElementById(id);
+	if (el) {
+		el.textContent = value;
+	}
+}
+
 function updateDateTime() {
 	const now = new Date();
-	const options = {
-		dateStyle: 'full',
-		timeStyle: 'long'
-	};
-	const currentDateTime = now.toLocaleString("sk-SK", options);
-	document.querySelector('#current').textContent = currentDateTime;
-	function getInternetTime() {
-		const now = new Date();
-		const timezoneOffset = now.getTimezoneOffset() * 60000; // Offset in milliseconds
-		const bielTime = new Date(now.getTime() + timezoneOffset + 3600000); // Biel is UTC+1
-		const beats = Math.floor((bielTime.getUTCHours() * 3600 + bielTime.getUTCMinutes() * 60 + bielTime.getUTCSeconds()) / 86.4) % 1000;
-		return `@${beats.toString().padStart(3, '0')}`;
-	}
-	document.querySelector('#internettime').textContent = getInternetTime();
+	setText('current', now.toLocaleString('sk-SK', { dateStyle: 'full', timeStyle: 'long' }));
+	setText('internettime', getInternetTime(now));
 }
+
+const today = new Date();
+setText('daynumber', String(getDayOfYear(today)));
+setText('weeknumber', String(getISOWeekNumber(today)));
+setText('yearnumber', String(today.getFullYear()));
+setText('timezone', getTimeZoneName(today));
+updateDateTime();
 setInterval(updateDateTime, 1000);

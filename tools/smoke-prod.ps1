@@ -17,6 +17,7 @@
 # Beh #20: skip-link focus #6a0dad; Clarity paths /privacy,/terms; orphan styles.sk.css.php removed.
 # Beh #21: Cache-Control on css/js/images; refbook canonical when quote found; no duplicate Fedora logo.
 # Beh #22: twitter:image:alt; webmanifest theme #f5fffa; MIME application/manifest+json; start_url/lang.
+# Beh #23: current.js immediate tick, formatToParts TZ, null-safe DOM.
 #
 # Spusti z koreňa:  .\tools\smoke-prod.ps1
 
@@ -32,6 +33,7 @@ $checks = [ordered]@{
     '/sitemap.xml'             = 200
     '/docs/mel.pdf'            = 200
     '/js/clarity-consent.js'   = 200
+    '/js/current.js'           = 200
     '/styles.css'              = 200
     '/favicon/site.webmanifest'= 200
     '/refbook.sk.php?data=1'   = 200
@@ -211,6 +213,19 @@ try {
         Write-Host ('OK webmanifest Cache-Control={0}' -f $manifestCc) -ForegroundColor Green
     } else {
         Write-Host 'FAIL webmanifest missing Cache-Control max-age' -ForegroundColor Red
+        $failed++
+    }
+    $clock = Get-PageProbe -Path '/js/current.js' -UserAgent $ua
+    if ($clock.Body -match 'updateDateTime\(\);\s*setInterval\(updateDateTime') {
+        Write-Host 'OK current.js calls updateDateTime before setInterval' -ForegroundColor Green
+    } else {
+        Write-Host 'FAIL current.js missing immediate updateDateTime() before setInterval' -ForegroundColor Red
+        $failed++
+    }
+    if (($clock.Body -match 'formatToParts') -and ($clock.Body -match 'getElementById')) {
+        Write-Host 'OK current.js uses formatToParts and getElementById guards' -ForegroundColor Green
+    } else {
+        Write-Host 'FAIL current.js missing formatToParts/getElementById hardening' -ForegroundColor Red
         $failed++
     }
     # Bare /styles.css may be edge-cached; pages use ?v=filemtime - probe that URL.
