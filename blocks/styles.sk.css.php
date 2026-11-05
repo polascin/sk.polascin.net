@@ -61,6 +61,7 @@ a:focus-visible {
 
 img.imgpromo {
 	height: 3em;
+	width: auto;
 	margin: 0.3em;
 	border-style: none;
 }

@@ -1,12 +1,15 @@
 # robots.txt — sk.polascin.net
-# Aktualizované: 2026-05-21
+# Aktualizované: 2026-11-05
 
 User-agent: *
 Allow: /
 Disallow: /blocks/
 Disallow: /docs/
 Disallow: /files/
+Disallow: /tools/
 Disallow: /.git/
+Disallow: /.codex/
+Disallow: /.cursor/
 
 Crawl-delay: 10
 

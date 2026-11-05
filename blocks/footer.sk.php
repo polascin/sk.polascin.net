@@ -51,28 +51,17 @@
 <!-- Last modification date in PHP -->
 <div style="color: gray; font-size: smaller;">
 	<em>
-		This WebPage was last modified on <?php setlocale(LC_ALL, 'en-US');?><?php echo(date("l, ", getlastmod()));?>
-		<strong>
-			<?php echo(date("F j", getlastmod()));?>
-			<sup>
-				<?php echo(date("S", getlastmod()));?>
-			</sup>
-			<?php echo(date(",  Y", getlastmod()));?>
-		</strong>
-		<?php echo(" at ");?>
-		<strong>
-			<?php echo(date("H:i:s", getlastmod()));?>
-		</strong>
-		<?php echo(date(" T e", getlastmod()));?>
-		<?php echo(" GMT(UTC)");?>
-		<?php echo(date("P", getlastmod()));?>
+		Stránka naposledy upravená
+		<strong><?php echo date('j. n. Y H:i:s', getlastmod()); ?></strong>
+		<?php echo date(' T e', getlastmod()); ?>
+		GMT(UTC)<?php echo date('P', getlastmod()); ?>
 	</em>
 </div>
 <!-- The End of the Last modification date in PHP -->
 
 <div style="color: silver; font-size: small; font-style: italic;">
-	Generated on
-	<?php echo(date("r", time()));?>
+	Vygenerované
+	<?php echo date('j. n. Y H:i:s O', time()); ?>
 </div>
 
 <hr>
@@ -101,28 +90,28 @@
 <div style="display: inline-table; border: thin solid gray; padding: 1em; background-color: whitesmoke;">
 	<div>Last But Not Least: My Thanks are due to the FOSS Community Creators and Contributors and among them also to</div>
 	<a href="https://www.opensuse.org/" target="_blank" title="openSUSE" rel="noopener noreferrer">
-		<img src="/weblogo/OIP.jpg" alt="openSUSE" class="imgpromo" loading="lazy">
+		<img src="/weblogo/OIP.jpg" alt="openSUSE" class="imgpromo" width="474" height="300" loading="lazy" decoding="async">
 	</a>
 	<a href="https://manjaro.org/" target="_blank" title="Manjaro" rel="noopener noreferrer">
-		<img src="/weblogo/Manjaro-logo.svg" alt="Manjaro" class="imgpromo" loading="lazy">
+		<img src="/weblogo/Manjaro-logo.svg" alt="Manjaro" class="imgpromo" width="256" height="256" loading="lazy" decoding="async">
 	</a>
 	<a href="https://mxlinux.org/" target="_blank" title="MX Linux OS" rel="noopener noreferrer">
-		<img src="/weblogo/mx.svg" alt="MX Linux OS" class="imgpromo" loading="lazy">
+		<img src="/weblogo/mx.svg" alt="MX Linux OS" class="imgpromo" width="298" height="270" loading="lazy" decoding="async">
 	</a>
 	<a href="https://ubuntu.com/" target="_blank" title="Ubuntu" rel="noopener noreferrer">
-		<img src="/weblogo/Canonical-Ubuntu.svg" alt="Ubuntu" class="imgpromo" loading="lazy">
+		<img src="/weblogo/Canonical-Ubuntu.svg" alt="Ubuntu" class="imgpromo" width="1113" height="400" loading="lazy" decoding="async">
 	</a>
 	<a href="https://www.linuxmint.com/" target="_blank" title="Linux Mint" rel="noopener noreferrer">
-		<img src="/weblogo/linuxmint-logo.png" alt="Linux Mint" class="imgpromo" loading="lazy">
+		<img src="/weblogo/linuxmint-logo.png" alt="Linux Mint" class="imgpromo" width="1065" height="961" loading="lazy" decoding="async">
 	</a>
 	<a href="https://neon.kde.org/" target="_blank" title="KDE Neon" rel="noopener noreferrer">
-		<img src="/weblogo/neon-logo.svg" alt="KDE Neon" class="imgpromo" loading="lazy">
+		<img src="/weblogo/neon-logo.svg" alt="KDE Neon" class="imgpromo" width="48" height="48" loading="lazy" decoding="async">
 	</a>
 	<a href="https://fedoraproject.org/" target="_blank" title="Fedora" rel="noopener noreferrer">
-		<img src="/weblogo/fedora-logo.png" alt="Fedora" class="imgpromo" loading="lazy">
+		<img src="/weblogo/fedora-logo.png" alt="Fedora" class="imgpromo" width="144" height="144" loading="lazy" decoding="async">
 	</a>
 	<a href="https://fedoraproject.org/" target="_blank" title="Fedora" rel="noopener noreferrer">
-		<img src="/weblogo/fedora-blue.png" alt="Fedora" class="imgpromo" loading="lazy">
+		<img src="/weblogo/fedora-blue.png" alt="Fedora" class="imgpromo" width="501" height="146" loading="lazy" decoding="async">
 	</a>
 	<br>
 	<a href="https://www.distrowatch.com/" target="_blank" title="DistroWatch" rel="noopener noreferrer">
