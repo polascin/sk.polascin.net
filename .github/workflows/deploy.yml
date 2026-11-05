@@ -145,6 +145,10 @@ jobs:
               --exclude-glob '.php-cs-fixer*' \
               --exclude-glob 'db.config.php' \
               ./ '$FTP_DIR';
+            # Explicit put: mirror can skip small text config when remote size matches
+            # (seen with robots.txt staying on an older Allow/Disallow set).
+            put -O '$FTP_DIR' robots.txt;
+            put -O '$FTP_DIR' .htaccess;
             bye
           "
           echo "FTP deploy done."

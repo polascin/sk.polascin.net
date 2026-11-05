@@ -195,8 +195,9 @@ Write-Host ""
 Write-Host "robots.txt: Allow public mel.pdf" -ForegroundColor Cyan
 try {
     $robots = Get-PageProbe -Path '/robots.txt' -UserAgent $ua
-    $failed += Assert-BodyContains -Label 'robots' -Body $robots.Body -Pattern '(?m)^Allow:\s*/docs/mel\.pdf\s*$' -OkMessage 'robots Allow /docs/mel.pdf'
-    $failed += Assert-BodyContains -Label 'robots' -Body $robots.Body -Pattern '(?m)^Disallow:\s*/docs/\s*$' -OkMessage 'robots Disallow /docs/'
+    $failed += Assert-BodyContains -Label 'robots' -Body $robots.Body -Pattern 'Allow:\s*/docs/mel\.pdf' -OkMessage 'robots Allow /docs/mel.pdf'
+    $failed += Assert-BodyContains -Label 'robots' -Body $robots.Body -Pattern 'Disallow:\s*/docs/' -OkMessage 'robots Disallow /docs/'
+    $failed += Assert-BodyContains -Label 'robots' -Body $robots.Body -Pattern 'Aktualizovan[eé]:\s*2026-11-06' -OkMessage 'robots last-updated 2026-11-06'
 } catch {
     Write-Host "FAIL robots.txt probe - $($_.Exception.Message)" -ForegroundColor Red
     $failed++
