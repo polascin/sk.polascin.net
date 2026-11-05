@@ -15,8 +15,27 @@
   const sk = document.documentElement.lang.startsWith("sk");
   let loaded = false;
   let banner;
+  let openedFromSettings = false;
   const read = () => { try { return JSON.parse(localStorage.getItem(key)); } catch { return null; } };
   const save = granted => { try { localStorage.setItem(key, JSON.stringify({granted, expires: Date.now() + 180 * 86400000})); } catch { /* Consent still applies for this page. */ } };
+  function onKey(e) {
+    if (e.key !== "Escape" || !banner) return;
+    e.preventDefault();
+    if (openedFromSettings) {
+      closeBanner();
+      settings.focus();
+    } else {
+      // First-visit Escape is an explicit dismiss → decline and persist.
+      apply(false);
+    }
+  }
+  function closeBanner() {
+    if (!banner) return;
+    banner.remove();
+    banner = null;
+    openedFromSettings = false;
+    window.removeEventListener("keydown", onKey);
+  }
   function apply(granted, persist = true) {
     if (persist && !external) save(granted);
     if (granted) {
@@ -47,7 +66,7 @@
       // Stop the already loaded SDK, including its cookieless mode.
       if (loaded && persist) location.reload();
     }
-    if (banner) { banner.remove(); banner = null; }
+    closeBanner();
   }
   if (external) {
     window.addEventListener("site:analytics-consent", e => apply(e.detail === true));
@@ -65,9 +84,11 @@
   (document.querySelector("footer") || document.body).appendChild(settings);
   function show(focus = false) {
     if (banner) { if (focus) banner.querySelector("button").focus(); return; }
+    openedFromSettings = focus;
     banner = document.createElement("section");
     banner.className = "clarity-consent";
     banner.setAttribute("role", "dialog");
+    banner.setAttribute("aria-modal", "true");
     banner.setAttribute("aria-labelledby", "clarity-consent-title");
     const title = document.createElement("h2");
     title.id = "clarity-consent-title";
@@ -77,7 +98,7 @@
       ? "S vaším súhlasom používame Microsoft Clarity na meranie návštevnosti, kliknutí, posúvania a záznamov používania verejných stránok. Text je maskovaný. Bez súhlasu sa Clarity nenačíta. Reklamný súhlas zostáva vypnutý. Voľbu môžete kedykoľvek zmeniť v nastaveniach analytiky."
       : "With your consent, we use Microsoft Clarity for visits, clicks, scrolling and session recordings on public pages. Text is masked. Clarity does not load without consent. Advertising consent stays denied. You can change your choice in Analytics settings at any time.";
     const link = document.createElement("a");
-    link.href = config.dataset.privacy || "/privacy.php";
+    link.href = config.dataset.privacy || "/privacy";
     link.textContent = sk ? "Ochrana súkromia" : "Privacy policy";
     const decline = document.createElement("button");
     decline.type = "button";
@@ -89,6 +110,7 @@
     accept.addEventListener("click", () => apply(true));
     banner.append(title, text, link, decline, accept);
     document.body.appendChild(banner);
+    window.addEventListener("keydown", onKey);
     if (focus) decline.focus();
   }
   const stored = read();
