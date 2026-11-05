@@ -122,7 +122,9 @@ jobs:
           # 2) Nahranie bez mazania (serverové súbory mimo repozitára zostávajú).
           lftp -c "$COMMON
             set net:persist-retries 2;
-            mirror --reverse --continue --no-perms --parallel=2 \
+            # Bez --continue: rovnaká veľkosť + zmena obsahu (napr. #f5fffa→#6a0dad)
+            # by sa inak mohla na FTPS preskočiť a produkcia by ostala na starej verzii.
+            mirror --reverse --no-perms --parallel=2 \
               --exclude-glob .git \
               --exclude-glob .git/ \
               --exclude-glob .github/ \
