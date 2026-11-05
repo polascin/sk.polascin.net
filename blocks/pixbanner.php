@@ -18,5 +18,4 @@
 	<img src="/pix/renalusg1.en.jpg" alt="" width="1024" height="1024" loading="lazy" decoding="async" style="max-width: 5%; height: auto;">
 	<img src="/pix/renalusg2.en.jpg" alt="" width="1024" height="1024" loading="lazy" decoding="async" style="max-width: 5%; height: auto;">
 	<img src="/pix/dialysis.en.jpg" alt="" width="1024" height="1024" loading="lazy" decoding="async" style="max-width: 5%; height: auto;">
-	<img src="/pix/kidneybiopsy.en.jpg" alt="" width="1024" height="1024" loading="lazy" decoding="async" style="max-width: 5%; height: auto;">
 </div>
