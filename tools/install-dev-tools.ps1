@@ -32,8 +32,13 @@ $baseline = Join-Path $projectRoot 'phpstan-baseline.neon'
 Write-Host "`nGenerujem PHPStan baseline (existujúce nálezy sa ignorujú)..." -ForegroundColor Cyan
 Push-Location $projectRoot
 try {
-    & php $phpstanPhar analyse --generate-baseline=$baseline --no-progress
-    Write-Host 'Hotovo. Baseline: phpstan-baseline.neon' -ForegroundColor Green
+    # Pri nula nálezoch treba --allow-empty-baseline, inak PHPStan baseline nevytvorí.
+    & php $phpstanPhar analyse --generate-baseline=$baseline --allow-empty-baseline --no-progress
+    if ($LASTEXITCODE -eq 0) {
+        Write-Host 'Hotovo. Baseline: phpstan-baseline.neon' -ForegroundColor Green
+    } else {
+        Write-Host "PHPStan baseline skončil s kódom $LASTEXITCODE" -ForegroundColor Yellow
+    }
 } catch {
     Write-Host "PHPStan analýza zlyhala (baseline nevygenerovaný): $_" -ForegroundColor Yellow
 } finally {

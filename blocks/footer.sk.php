@@ -88,12 +88,12 @@
 </p> -->
 <div style="display: inline-table; border-width: thin; border-style: solid;">
   <a href="https://www.w3schools.com/" target="_blank" title="W3 Schools" rel="noopener noreferrer">
-    <img src="/weblogo/w3schools-logo.png" alt="W3 Schools" style="height: 5em;" loading="lazy">
+    <img src="/weblogo/w3schools-logo.png" alt="W3 Schools" width="500" height="500" style="height: 5em; width: auto;" loading="lazy">
   </a>
 </div>
 <p>
   <a href="https://validator.w3.org/" target="_blank" title="W3C Markup Validation Service" rel="noopener noreferrer">
-    <img src="/weblogo/w3c_home_nb.png" alt="W3C Markup Validation Service" loading="lazy">
+    <img src="/weblogo/w3c_home_nb.png" alt="W3C Markup Validation Service" width="72" height="47" loading="lazy">
   </a>
 </p>
 <br>
@@ -126,7 +126,7 @@
 	</a>
 	<br>
 	<a href="https://www.distrowatch.com/" target="_blank" title="DistroWatch" rel="noopener noreferrer">
-		<img src="/weblogo/dwbanner.png" alt="DistroWatch" style="width: 300px; max-width: 50%;" loading="lazy">
+		<img src="/weblogo/dwbanner.png" alt="DistroWatch" width="468" height="60" style="width: 300px; max-width: 50%; height: auto;" loading="lazy">
 	</a>
 	<div>and many others. I apologize for not mentioning them all ;-).</div>
 </div>

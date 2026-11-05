@@ -1,6 +1,6 @@
 <div class="info" style="font-family: system-ui;">
 
-	<img src="/weblogo/ordinacia.jpg" alt="Ordinácia" style="float: left; width: 30%; margin-right: 1em;" loading="lazy">
+	<img src="/weblogo/ordinacia.jpg" alt="Ordinácia" width="1024" height="1024" style="float: left; width: 30%; height: auto; margin-right: 1em;" loading="lazy">
 
 	<h2 style="color: gray; font-style: italic;">O mne</h2>
 
@@ -84,8 +84,8 @@
 
 <p style="text-align: center; font-variant: small-caps; ">
 	<a href="https://you.23andme.com/published/reports/a38bc14066464d3c863bcfba5eabfd37/?share_id=cdc1161135484f7a" target="_blank" title="23andme" rel="noopener noreferrer">
-		<img src="/weblogo/23andme-logo.gif" alt="23andme" loading="lazy">
+		<img src="/weblogo/23andme-logo.gif" alt="23andme" width="73" height="50" loading="lazy">
 		&nbsp;&nbsp;&nbsp;
-		<img src="/weblogo/chromo.gif" alt="23andme" loading="lazy">
+		<img src="/weblogo/chromo.gif" alt="23andme" width="217" height="50" loading="lazy">
 	</a>
 </p>

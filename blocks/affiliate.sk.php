@@ -3,10 +3,10 @@
 <!-- Audiolibrix and Martinus.sk Affiliate Links -->
 <p style="text-align: center;">
 	<a target="_blank" href="https://www.audiolibrix.com/sk/Audioknihy?afid=944&afbid=65&afcid=2194" title="Audioknihy ihneď, kdekoľvek a kedykoľvek" rel="noopener noreferrer">
-		<img src="https://d2emjept89nv7b.cloudfront.net/assets/Listening/468x60/pocuvanie-audioknih-je-nove-citanie.gif" alt="Audiolibrix" style="width: 100%;" loading="lazy">
+		<img src="https://d2emjept89nv7b.cloudfront.net/assets/Listening/468x60/pocuvanie-audioknih-je-nove-citanie.gif" alt="Audiolibrix" width="468" height="60" style="width: 100%; height: auto;" loading="lazy">
 	</a>
 	<a target="_blank" href="https://www.martinus.sk?z=H8DMXS&utm_source=z%3DH8DMXS&utm_medium=banner1_468x60&utm_campaign=partner" title="Martinus.sk" rel="noopener noreferrer">
-		<img src="https://www.martinus.sk/images/banners/468x60_red.jpg" alt="www.martinus.sk" style="width: 100%;" loading="lazy">
+		<img src="https://www.martinus.sk/images/banners/468x60_red.jpg" alt="www.martinus.sk" width="468" height="60" style="width: 100%; height: auto;" loading="lazy">
 	</a>
 </p>
 
@@ -23,7 +23,7 @@
 	</a>
 	<br>
 	<a href="https://www.websupport.sk/?ref=ND4sHF8x" target="_blank" title="Websupport" rel="noopener noreferrer">
-		<img src="/websupport-ad-banners-sk/websupport-ad-banners-sk/freeweb-sk-1.png" alt="Websupport" loading="lazy">
+		<img src="/websupport-ad-banners-sk/websupport-ad-banners-sk/freeweb-sk-1.png" width="300" height="250" alt="Websupport" loading="lazy">
 	</a>
 </p>
 
