@@ -43,3 +43,6 @@ db.config.php
 
 # Lokálne FTP prihlásenie pre deploy — NIKDY neverziovať
 tools/deploy.local.env
+
+# Session handoffs (local durable state)
+.codex/
