@@ -4,6 +4,7 @@
   "lang": "sk",
   "start_url": "/",
   "id": "/",
+  "scope": "/",
   "icons": [
     {
       "src": "/favicon/android-chrome-192x192.png",

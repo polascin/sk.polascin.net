@@ -188,6 +188,7 @@ try {
     }
     $failed += Assert-BodyContains -Label 'home' -Body $probe.Body -Pattern 'href="/docs/mel\.pdf"' -OkMessage 'home link /docs/mel.pdf'
     $failed += Assert-BodyContains -Label 'home' -Body $probe.Body -Pattern 'href="/styles\.css\?v=' -OkMessage 'home stylesheet /styles.css'
+    $failed += Assert-BodyContains -Label 'home' -Body $probe.Body -Pattern 'src="/js/current\.js\?v=\d+"' -OkMessage 'home script /js/current.js?v='
     $failed += Assert-BodyContains -Label 'home' -Body $probe.Body -Pattern 'name="twitter:image:alt" content="Fotografia' -OkMessage 'home twitter:image:alt'
     $failed += Assert-BodyContains -Label 'home' -Body $probe.Body -Pattern 'data-paths="[^"]*/privacy[^"]*/terms"' -OkMessage 'home clarity paths include /privacy and /terms'
     $manifest = Get-PageProbe -Path '/favicon/site.webmanifest' -UserAgent $ua
@@ -196,6 +197,7 @@ try {
     $failed += Assert-BodyContains -Label 'manifest' -Body $manifest.Body -Pattern '"start_url":\s*"/"' -OkMessage 'webmanifest start_url /'
     $failed += Assert-BodyContains -Label 'manifest' -Body $manifest.Body -Pattern '"id":\s*"/"' -OkMessage 'webmanifest id /'
     $failed += Assert-BodyContains -Label 'manifest' -Body $manifest.Body -Pattern '"lang":\s*"sk"' -OkMessage 'webmanifest lang sk'
+    $failed += Assert-BodyContains -Label 'manifest' -Body $manifest.Body -Pattern '"scope":\s*"/"' -OkMessage 'webmanifest scope /'
     $manifestCt = $null
     $manifestCc = $null
     foreach ($key in $manifest.Headers.Keys) {
@@ -226,6 +228,16 @@ try {
         Write-Host 'OK current.js uses formatToParts and getElementById guards' -ForegroundColor Green
     } else {
         Write-Host 'FAIL current.js missing formatToParts/getElementById hardening' -ForegroundColor Red
+        $failed++
+    }
+    $clockCc = $null
+    foreach ($key in $clock.Headers.Keys) {
+        if ($key -ieq 'Cache-Control') { $clockCc = $clock.Headers[$key]; break }
+    }
+    if ($clockCc -and ($clockCc -match 'max-age=')) {
+        Write-Host ('OK current.js Cache-Control={0}' -f $clockCc) -ForegroundColor Green
+    } else {
+        Write-Host 'FAIL current.js missing Cache-Control max-age' -ForegroundColor Red
         $failed++
     }
     # Bare /styles.css may be edge-cached; pages use ?v=filemtime - probe that URL.
