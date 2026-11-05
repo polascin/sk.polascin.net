@@ -23,6 +23,16 @@ Stiahne `phpstan.phar` + `php-cs-fixer.phar` do `tools/` a vygeneruje
 
 `-Fix` bez `-AllowRenormalize` sa odmietne: na Windows je diff často len CRLF→LF.
 
+## Produkčný smoke (plný browser UA)
+
+```powershell
+.\tools\smoke-prod.ps1
+```
+
+Kontroluje 200 / 301 / 403 / 404 a **509** na `/.github` (OpenResty edge,
+nie chyba `.htaccess`). Skrátený User-Agent môže dostať HTTP 466. Detaily:
+`docs/manual-steps-clarity-and-polascin-sk.md` sekcia C.
+
 ## Konfigurácia
 
 | Súbor | Účel |
