@@ -169,9 +169,9 @@ try {
     }
     $kbCount = ([regex]::Matches($probe.Body, 'kidneybiopsy\.en\.jpg')).Count
     if ($kbCount -eq 2) {
-        Write-Host "OK kidneybiopsy.en.jpg count=$kbCount (2 pixbanner strips)" -ForegroundColor Green
+        Write-Host ("OK kidneybiopsy.en.jpg count={0} (2 pixbanner strips)" -f $kbCount) -ForegroundColor Green
     } else {
-        Write-Host "FAIL kidneybiopsy.en.jpg count=$kbCount (expected 2)" -ForegroundColor Red
+        Write-Host ("FAIL kidneybiopsy.en.jpg count={0} (expected 2)" -f $kbCount) -ForegroundColor Red
         $failed++
     }
     $failed += Assert-BodyContains -Label 'home' -Body $probe.Body -Pattern 'href="/docs/mel\.pdf"' -OkMessage 'home link /docs/mel.pdf'
