@@ -23,9 +23,8 @@
 # Beh #25: JSON-LD email without mailto:; Clarity dialog aria-modal + Escape.
 # Beh #26: modal focus trap / aria-describedby / aria-expanded; versioned clarity CSS.
 # Beh #27: versioned webmanifest + description/purpose; root favicon.ico link; legal OG/Twitter.
-# Beh #28: refbook OG; versioned favicon PNG/ICO.
-# Beh #29: PHP HTML Cache-Control no-cache; JSON-LD description/inLanguage/knowsAbout; hreflang.
 # Beh #28: refbook OG/Twitter (dynamic title); versioned favicon PNG/ICO; /favicon.ico HEAD 200.
+# Beh #29: PHP HTML Cache-Control no-cache; JSON-LD description/inLanguage/knowsAbout; hreflang.
 #
 # Spusti z koreňa:  .\tools\smoke-prod.ps1
 
