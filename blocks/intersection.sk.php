@@ -1,3 +1,7 @@
+<?php
+$skPath = parse_url($_SERVER['REQUEST_URI'] ?? '/', PHP_URL_PATH);
+$skAriaCurrent = ($skPath === '/' || $skPath === '/index.php') ? ' aria-current="page"' : '';
+?>
 <div style="text-align: center; color: gray; ">
 	<small>
 		&nbsp;
@@ -5,7 +9,7 @@
 			{Polascin.Net}
 		</a>
 		&nbsp;&nbsp;&nbsp;
-		<a href="https://sk.polascin.net/" target="_top" hreflang="sk">
+		<a href="https://sk.polascin.net/" target="_top" hreflang="sk"<?= $skAriaCurrent ?>>
 			{SK.polascin.net}
 		</a>
 		&nbsp;&nbsp;&nbsp;

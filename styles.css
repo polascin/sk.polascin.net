@@ -99,6 +99,24 @@ hr.promohr {
   border: solid thin gray;
   padding: 1em;
   background-color: snow;
+  margin: 0;
+}
+
+a.quote-link {
+  text-decoration: underline;
+}
+
+a.quote-link:focus-visible {
+  outline: 2px solid #6a0dad;
+  outline-offset: 2px;
+}
+
+a.quote-link cite {
+  font-style: italic;
+}
+
+.quotebox .quote {
+  margin: 0;
 }
 
 .quote {

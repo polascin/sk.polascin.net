@@ -70,7 +70,7 @@ $richText = static function (mixed $value): string {
 
   <?php require "./blocks/favicon.php"; ?>
 
-  <meta name="date" content="2024-03-14T17:11:36+0100" >
+  <meta name="date" content="2026-11-05T21:00:00+0100" >
 	<meta name="description" content="Ľubomír Polaščín - kniha, z ktorej je citát, stránka v slovenskom jazyku">
   <meta name="copyright" content="Ľubomír Polaščín">
 	<meta name="keywords" content="Ľubomír Polaščín,Ľubomír,Polaščín,polascin,lubomir,kniha,citát,citat,citácia,citacia">
@@ -109,9 +109,7 @@ $richText = static function (mixed $value): string {
 
 <br><br>
 
-<a href="https://sk.polascin.net/" target="_self" style="text-decoration: none; color: black;">
-
-<div style="display: inline-table; border: solid thin grey; padding: 3em; background-color: ghostwhite; width: 80%;">
+<div class="refbook-card" style="display: inline-table; border: solid thin grey; padding: 3em; background-color: ghostwhite; width: 80%; text-align: left;">
 
 <?php if ($record === null) { ?>
 
@@ -123,9 +121,13 @@ $richText = static function (mixed $value): string {
 
 	<div><em>Citát</em></div>
 	<br>
-	<div class="quote"><cite><?= $esc($record['quote']) ?></cite></div>
-	<div class="author"><?= $esc($record['author']) ?></div>
-	<div class="source"><?= $esc($record['source']) ?></div>
+	<blockquote class="quotebox" style="display: block; width: auto; margin: 0; text-align: left;">
+		<p class="quote" style="margin: 0;"><?= $esc($record['quote']) ?></p>
+		<footer>
+			<div class="author"><?= $esc($record['author']) ?></div>
+			<div class="source"><cite><?= $esc($record['source']) ?></cite></div>
+		</footer>
+	</blockquote>
 	<br>
 
 	<?php if ($record['title'] !== null) { ?>
@@ -159,7 +161,9 @@ $richText = static function (mixed $value): string {
 
 </div>
 
-</a>
+<p style="margin-top: 1.5em;">
+	<a href="https://sk.polascin.net/" target="_self" title="Späť na úvodnú stránku sk.polascin.net">Späť na úvod</a>
+</p>
 
 <br><br>
 

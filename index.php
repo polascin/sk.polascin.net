@@ -21,6 +21,7 @@
   <title>Ľubomír Polaščín (webové sídlo)</title>
 
   <link rel="canonical" href="https://sk.polascin.net/">
+  <link rel="preload" as="image" href="/pix/lpsk2.jpg" fetchpriority="high">
 
   <meta property="og:type" content="website">
   <meta property="og:locale" content="sk_SK">

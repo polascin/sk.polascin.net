@@ -1,7 +1,9 @@
 # Lokálne vývojárske nástroje
 
 Kontrola kvality PHP kódu **bez Composera** — nástroje sa sťahujú ako samostatné
-PHAR súbory (sú v `.gitignore`, na server sa nedeployujú).
+PHAR súbory (sú v `.gitignore`, na server sa nedeployujú). Projekt **nemá**
+`composer.json` zámerne. Ak PHPStan PHAR vypíše NOTE o Turbo / Composer, ignoruj
+ho: nie je to chyba ani dôvod pridávať Composer.
 
 ## Inštalácia (raz)
 
@@ -15,9 +17,11 @@ Stiahne `phpstan.phar` + `php-cs-fixer.phar` do `tools/` a vygeneruje
 ## Každodenné použitie
 
 ```powershell
-.\tools\quality.ps1          # PHPStan analýza + náhľad formátovania (nič nemení)
-.\tools\quality.ps1 -Fix     # aplikuje opravy formátovania (PHP-CS-Fixer)
+.\tools\quality.ps1                         # PHPStan + dry-run formátovania (nič nemení)
+.\tools\quality.ps1 -Fix -AllowRenormalize  # až po schválenom `git add --renormalize .`
 ```
+
+`-Fix` bez `-AllowRenormalize` sa odmietne: na Windows je diff často len CRLF→LF.
 
 ## Konfigurácia
 

@@ -41,10 +41,14 @@ $url = 'https://sk.polascin.net/refbook.sk.php?data=' . urlencode((string) $row[
 $esc = static fn (mixed $value): string => htmlspecialchars((string) $value, ENT_QUOTES, 'UTF-8');
 
 ?>
-<a href="<?= $esc($url) ?>" target="_self" title="Citát a odkaz na knihu">
-	<div class="quotebox">
-		<div class="quote"><cite><?= $esc($row['quote']) ?></cite></div>
+<blockquote class="quotebox">
+	<p class="quote"><?= $esc($row['quote']) ?></p>
+	<footer>
 		<div class="author"><?= $esc($row['author']) ?></div>
-		<div class="source"><?= $esc($row['source']) ?></div>
-	</div>
-</a>
+		<div class="source">
+			<a href="<?= $esc($url) ?>" target="_self" title="Citát a odkaz na knihu" class="quote-link">
+				<cite><?= $esc($row['source']) ?></cite>
+			</a>
+		</div>
+	</footer>
+</blockquote>
