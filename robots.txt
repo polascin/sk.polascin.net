@@ -1,5 +1,5 @@
 # robots.txt — sk.polascin.net
-# Aktualizované: 2026-11-06 (Allow /docs/mel.pdf; explicit FTPS put)
+# Aktualizované: 2026-11-06 (Allow /docs/mel.pdf; FTPS put unquoted path)
 # Poznámka: ďalšie interné cesty (.github, .kilo, .trunk, .claude, …)
 # sú blokované v .htaccess (403), nie cez Disallow (neadvertovať cestu).
 # docs/: adresár je Disallow; jediný verejný PDF mel.pdf je Allow (zhoda s .htaccess).
