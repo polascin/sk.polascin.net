@@ -14,6 +14,7 @@
 # kidneybiopsy.en.jpg (2 pixbanner strips × 1 img = 2).
 # Beh #18: root-absolútne /styles.css; na privacy/terms krížové odkazy.
 # Beh #19: refbook ?data=1 dynamický <title>/description; /styles.css; 404 generický title.
+# Beh #20: skip-link focus #6a0dad; Clarity paths /privacy,/terms; orphan styles.sk.css.php removed.
 #
 # Spusti z koreňa:  .\tools\smoke-prod.ps1
 
@@ -29,6 +30,7 @@ $checks = [ordered]@{
     '/sitemap.xml'             = 200
     '/docs/mel.pdf'            = 200
     '/js/clarity-consent.js'   = 200
+    '/styles.css'              = 200
     '/refbook.sk.php?data=1'   = 200
     '/refbook.sk.php?data=abc' = 404
     '/privacy'                 = 301
@@ -174,6 +176,9 @@ try {
     }
     $failed += Assert-BodyContains -Label 'home' -Body $probe.Body -Pattern 'href="/docs/mel\.pdf"' -OkMessage 'home link /docs/mel.pdf'
     $failed += Assert-BodyContains -Label 'home' -Body $probe.Body -Pattern 'href="/styles\.css\?v=' -OkMessage 'home stylesheet /styles.css'
+    $failed += Assert-BodyContains -Label 'home' -Body $probe.Body -Pattern 'data-paths="[^"]*/privacy[^"]*/terms"' -OkMessage 'home clarity paths include /privacy and /terms'
+    $styles = Get-PageProbe -Path '/styles.css' -UserAgent $ua
+    $failed += Assert-BodyContains -Label 'styles.css' -Body $styles.Body -Pattern '\.skip-link:focus[^{]*\{[^}]*outline:\s*2px\s+solid\s+#6a0dad' -OkMessage 'skip-link focus outline #6a0dad'
 } catch {
     Write-Host "FAIL home GET probe — $($_.Exception.Message)" -ForegroundColor Red
     $failed++

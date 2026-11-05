@@ -22,7 +22,7 @@ body {
 .skip-link:focus-visible {
   left: 0.5em;
   top: 0.5em;
-  outline: 2px solid #f5fffa;
+  outline: 2px solid #6a0dad;
   outline-offset: 2px;
 }
 
