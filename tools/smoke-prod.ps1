@@ -1,4 +1,4 @@
-﻿# Produkčný smoke sk.polascin.net s plným browser User-Agent.
+# Produkčný smoke sk.polascin.net s plným browser User-Agent.
 # Skrátený UA môže dostať HTTP 466 (ochrana hostingu).
 # Vyžaduje Windows PowerShell 5.1+.
 #
@@ -177,8 +177,14 @@ try {
     $failed += Assert-BodyContains -Label 'home' -Body $probe.Body -Pattern 'href="/docs/mel\.pdf"' -OkMessage 'home link /docs/mel.pdf'
     $failed += Assert-BodyContains -Label 'home' -Body $probe.Body -Pattern 'href="/styles\.css\?v=' -OkMessage 'home stylesheet /styles.css'
     $failed += Assert-BodyContains -Label 'home' -Body $probe.Body -Pattern 'data-paths="[^"]*/privacy[^"]*/terms"' -OkMessage 'home clarity paths include /privacy and /terms'
-    $styles = Get-PageProbe -Path '/styles.css' -UserAgent $ua
-    $failed += Assert-BodyContains -Label 'styles.css' -Body $styles.Body -Pattern '\.skip-link:focus[^{]*\{[^}]*outline:\s*2px\s+solid\s+#6a0dad' -OkMessage 'skip-link focus outline #6a0dad'
+    # Bare /styles.css may be edge-cached; pages use ?v=filemtime — probe that URL.
+    if ($probe.Body -match 'href="(/styles\.css\?v=\d+)"') {
+        $styles = Get-PageProbe -Path $Matches[1] -UserAgent $ua
+        $failed += Assert-BodyContains -Label 'styles.css' -Body $styles.Body -Pattern 'skip-link:focus[\s\S]{0,160}#6a0dad' -OkMessage 'skip-link focus outline #6a0dad (versioned CSS)'
+    } else {
+        Write-Host 'FAIL home missing versioned /styles.css?v= for CSS probe' -ForegroundColor Red
+        $failed++
+    }
 } catch {
     Write-Host "FAIL home GET probe — $($_.Exception.Message)" -ForegroundColor Red
     $failed++
