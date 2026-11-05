@@ -30,6 +30,7 @@
 # Beh #30: Clarity apply() restores focus to settings when openedFromSettings (non-reload).
 # Beh #32: refbook lang aliases cz→cs (and ua/gr/jp/cn).
 # Beh #33: Quotation isbn without ISBN prefix; Book inLanguage; PDF/XML Cache-Control; sitemap; iframe title.
+# Beh #34: educational article images lazy/decoding; color-scheme light in shared favicon head.
 #
 # Spusti z koreňa:  .\tools\smoke-prod.ps1
 
@@ -242,6 +243,10 @@ try {
     }
     $failed += Assert-BodyContains -Label 'home' -Body $probe.Body -Pattern 'href="/docs/mel\.pdf"' -OkMessage 'home link /docs/mel.pdf'
     $failed += Assert-BodyContains -Label 'home' -Body $probe.Body -Pattern 'title="Mimotelová eliminačná liečba\. Copyright 2009"' -OkMessage 'home mel.pdf iframe title without HTML entity'
+    $failed += Assert-BodyContains -Label 'home' -Body $probe.Body -Pattern 'name="color-scheme" content="light"' -OkMessage 'home color-scheme light'
+    $failed += Assert-BodyContains -Label 'home' -Body $probe.Body -Pattern 'src="/pix/dial\.jpeg"[^>]*loading="lazy"' -OkMessage 'home dial.jpeg loading=lazy'
+    $failed += Assert-BodyContains -Label 'home' -Body $probe.Body -Pattern 'src="/pix/klinef\.jpeg"[^>]*loading="lazy"' -OkMessage 'home klinef.jpeg loading=lazy'
+    $failed += Assert-BodyContains -Label 'home' -Body $probe.Body -Pattern 'src="/pix/transplantoblicky\.jpeg"[^>]*loading="lazy"' -OkMessage 'home transplantoblicky.jpeg loading=lazy'
     $failed += Assert-BodyContains -Label 'home' -Body $probe.Body -Pattern 'href="/styles\.css\?v=' -OkMessage 'home stylesheet /styles.css'
     $failed += Assert-BodyContains -Label 'home' -Body $probe.Body -Pattern 'src="/js/current\.js\?v=\d+"' -OkMessage 'home script /js/current.js?v='
     $failed += Assert-BodyContains -Label 'home' -Body $probe.Body -Pattern 'name="twitter:image:alt" content="Fotografia' -OkMessage 'home twitter:image:alt'
