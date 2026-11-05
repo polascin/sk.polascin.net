@@ -218,7 +218,12 @@ try {
         Write-Host 'FAIL webmanifest missing Cache-Control max-age' -ForegroundColor Red
         $failed++
     }
-    $clock = Get-PageProbe -Path '/js/current.js' -UserAgent $ua
+    # Bare /js/current.js may be edge-cached; homepage uses ?v=filemtime - probe that URL for body.
+    $clockPath = '/js/current.js'
+    if ($probe.Body -match 'src="(/js/current\.js\?v=\d+)"') {
+        $clockPath = $Matches[1]
+    }
+    $clock = Get-PageProbe -Path $clockPath -UserAgent $ua
     if ($clock.Body -match 'updateDateTime\(\);\s*setInterval\(updateDateTime') {
         Write-Host 'OK current.js calls updateDateTime before setInterval' -ForegroundColor Green
     } else {
