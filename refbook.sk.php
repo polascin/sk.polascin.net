@@ -159,7 +159,9 @@ if (is_array($record)) {
             '@type' => 'Book',
             'name' => $bookTitleLd,
         ];
+        // Schema.org isbn expects the number, not a leading "ISBN " label from the DB.
         $isbnLd = trim((string) ($record['isbn'] ?? ''));
+        $isbnLd = trim((string) preg_replace('/^ISBN[\s:]*/i', '', $isbnLd));
         if ($isbnLd !== '') {
             $bookLd['isbn'] = $isbnLd;
         }

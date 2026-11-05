@@ -35,6 +35,12 @@ ServerSignature Off
     <FilesMatch "\.(png|jpe?g|gif|svg|webp|ico|woff2?)$">
         Header set Cache-Control "public, max-age=604800"
     </FilesMatch>
+    <FilesMatch "\.pdf$">
+        Header set Cache-Control "public, max-age=604800"
+    </FilesMatch>
+    <FilesMatch "\.xml$">
+        Header set Cache-Control "public, max-age=3600, must-revalidate"
+    </FilesMatch>
     # HTML z PHP: po deployi nesmie edge držať starý dokument (CSS/JS majú vlastné ?v=).
     <FilesMatch "\.php$">
         Header set Cache-Control "no-cache, must-revalidate"

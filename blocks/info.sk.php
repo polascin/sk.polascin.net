@@ -43,11 +43,11 @@
 <div class="info" style="background-color: honeydew; display: inline-table;">
 	<div style="font-size: 3em; font-variant: small-caps; text-align: center;">
 		<a href="/docs/mel.pdf" target="_blank" rel="noopener noreferrer">
-			Mimotelová eliminačná liečba. &copy; 2009.
+			Mimotelová eliminačná liečba. © 2009.
 		</a>
 	</div>
 	<br>
-	<iframe src="/docs/mel.pdf" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" style="border:3px solid teal; width: 100%; height: 50em;" title="Mimotelová eliminačná liečba. &copy; 2009"></iframe>
+	<iframe src="/docs/mel.pdf" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" style="border:3px solid teal; width: 100%; height: 50em;" title="Mimotelová eliminačná liečba. Copyright 2009"></iframe>
 </div>
 
 <br>

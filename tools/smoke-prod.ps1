@@ -28,6 +28,9 @@
 # Beh #30: Clarity settings focus restore after Allow/Decline from settings.
 # Beh #31: refbook Quotation JSON-LD; optional ISO lang on blockquote; bio mailto title.
 # Beh #30: Clarity apply() restores focus to settings when openedFromSettings (non-reload).
+# Beh #32: refbook lang aliases cz→cs (and ua/gr/jp/cn).
+# Beh #33: Quotation isbn without ISBN prefix; PDF/XML Cache-Control; sitemap lastmod; iframe title.
+# Beh #32: Quotation Book isbn without "ISBN " label; Book inLanguage; cz→cs already on tip.
 #
 # Spusti z koreňa:  .\tools\smoke-prod.ps1
 
@@ -156,6 +159,37 @@ foreach ($path in $checks.Keys) {
 }
 
 Write-Host ""
+Write-Host "Static asset Cache-Control (PDF / sitemap)" -ForegroundColor Cyan
+try {
+    $pdf = Get-PageProbe -Path '/docs/mel.pdf' -UserAgent $ua
+    $pdfCc = $null
+    foreach ($key in $pdf.Headers.Keys) {
+        if ($key -ieq 'Cache-Control') { $pdfCc = $pdf.Headers[$key]; break }
+    }
+    if ($pdfCc -and ($pdfCc -match 'max-age=')) {
+        Write-Host ('OK mel.pdf Cache-Control={0}' -f $pdfCc) -ForegroundColor Green
+    } else {
+        Write-Host ('FAIL mel.pdf missing Cache-Control max-age (got {0})' -f $pdfCc) -ForegroundColor Red
+        $failed++
+    }
+    $map = Get-PageProbe -Path '/sitemap.xml' -UserAgent $ua
+    $mapCc = $null
+    foreach ($key in $map.Headers.Keys) {
+        if ($key -ieq 'Cache-Control') { $mapCc = $map.Headers[$key]; break }
+    }
+    if ($mapCc -and ($mapCc -match 'max-age=')) {
+        Write-Host ('OK sitemap.xml Cache-Control={0}' -f $mapCc) -ForegroundColor Green
+    } else {
+        Write-Host ('FAIL sitemap.xml missing Cache-Control max-age (got {0})' -f $mapCc) -ForegroundColor Red
+        $failed++
+    }
+    $failed += Assert-BodyContains -Label 'sitemap' -Body $map.Body -Pattern '<lastmod>2026-11-06</lastmod>' -OkMessage 'sitemap lastmod 2026-11-06'
+} catch {
+    Write-Host "FAIL PDF/sitemap cache probe - $($_.Exception.Message)" -ForegroundColor Red
+    $failed++
+}
+
+Write-Host ""
 Write-Host "Home GET: security headers + pixbanner count" -ForegroundColor Cyan
 try {
     $probe = Get-PageProbe -Path '/' -UserAgent $ua
@@ -208,6 +242,7 @@ try {
         $failed++
     }
     $failed += Assert-BodyContains -Label 'home' -Body $probe.Body -Pattern 'href="/docs/mel\.pdf"' -OkMessage 'home link /docs/mel.pdf'
+    $failed += Assert-BodyContains -Label 'home' -Body $probe.Body -Pattern 'title="Mimotelová eliminačná liečba\. Copyright 2009"' -OkMessage 'home mel.pdf iframe title without HTML entity'
     $failed += Assert-BodyContains -Label 'home' -Body $probe.Body -Pattern 'href="/styles\.css\?v=' -OkMessage 'home stylesheet /styles.css'
     $failed += Assert-BodyContains -Label 'home' -Body $probe.Body -Pattern 'src="/js/current\.js\?v=\d+"' -OkMessage 'home script /js/current.js?v='
     $failed += Assert-BodyContains -Label 'home' -Body $probe.Body -Pattern 'name="twitter:image:alt" content="Fotografia' -OkMessage 'home twitter:image:alt'
@@ -391,6 +426,18 @@ try {
         Write-Host 'FAIL refbook still emits invalid inLanguage cz' -ForegroundColor Red
         $failed++
     }
+    $failed += Assert-BodyContains -Label 'refbook' -Body $refOk.Body -Pattern '"isbn":\s*"978-' -OkMessage 'refbook Quotation isbn without ISBN prefix'
+    if ($refOk.Body -match '"isbn":\s*"ISBN') {
+        Write-Host 'FAIL refbook Quotation isbn still has ISBN label prefix' -ForegroundColor Red
+        $failed++
+    }
+    # data=1 isbn is stored with an "ISBN " label; JSON-LD isbn must be the identifier only.
+    $failed += Assert-BodyContains -Label 'refbook' -Body $refOk.Body -Pattern '"isbn":\s*"978-' -OkMessage 'refbook Book isbn without ISBN label'
+    if ($refOk.Body -match '"isbn":\s*"ISBN\s') {
+        Write-Host 'FAIL refbook JSON-LD isbn still has ISBN label prefix' -ForegroundColor Red
+        $failed++
+    }
+    $failed += Assert-BodyContains -Label 'refbook' -Body $refOk.Body -Pattern '"@type":\s*"Book"[^}]*"inLanguage":\s*"cs"' -OkMessage 'refbook Book inLanguage cs'
     if ($refOk.Body -match '"@type":\s*"Quotation"' -and $refOk.Body -notmatch 'application/ld\+json') {
         Write-Host 'FAIL refbook Quotation JSON-LD missing script type' -ForegroundColor Red
         $failed++
