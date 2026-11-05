@@ -25,7 +25,7 @@ user = os.environ["FTP_USER"]
 password = os.environ["FTP_PASS"]
 remote_root = os.environ["FTP_DIR"].strip("/")
 
-EXCLUDE_DIRS = {".git", ".github", ".githooks", ".vscode", ".claude", ".trunk", "tools"}
+EXCLUDE_DIRS = {".git", ".github", ".githooks", ".vscode", ".claude", ".cursor", ".codex", ".kilo", ".trunk", "tools"}
 EXCLUDE_GLOBS = [
     "*.md", "*.ps1", "phpstan*", ".php-cs-fixer*", "db.config.php",
     ".gitignore", ".gitattributes", ".deployignore",

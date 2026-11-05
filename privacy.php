@@ -23,7 +23,7 @@
 
   <title>Ochrana osobných údajov (sk.polascin.net)</title>
 
-  <link rel="stylesheet" href="styles.css?v=<?php echo (int) @filemtime(__DIR__ . '/styles.css'); ?>">
+  <link rel="stylesheet" href="/styles.css?v=<?php echo (int) @filemtime(__DIR__ . '/styles.css'); ?>">
 
 </head>
 

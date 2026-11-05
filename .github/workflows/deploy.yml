@@ -129,6 +129,9 @@ jobs:
               --exclude-glob .githooks/ \
               --exclude-glob .vscode/ \
               --exclude-glob .claude/ \
+              --exclude-glob .cursor/ \
+              --exclude-glob .codex/ \
+              --exclude-glob .kilo/ \
               --exclude-glob .trunk/ \
               --exclude-glob tools/ \
               --exclude-glob .gitignore \

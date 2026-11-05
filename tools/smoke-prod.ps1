@@ -12,6 +12,7 @@
 #
 # Beh #15: na GET / overí aj kľúčové bezpečnostné hlavičky a počet
 # kidneybiopsy.en.jpg (2 pixbanner strips × 1 img = 2).
+# Beh #18: root-absolútne /styles.css; na privacy/terms krížové odkazy.
 #
 # Spusti z koreňa:  .\tools\smoke-prod.ps1
 
@@ -66,9 +67,12 @@ function Get-HttpStatus {
     }
 }
 
-function Get-HomeProbe {
-    param([string]$UserAgent)
-    $req = [System.Net.HttpWebRequest]::Create("$base/")
+function Get-PageProbe {
+    param(
+        [string]$Path,
+        [string]$UserAgent
+    )
+    $req = [System.Net.HttpWebRequest]::Create("$base$Path")
     $req.Method = 'GET'
     $req.UserAgent = $UserAgent
     $req.AllowAutoRedirect = $false
@@ -86,6 +90,21 @@ function Get-HomeProbe {
     } finally {
         $resp.Close()
     }
+}
+
+function Assert-BodyContains {
+    param(
+        [string]$Label,
+        [string]$Body,
+        [string]$Pattern,
+        [string]$OkMessage
+    )
+    if ($Body -notmatch $Pattern) {
+        Write-Host "FAIL $Label missing match: $Pattern" -ForegroundColor Red
+        return 1
+    }
+    Write-Host "OK $OkMessage" -ForegroundColor Green
+    return 0
 }
 
 $failed = 0
@@ -109,7 +128,7 @@ foreach ($path in $checks.Keys) {
 Write-Host ""
 Write-Host "Home GET: security headers + pixbanner count" -ForegroundColor Cyan
 try {
-    $probe = Get-HomeProbe -UserAgent $ua
+    $probe = Get-PageProbe -Path '/' -UserAgent $ua
     $requiredHeaders = [ordered]@{
         'X-Content-Type-Options'      = 'nosniff'
         'Cross-Origin-Resource-Policy' = 'same-origin'
@@ -141,14 +160,26 @@ try {
         Write-Host "FAIL kidneybiopsy.en.jpg count=$kbCount (expected 2)" -ForegroundColor Red
         $failed++
     }
-    if ($probe.Body -notmatch 'href="/docs/mel\.pdf"') {
-        Write-Host "FAIL home missing absolute /docs/mel.pdf link" -ForegroundColor Red
-        $failed++
-    } else {
-        Write-Host "OK home link /docs/mel.pdf" -ForegroundColor Green
-    }
+    $failed += Assert-BodyContains -Label 'home' -Body $probe.Body -Pattern 'href="/docs/mel\.pdf"' -OkMessage 'home link /docs/mel.pdf'
+    $failed += Assert-BodyContains -Label 'home' -Body $probe.Body -Pattern 'href="/styles\.css\?v=' -OkMessage 'home stylesheet /styles.css'
 } catch {
     Write-Host "FAIL home GET probe — $($_.Exception.Message)" -ForegroundColor Red
+    $failed++
+}
+
+Write-Host ""
+Write-Host "Legal GET: root-absolute cross-links + stylesheet" -ForegroundColor Cyan
+try {
+    $privacy = Get-PageProbe -Path '/privacy.php' -UserAgent $ua
+    $failed += Assert-BodyContains -Label 'privacy' -Body $privacy.Body -Pattern 'href="/styles\.css\?v=' -OkMessage 'privacy stylesheet /styles.css'
+    $failed += Assert-BodyContains -Label 'privacy' -Body $privacy.Body -Pattern 'href="/terms"' -OkMessage 'privacy link /terms'
+    $failed += Assert-BodyContains -Label 'privacy' -Body $privacy.Body -Pattern 'href="/refbook\.sk\.php"' -OkMessage 'privacy link /refbook.sk.php'
+
+    $terms = Get-PageProbe -Path '/terms.php' -UserAgent $ua
+    $failed += Assert-BodyContains -Label 'terms' -Body $terms.Body -Pattern 'href="/styles\.css\?v=' -OkMessage 'terms stylesheet /styles.css'
+    $failed += Assert-BodyContains -Label 'terms' -Body $terms.Body -Pattern 'href="/privacy"' -OkMessage 'terms link /privacy'
+} catch {
+    Write-Host "FAIL legal GET probe — $($_.Exception.Message)" -ForegroundColor Red
     $failed++
 }
 
@@ -158,5 +189,5 @@ if ($failed -gt 0) {
     exit 1
 }
 Write-Host ""
-Write-Host "Smoke OK (403 = Apache; 509 = OpenResty edge; headers + pixbanner)." -ForegroundColor Green
+Write-Host "Smoke OK (403 = Apache; 509 = OpenResty edge; headers + pixbanner + legal)." -ForegroundColor Green
 exit 0

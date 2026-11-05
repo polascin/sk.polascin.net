@@ -12,5 +12,7 @@ tools
 .vscode
 .claude
 .cursor
+.codex
+.kilo
 .trunk
 *.ps1
