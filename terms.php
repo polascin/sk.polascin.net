@@ -97,6 +97,11 @@
 
 <main id="obsah" class="info legal" tabindex="-1" aria-label="Hlavný obsah">
 
+	<?php
+	$skBcCurrentLabel = 'Podmienky používania';
+	require __DIR__ . '/blocks/breadcrumb.sk.php';
+	?>
+
 	<h1>Podmienky používania</h1>
 
 	<p class="legal-updated">

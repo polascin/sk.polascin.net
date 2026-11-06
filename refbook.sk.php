@@ -298,6 +298,11 @@ if (is_array($record)) {
 
 <br><br>
 
+<?php if ($record !== null) {
+	$skBcCurrentLabel = 'Citát';
+	require __DIR__ . '/blocks/breadcrumb.sk.php';
+} ?>
+
 <div class="refbook-card" style="display: inline-table; border: solid thin grey; padding: 3em; background-color: ghostwhite; width: 80%; text-align: left;">
 
 <?php if ($record === null) { ?>

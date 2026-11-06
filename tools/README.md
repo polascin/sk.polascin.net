@@ -62,6 +62,8 @@ do `sameAs`, nie nav `href`), na `privacy.php` / `terms.php` `@graph`
 `WebPage` + `BreadcrumbList` (`isPartOf` `#website`, Domov → právna stránka),
 na `refbook.sk.php?data=` `@graph` `WebPage` + `BreadcrumbList` + `Quotation`
 (`isPartOf` `#website`, Domov → Citát, `mainEntity` `#quotation`),
+viditeľnú navigáciu `aria-label="Navigačná cesta"` (Domov → aktuálna stránka)
+na privacy/terms/úspešnom refbooku (nie na refbook 404),
 focus outline Clarity `#6a0dad` (zhoda so skip-link), `main`
 `aria-label="Hlavný obsah"`, footer `aria-label="Pätička stránky"`, bio
 `title` na kontaktných/Amazon odkazoch, Permissions-Policy
