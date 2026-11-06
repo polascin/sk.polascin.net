@@ -48,6 +48,10 @@ ServerSignature Off
     <FilesMatch "\.php$">
         Header set Cache-Control "no-cache, must-revalidate"
     </FilesMatch>
+    # PWA manifest (PHP): ikony majú ?v=filemtime; samotný JSON môže byť krátko cacheovaný.
+    <Files "site.webmanifest.php">
+        Header set Cache-Control "public, max-age=86400, must-revalidate"
+    </Files>
 </IfModule>
 
 # Blokovanie .git a citlivých súborov
@@ -86,4 +90,6 @@ ServerSignature Off
     RewriteRule ^docs/(?!mel\.pdf$).* - [F,L]
     # Alias bez prípony: /privacy a /terms → kanonické .php stránky
     RewriteRule ^(privacy|terms)/?$ /$1.php [R=301,L,NE]
+    # PWA: dynamický manifest s ?v= na ikonách (Beh #66); starý .webmanifest URL ostáva.
+    RewriteRule ^favicon/site\.webmanifest$ /favicon/site.webmanifest.php [L]
 </IfModule>

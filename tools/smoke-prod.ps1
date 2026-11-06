@@ -60,6 +60,7 @@
 # Beh #61: privacy/terms cross-links + Microsoft Clarity docs have title; externals noopener.
 # Beh #62: stop PHP-require of lipton-tx inside HTML comment (include skipped; home has no eugenika).
 # Beh #65: versioned link rel=icon 192x192 + 512x512 (manifest assets also in HTML head).
+# Beh #66: PHP site.webmanifest.php with ?v=filemtime on icon src; rewrite from .webmanifest.
 #
 # Spusti z koreňa:  .\tools\smoke-prod.ps1
 
@@ -77,6 +78,7 @@ $checks = [ordered]@{
     '/js/clarity-consent.js'   = 200
     '/js/current.js'           = 200
     '/styles.css'              = 200
+    '/favicon/site.webmanifest.php' = 200
     '/favicon/site.webmanifest'= 200
     '/favicon.ico'             = 200
     '/refbook.sk.php?data=1'   = 200
@@ -383,8 +385,8 @@ try {
     $failed += Assert-BodyContains -Label 'home' -Body $probe.Body -Pattern 'href="/favicon/apple-touch-icon\.png\?v=\d+"' -OkMessage 'home versioned apple-touch-icon'
     $failed += Assert-BodyContains -Label 'home' -Body $probe.Body -Pattern 'rel="icon" type="image/png" sizes="192x192" href="/favicon/android-chrome-192x192\.png\?v=\d+"' -OkMessage 'home versioned icon 192x192'
     $failed += Assert-BodyContains -Label 'home' -Body $probe.Body -Pattern 'rel="icon" type="image/png" sizes="512x512" href="/favicon/android-chrome-512x512\.png\?v=\d+"' -OkMessage 'home versioned icon 512x512'
-    # Bare webmanifest may be edge-cached; pages use ?v=filemtime.
-    if ($probe.Body -match 'href="(/favicon/site\.webmanifest\?v=\d+)"') {
+    # Versioned PHP manifest; rewrite also serves /favicon/site.webmanifest.
+    if ($probe.Body -match 'href="(/favicon/site\.webmanifest\.php\?v=\d+)"') {
         $manifestPath = $Matches[1]
         Write-Host ('OK home webmanifest href {0}' -f $manifestPath) -ForegroundColor Green
         $manifest = Get-PageProbe -Path $manifestPath -UserAgent $ua
@@ -396,6 +398,8 @@ try {
         $failed += Assert-BodyContains -Label 'manifest' -Body $manifest.Body -Pattern '"scope":\s*"/"' -OkMessage 'webmanifest scope /'
         $failed += Assert-BodyContains -Label 'manifest' -Body $manifest.Body -Pattern '"description":\s*"Webové sídlo' -OkMessage 'webmanifest description'
         $failed += Assert-BodyContains -Label 'manifest' -Body $manifest.Body -Pattern '"purpose":\s*"any"' -OkMessage 'webmanifest icon purpose any'
+        $failed += Assert-BodyContains -Label 'manifest' -Body $manifest.Body -Pattern '"src":\s*"/favicon/android-chrome-192x192\.png\?v=\d+"' -OkMessage 'webmanifest icon 192 has ?v='
+        $failed += Assert-BodyContains -Label 'manifest' -Body $manifest.Body -Pattern '"src":\s*"/favicon/android-chrome-512x512\.png\?v=\d+"' -OkMessage 'webmanifest icon 512 has ?v='
         $manifestCt = $null
         $manifestCc = $null
         foreach ($key in $manifest.Headers.Keys) {
@@ -416,7 +420,7 @@ try {
             $failed++
         }
     } else {
-        Write-Host 'FAIL home missing versioned /favicon/site.webmanifest?v=' -ForegroundColor Red
+        Write-Host 'FAIL home missing versioned /favicon/site.webmanifest.php?v=' -ForegroundColor Red
         $failed++
     }
     # Bare /js/current.js may be edge-cached; homepage uses ?v=filemtime - probe that URL for body.

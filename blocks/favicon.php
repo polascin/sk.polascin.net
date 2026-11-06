@@ -4,7 +4,7 @@ $skIcoV = (int) @filemtime(__DIR__ . '/../favicon.ico');
 $skAppleV = (int) @filemtime($skFavDir . '/apple-touch-icon.png');
 $skIcon32V = (int) @filemtime($skFavDir . '/favicon-32x32.png');
 $skIcon16V = (int) @filemtime($skFavDir . '/favicon-16x16.png');
-$skManifestV = (int) @filemtime($skFavDir . '/site.webmanifest');
+$skManifestV = (int) @filemtime($skFavDir . '/site.webmanifest.php');
 $skChrome192V = (int) @filemtime($skFavDir . '/android-chrome-192x192.png');
 $skChrome512V = (int) @filemtime($skFavDir . '/android-chrome-512x512.png');
 ?>
@@ -24,4 +24,4 @@ $skChrome512V = (int) @filemtime($skFavDir . '/android-chrome-512x512.png');
 <link rel="icon" type="image/png" sizes="192x192" href="/favicon/android-chrome-192x192.png?v=<?= $skChrome192V ?>">
 <link rel="icon" type="image/png" sizes="512x512" href="/favicon/android-chrome-512x512.png?v=<?= $skChrome512V ?>">
 <link rel="icon" href="/favicon.ico?v=<?= $skIcoV ?>" sizes="any">
-<link rel="manifest" href="/favicon/site.webmanifest?v=<?= $skManifestV ?>">
+<link rel="manifest" href="/favicon/site.webmanifest.php?v=<?= $skManifestV ?>">
