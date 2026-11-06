@@ -35,6 +35,7 @@
   <meta property="og:image:width" content="400">
   <meta property="og:image:height" content="400">
   <meta property="og:image:alt" content="Fotografia Ľubomíra Polaščína">
+  <meta property="og:updated_time" content="<?php echo htmlspecialchars(date('c', (int) @filemtime(__FILE__)), ENT_QUOTES, 'UTF-8'); ?>">
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="Ochrana osobných údajov (sk.polascin.net)">
   <meta name="twitter:description" content="Zásady ochrany osobných údajov (GDPR) webového sídla sk.polascin.net">

@@ -66,7 +66,8 @@ viditeľnú navigáciu `aria-label="Navigačná cesta"` (Domov → aktuálna str
 na privacy/terms/úspešnom refbooku (nie na refbook 404), breadcrumb oddeľovač
 `<li aria-hidden="true">/</li>`, homepage `blockquote.quotebox` `lang="sk"`
 s `cite=` na refbook URL (úspešný refbook: `cite=` kanonickej URL citátu),
-focus outline Clarity `#6a0dad` (zhoda so skip-link), `main`
+`meta name="date"` a `og:updated_time` z `filemtime` (ISO-8601 s offsetom)
+na home/privacy/terms/refbook, focus outline Clarity `#6a0dad` (zhoda so skip-link), `main`
 `aria-label="Hlavný obsah"`, footer `aria-label="Pätička stránky"`, bio
 `title` na kontaktných/Amazon odkazoch, Permissions-Policy
 `browsing-topics=()` / `interest-cohort=()`, `robots.txt` s

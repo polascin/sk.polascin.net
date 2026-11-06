@@ -47,8 +47,8 @@
 # Beh #48: blockquote cite= URL (homepage → refbook; refbook → canonical quote URL).
 # Beh #49: WebPage dateModified from filemtime; breadcrumb Domov title.
 # Beh #50: meta name="date" from filemtime (ISO-8601 date('c')); refbook WebPage dateModified.
-# Beh #51: og:updated_time from filemtime (same ISO-8601 as meta date) on home/privacy/terms/refbook.
 # Beh #51: intersection sister-site nav links have title attributes.
+# Beh #52: og:updated_time from filemtime (same ISO-8601 as meta date) on home/privacy/terms/refbook.
 #
 # Spusti z koreňa:  .\tools\smoke-prod.ps1
 
@@ -155,6 +155,25 @@ function Assert-BodyContains {
         return 1
     }
     Write-Host "OK $OkMessage" -ForegroundColor Green
+    return 0
+}
+
+function Assert-MetaDateEqualsOgUpdated {
+    param(
+        [string]$Label,
+        [string]$Body
+    )
+    $metaM = [regex]::Match($Body, 'name="date" content="(\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}[+-]\d{2}:\d{2})"')
+    $ogM = [regex]::Match($Body, 'property="og:updated_time" content="(\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}[+-]\d{2}:\d{2})"')
+    if (-not $metaM.Success -or -not $ogM.Success) {
+        Write-Host "FAIL $Label meta date / og:updated_time capture missing" -ForegroundColor Red
+        return 1
+    }
+    if ($metaM.Groups[1].Value -ne $ogM.Groups[1].Value) {
+        Write-Host "FAIL $Label meta date ($($metaM.Groups[1].Value)) != og:updated_time ($($ogM.Groups[1].Value))" -ForegroundColor Red
+        return 1
+    }
+    Write-Host "OK $Label meta date equals og:updated_time" -ForegroundColor Green
     return 0
 }
 
@@ -305,6 +324,7 @@ try {
     $failed += Assert-BodyContains -Label 'home' -Body $probe.Body -Pattern '"dateModified":\s*"\d{4}-\d{2}-\d{2}"' -OkMessage 'home JSON-LD WebPage dateModified'
     $failed += Assert-BodyContains -Label 'home' -Body $probe.Body -Pattern 'name="date" content="\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}[+-]\d{2}:\d{2}"' -OkMessage 'home meta date ISO-8601 with offset'
     $failed += Assert-BodyContains -Label 'home' -Body $probe.Body -Pattern 'property="og:updated_time" content="\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}[+-]\d{2}:\d{2}"' -OkMessage 'home og:updated_time ISO-8601 with offset'
+    $failed += Assert-MetaDateEqualsOgUpdated -Label 'home' -Body $probe.Body
     $failed += Assert-BodyContains -Label 'home' -Body $probe.Body -Pattern '"@graph"' -OkMessage 'home JSON-LD @graph'
     $failed += Assert-BodyContains -Label 'home' -Body $probe.Body -Pattern '"isPartOf"\s*:\s*\{\s*"@id"\s*:\s*"https://sk\.polascin\.net/#website"' -OkMessage 'home JSON-LD WebPage isPartOf website'
     $failed += Assert-BodyContains -Label 'home' -Body $probe.Body -Pattern '"mainEntity"\s*:\s*\{\s*"@id"\s*:\s*"https://sk\.polascin\.net/#person"' -OkMessage 'home JSON-LD WebPage mainEntity person'
@@ -481,6 +501,7 @@ try {
     $failed += Assert-BodyContains -Label 'privacy' -Body $privacy.Body -Pattern '"dateModified":\s*"\d{4}-\d{2}-\d{2}"' -OkMessage 'privacy JSON-LD dateModified'
     $failed += Assert-BodyContains -Label 'privacy' -Body $privacy.Body -Pattern 'name="date" content="\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}[+-]\d{2}:\d{2}"' -OkMessage 'privacy meta date ISO-8601 with offset'
     $failed += Assert-BodyContains -Label 'privacy' -Body $privacy.Body -Pattern 'property="og:updated_time" content="\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}[+-]\d{2}:\d{2}"' -OkMessage 'privacy og:updated_time ISO-8601 with offset'
+    $failed += Assert-MetaDateEqualsOgUpdated -Label 'privacy' -Body $privacy.Body
     $failed += Assert-BodyContains -Label 'privacy' -Body $privacy.Body -Pattern 'href="/"[^>]*title="Úvodná stránka"' -OkMessage 'privacy breadcrumb Domov title'
     $failed += Assert-BodyContains -Label 'privacy' -Body $privacy.Body -Pattern '<li aria-hidden="true">/</li>' -OkMessage 'privacy breadcrumb separator aria-hidden'
 
@@ -501,6 +522,7 @@ try {
     $failed += Assert-BodyContains -Label 'terms' -Body $terms.Body -Pattern '"dateModified":\s*"\d{4}-\d{2}-\d{2}"' -OkMessage 'terms JSON-LD dateModified'
     $failed += Assert-BodyContains -Label 'terms' -Body $terms.Body -Pattern 'name="date" content="\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}[+-]\d{2}:\d{2}"' -OkMessage 'terms meta date ISO-8601 with offset'
     $failed += Assert-BodyContains -Label 'terms' -Body $terms.Body -Pattern 'property="og:updated_time" content="\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}[+-]\d{2}:\d{2}"' -OkMessage 'terms og:updated_time ISO-8601 with offset'
+    $failed += Assert-MetaDateEqualsOgUpdated -Label 'terms' -Body $terms.Body
 } catch {
     Write-Host "FAIL legal GET probe - $($_.Exception.Message)" -ForegroundColor Red
     $failed++
@@ -531,6 +553,7 @@ try {
     $failed += Assert-BodyContains -Label 'refbook' -Body $refOk.Body -Pattern '"dateModified":\s*"\d{4}-\d{2}-\d{2}"' -OkMessage 'refbook JSON-LD WebPage dateModified'
     $failed += Assert-BodyContains -Label 'refbook' -Body $refOk.Body -Pattern 'name="date" content="\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}[+-]\d{2}:\d{2}"' -OkMessage 'refbook meta date ISO-8601 with offset'
     $failed += Assert-BodyContains -Label 'refbook' -Body $refOk.Body -Pattern 'property="og:updated_time" content="\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}[+-]\d{2}:\d{2}"' -OkMessage 'refbook og:updated_time ISO-8601 with offset'
+    $failed += Assert-MetaDateEqualsOgUpdated -Label 'refbook' -Body $refOk.Body
     $failed += Assert-BodyContains -Label 'refbook' -Body $refOk.Body -Pattern '"@type":\s*"BreadcrumbList"' -OkMessage 'refbook JSON-LD BreadcrumbList'
     $failed += Assert-BodyContains -Label 'refbook' -Body $refOk.Body -Pattern '"isPartOf"\s*:\s*\{\s*"@id"\s*:\s*"https://sk\.polascin\.net/#website"' -OkMessage 'refbook WebPage isPartOf website'
     $failed += Assert-BodyContains -Label 'refbook' -Body $refOk.Body -Pattern '"@id":\s*"https://sk\.polascin\.net/refbook\.sk\.php\?data=1#quotation"' -OkMessage 'refbook Quotation @id'

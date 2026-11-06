@@ -136,6 +136,7 @@ if (is_array($record)) {
   <meta property="og:image:width" content="400">
   <meta property="og:image:height" content="400">
   <meta property="og:image:alt" content="Fotografia Ľubomíra Polaščína">
+  <meta property="og:updated_time" content="<?php echo htmlspecialchars(date('c', (int) @filemtime(__FILE__)), ENT_QUOTES, 'UTF-8'); ?>">
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="<?= $esc($pageTitle) ?>">
   <meta name="twitter:description" content="<?= $esc($pageDescription) ?>">
