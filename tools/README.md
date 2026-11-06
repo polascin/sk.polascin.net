@@ -57,8 +57,8 @@ cz→cs), Cache-Control pre `mel.pdf` a `sitemap.xml`, `color-scheme: light`,
 `loading=lazy` na odborných obrázkoch (`dial.jpeg`, `klinef.jpeg`, …),
 nadpisy bez preskoku úrovní (Amazon knihy `h2`, podsekcie nefamb `h3`),
 JSON-LD `@graph` (`WebSite` + `WebPage` + `Person`, `publisher`/`isPartOf`/
-`mainEntity` `@id`), `sameAs` vrátane `https://polascin.sk/` (assert scoped
-do `sameAs`, nie nav `href`), na `privacy.php` / `terms.php` `@graph`
+`mainEntity` `@id`), `sameAs` vrátane `https://polascin.sk/` a `https://polascin.org/` (assert scoped
+do `sameAs`, nie nav `href`), `application-name` / `apple-mobile-web-app-title` podľa manifestu, na `privacy.php` / `terms.php` `@graph`
 `WebPage` + `BreadcrumbList` (`isPartOf` `#website`, Domov → právna stránka),
 na `refbook.sk.php?data=` `@graph` `WebPage` + `BreadcrumbList` + `Quotation`
 (`isPartOf` `#website`, Domov → Citát, `mainEntity` `#quotation`),

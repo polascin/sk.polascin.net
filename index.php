@@ -83,6 +83,7 @@
           "https://www.linkedin.com/in/lubomirpolascin/",
           "https://polascin.net/",
           "https://polascin.sk/",
+          "https://polascin.org/",
           "https://nephrosite.polascin.net/",
           "https://books.polascin.net/"
         ]

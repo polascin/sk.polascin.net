@@ -50,6 +50,7 @@
 # Beh #51: intersection sister-site nav links have title attributes.
 # Beh #52: og:updated_time from filemtime (same ISO-8601 as meta date) on home/privacy/terms/refbook.
 # Beh #53: og:image:type image/jpeg; smoke covers all six intersection titles.
+# Beh #54: application-name / apple-mobile-web-app-title (manifest parity); sameAs polascin.org.
 #
 # Spusti z koreňa:  .\tools\smoke-prod.ps1
 
@@ -331,9 +332,13 @@ try {
     $failed += Assert-BodyContains -Label 'home' -Body $probe.Body -Pattern '"isPartOf"\s*:\s*\{\s*"@id"\s*:\s*"https://sk\.polascin\.net/#website"' -OkMessage 'home JSON-LD WebPage isPartOf website'
     $failed += Assert-BodyContains -Label 'home' -Body $probe.Body -Pattern '"mainEntity"\s*:\s*\{\s*"@id"\s*:\s*"https://sk\.polascin\.net/#person"' -OkMessage 'home JSON-LD WebPage mainEntity person'
     $failed += Assert-BodyContains -Label 'home' -Body $probe.Body -Pattern '"sameAs"\s*:\s*\[[\s\S]*?https://polascin\.sk/' -OkMessage 'home JSON-LD sameAs polascin.sk'
+    $failed += Assert-BodyContains -Label 'home' -Body $probe.Body -Pattern '"sameAs"\s*:\s*\[[\s\S]*?https://polascin\.org/' -OkMessage 'home JSON-LD sameAs polascin.org'
+    $failed += Assert-BodyContains -Label 'home' -Body $probe.Body -Pattern 'name="application-name" content="Ľubomír Polaščín"' -OkMessage 'home application-name'
+    $failed += Assert-BodyContains -Label 'home' -Body $probe.Body -Pattern 'name="apple-mobile-web-app-title" content="Polaščín"' -OkMessage 'home apple-mobile-web-app-title'
     $failed += Assert-BodyContains -Label 'home' -Body $probe.Body -Pattern '<main[^>]*aria-label="Hlavný obsah"' -OkMessage 'home main aria-label'
     $failed += Assert-BodyContains -Label 'home' -Body $probe.Body -Pattern 'aria-label="Súvisiace weby"' -OkMessage 'home sister-sites nav aria-label'
     $failed += Assert-BodyContains -Label 'home' -Body $probe.Body -Pattern 'href="https://polascin\.net/"[^>]*title="Polascin\.Net \(EN\)"' -OkMessage 'home intersection polascin.net title'
+    $failed += Assert-BodyContains -Label 'home' -Body $probe.Body -Pattern 'href="https://sk\.polascin\.net/"[^>]*title="SK\.polascin\.net"' -OkMessage 'home intersection sk.polascin.net title'
     $failed += Assert-BodyContains -Label 'home' -Body $probe.Body -Pattern 'href="https://polascin\.sk/"[^>]*title="Polascin\.Sk"' -OkMessage 'home intersection polascin.sk title'
     $failed += Assert-BodyContains -Label 'home' -Body $probe.Body -Pattern 'href="https://books\.polascin\.net/"[^>]*title="Books \(EN\)"' -OkMessage 'home intersection Books title'
     $failed += Assert-BodyContains -Label 'home' -Body $probe.Body -Pattern 'href="https://polascin\.org/"[^>]*title="polascin\.org \(EN\)"' -OkMessage 'home intersection polascin.org title'
