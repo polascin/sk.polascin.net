@@ -133,6 +133,7 @@ if (is_array($record)) {
   <meta property="og:url" content="https://sk.polascin.net/refbook.sk.php?data=<?= $quoteId ?>">
 <?php } ?>
   <meta property="og:image" content="https://sk.polascin.net/pix/lpsk2.jpg">
+  <meta property="og:image:type" content="image/jpeg">
   <meta property="og:image:width" content="400">
   <meta property="og:image:height" content="400">
   <meta property="og:image:alt" content="Fotografia Ľubomíra Polaščína">

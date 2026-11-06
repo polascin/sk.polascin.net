@@ -32,6 +32,7 @@
   <meta property="og:description" content="Podmienky používania webového sídla sk.polascin.net vrátane zdravotného zrieknutia sa zodpovednosti">
   <meta property="og:url" content="https://sk.polascin.net/terms.php">
   <meta property="og:image" content="https://sk.polascin.net/pix/lpsk2.jpg">
+  <meta property="og:image:type" content="image/jpeg">
   <meta property="og:image:width" content="400">
   <meta property="og:image:height" content="400">
   <meta property="og:image:alt" content="Fotografia Ľubomíra Polaščína">

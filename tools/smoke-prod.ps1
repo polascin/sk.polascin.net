@@ -49,6 +49,7 @@
 # Beh #50: meta name="date" from filemtime (ISO-8601 date('c')); refbook WebPage dateModified.
 # Beh #51: intersection sister-site nav links have title attributes.
 # Beh #52: og:updated_time from filemtime (same ISO-8601 as meta date) on home/privacy/terms/refbook.
+# Beh #53: og:image:type image/jpeg; smoke covers all six intersection titles.
 #
 # Spusti z koreňa:  .\tools\smoke-prod.ps1
 
@@ -308,6 +309,7 @@ try {
     }
     $failed += Assert-BodyContains -Label 'home' -Body $probe.Body -Pattern 'href="/styles\.css\?v=' -OkMessage 'home stylesheet /styles.css'
     $failed += Assert-BodyContains -Label 'home' -Body $probe.Body -Pattern 'src="/js/current\.js\?v=\d+"' -OkMessage 'home script /js/current.js?v='
+    $failed += Assert-BodyContains -Label 'home' -Body $probe.Body -Pattern 'property="og:image:type" content="image/jpeg"' -OkMessage 'home og:image:type image/jpeg'
     $failed += Assert-BodyContains -Label 'home' -Body $probe.Body -Pattern 'name="twitter:image:alt" content="Fotografia' -OkMessage 'home twitter:image:alt'
     $failed += Assert-BodyContains -Label 'home' -Body $probe.Body -Pattern 'data-paths="[^"]*/privacy[^"]*/terms"' -OkMessage 'home clarity paths include /privacy and /terms'
     $failed += Assert-BodyContains -Label 'home' -Body $probe.Body -Pattern 'data-css-v="\d+"' -OkMessage 'home clarity consent data-css-v cache buster'
@@ -333,6 +335,8 @@ try {
     $failed += Assert-BodyContains -Label 'home' -Body $probe.Body -Pattern 'aria-label="Súvisiace weby"' -OkMessage 'home sister-sites nav aria-label'
     $failed += Assert-BodyContains -Label 'home' -Body $probe.Body -Pattern 'href="https://polascin\.net/"[^>]*title="Polascin\.Net \(EN\)"' -OkMessage 'home intersection polascin.net title'
     $failed += Assert-BodyContains -Label 'home' -Body $probe.Body -Pattern 'href="https://polascin\.sk/"[^>]*title="Polascin\.Sk"' -OkMessage 'home intersection polascin.sk title'
+    $failed += Assert-BodyContains -Label 'home' -Body $probe.Body -Pattern 'href="https://books\.polascin\.net/"[^>]*title="Books \(EN\)"' -OkMessage 'home intersection Books title'
+    $failed += Assert-BodyContains -Label 'home' -Body $probe.Body -Pattern 'href="https://polascin\.org/"[^>]*title="polascin\.org \(EN\)"' -OkMessage 'home intersection polascin.org title'
     $failed += Assert-BodyContains -Label 'home' -Body $probe.Body -Pattern 'href="https://nephrosite\.polascin\.net/"[^>]*title="NephroSite"' -OkMessage 'home intersection NephroSite title'
     $failed += Assert-BodyContains -Label 'home' -Body $probe.Body -Pattern '<footer[^>]*aria-label="Pätička stránky"' -OkMessage 'home footer aria-label'
     $failed += Assert-BodyContains -Label 'home' -Body $probe.Body -Pattern 'href="https://polascin\.sk/"[^>]*title="polascin\.sk"' -OkMessage 'home bio polascin.sk title'
@@ -488,6 +492,7 @@ try {
     $failed += Assert-BodyContains -Label 'privacy' -Body $privacy.Body -Pattern 'href="/terms"' -OkMessage 'privacy link /terms'
     $failed += Assert-BodyContains -Label 'privacy' -Body $privacy.Body -Pattern 'href="/refbook\.sk\.php"' -OkMessage 'privacy link /refbook.sk.php'
     $failed += Assert-BodyContains -Label 'privacy' -Body $privacy.Body -Pattern 'property="og:title" content="Ochrana osobných údajov' -OkMessage 'privacy og:title'
+    $failed += Assert-BodyContains -Label 'privacy' -Body $privacy.Body -Pattern 'property="og:image:type" content="image/jpeg"' -OkMessage 'privacy og:image:type image/jpeg'
     $failed += Assert-BodyContains -Label 'privacy' -Body $privacy.Body -Pattern 'name="twitter:image:alt"' -OkMessage 'privacy twitter:image:alt'
     $failed += Assert-BodyContains -Label 'privacy' -Body $privacy.Body -Pattern '<main[^>]*aria-label="Hlavný obsah"' -OkMessage 'privacy main aria-label'
     $failed += Assert-BodyContains -Label 'privacy' -Body $privacy.Body -Pattern 'rel="alternate" hreflang="sk"[^>]*href="https://sk\.polascin\.net/privacy\.php"' -OkMessage 'privacy hreflang sk'
@@ -509,6 +514,7 @@ try {
     $failed += Assert-BodyContains -Label 'terms' -Body $terms.Body -Pattern 'href="/styles\.css\?v=' -OkMessage 'terms stylesheet /styles.css'
     $failed += Assert-BodyContains -Label 'terms' -Body $terms.Body -Pattern 'href="/privacy"' -OkMessage 'terms link /privacy'
     $failed += Assert-BodyContains -Label 'terms' -Body $terms.Body -Pattern 'property="og:title" content="Podmienky používania' -OkMessage 'terms og:title'
+    $failed += Assert-BodyContains -Label 'terms' -Body $terms.Body -Pattern 'property="og:image:type" content="image/jpeg"' -OkMessage 'terms og:image:type image/jpeg'
     $failed += Assert-BodyContains -Label 'terms' -Body $terms.Body -Pattern 'name="twitter:image:alt"' -OkMessage 'terms twitter:image:alt'
     $failed += Assert-BodyContains -Label 'terms' -Body $terms.Body -Pattern '<main[^>]*aria-label="Hlavný obsah"' -OkMessage 'terms main aria-label'
     $failed += Assert-BodyContains -Label 'terms' -Body $terms.Body -Pattern 'rel="alternate" hreflang="sk"[^>]*href="https://sk\.polascin\.net/terms\.php"' -OkMessage 'terms hreflang sk'
@@ -584,6 +590,7 @@ try {
         Write-Host 'FAIL refbook Quotation JSON-LD missing script type' -ForegroundColor Red
         $failed++
     }
+    $failed += Assert-BodyContains -Label 'refbook' -Body $refOk.Body -Pattern 'property="og:image:type" content="image/jpeg"' -OkMessage 'refbook og:image:type image/jpeg'
     $failed += Assert-BodyContains -Label 'refbook' -Body $refOk.Body -Pattern 'name="twitter:image:alt"' -OkMessage 'refbook twitter:image:alt'
     $failed += Assert-BodyContains -Label 'refbook' -Body $refOk.Body -Pattern '<main[^>]*aria-label="Hlavný obsah"' -OkMessage 'refbook main aria-label'
 
