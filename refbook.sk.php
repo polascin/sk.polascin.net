@@ -159,9 +159,60 @@ if (is_array($record)) {
             '@type' => 'Book',
             'name' => $bookTitleLd,
         ];
-        // Schema.org isbn expects the number, not a leading "ISBN " label from the DB.
-        $isbnLd = trim((string) ($record['isbn'] ?? ''));
-        $isbnLd = trim((string) preg_replace('/^ISBN[\s:]*/i', '', $isbnLd));
+        // Schema.org isbn: strip DB "ISBN " label; emit only valid ISBN-10/13.
+        // Code-side only (DB row stays user-gated): if digits are 14 and the first
+        // 13 pass the ISBN-13 check digit (doubled check digit typo, e.g.
+        // 978-80-7370-542-88 → 978-80-7370-542-8), use the first 13.
+        $isbnRaw = trim((string) preg_replace(
+            '/^ISBN[\s:]*/i',
+            '',
+            trim((string) ($record['isbn'] ?? ''))
+        ));
+        $isbnDigits = strtoupper((string) preg_replace('/[^0-9Xx]/', '', $isbnRaw));
+        $isbn13Check = static function (string $d): bool {
+            if (preg_match('/^\d{13}$/', $d) !== 1) {
+                return false;
+            }
+            $sum = 0;
+            for ($i = 0; $i < 12; $i++) {
+                $n = (int) $d[$i];
+                $sum += ($i % 2 === 0) ? $n : $n * 3;
+            }
+
+            return ((10 - ($sum % 10)) % 10) === (int) $d[12];
+        };
+        $isbn10Check = static function (string $d): bool {
+            if (preg_match('/^\d{9}[\dX]$/', $d) !== 1) {
+                return false;
+            }
+            $sum = 0;
+            for ($i = 0; $i < 9; $i++) {
+                $sum += ((int) $d[$i]) * (10 - $i);
+            }
+            $check = (11 - ($sum % 11)) % 11;
+            $expected = $check === 10 ? 'X' : (string) $check;
+
+            return $d[9] === $expected;
+        };
+        if (strlen($isbnDigits) === 14 && $isbn13Check(substr($isbnDigits, 0, 13))) {
+            $isbnDigits = substr($isbnDigits, 0, 13);
+            // Keep hyphenation when trimming one trailing digit restores ISBN-13.
+            if (preg_match('/\d$/', $isbnRaw) === 1) {
+                $trimmed = substr($isbnRaw, 0, -1);
+                if ((string) preg_replace('/[^0-9]/', '', $trimmed) === $isbnDigits) {
+                    $isbnRaw = $trimmed;
+                }
+            }
+        }
+        $isbnLd = '';
+        if (strlen($isbnDigits) === 13 && $isbn13Check($isbnDigits)) {
+            $isbnLd = (str_contains($isbnRaw, '-')
+                && (string) preg_replace('/[^0-9]/', '', $isbnRaw) === $isbnDigits)
+                ? $isbnRaw
+                : $isbnDigits;
+        } elseif (strlen($isbnDigits) === 10 && $isbn10Check($isbnDigits)) {
+            $isbnLd = $isbnDigits;
+        }
         if ($isbnLd !== '') {
             $bookLd['isbn'] = $isbnLd;
         }

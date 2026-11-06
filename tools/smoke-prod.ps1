@@ -33,6 +33,7 @@
 # Beh #34: educational article images lazy/decoding; color-scheme light in shared favicon head.
 # Beh #35: robots.txt Allow /docs/mel.pdf while Disallow /docs/; comment-block logo attrs.
 # Beh #36: heading hierarchy — Amazon books h2 (not h3); nefamb subsection h3 (not h4).
+# Beh #38: JSON-LD isbn ISBN-13 check digit; trim doubled check digit (…542-88 → …542-8).
 #
 # Spusti z koreňa:  .\tools\smoke-prod.ps1
 
@@ -454,10 +455,14 @@ try {
         Write-Host 'FAIL refbook still emits invalid inLanguage cz' -ForegroundColor Red
         $failed++
     }
-    # data=1 isbn is stored with an "ISBN " label; JSON-LD isbn must be the identifier only.
-    $failed += Assert-BodyContains -Label 'refbook' -Body $refOk.Body -Pattern '"isbn":\s*"978-' -OkMessage 'refbook Book isbn without ISBN label'
+    # data=1 isbn in DB is "ISBN 978-80-7370-542-88" (extra check digit); JSON-LD must emit valid ISBN-13 only.
+    $failed += Assert-BodyContains -Label 'refbook' -Body $refOk.Body -Pattern '"isbn":\s*"978-80-7370-542-8"' -OkMessage 'refbook Book isbn valid ISBN-13 (code-side normalize)'
     if ($refOk.Body -match '"isbn":\s*"ISBN') {
         Write-Host 'FAIL refbook JSON-LD isbn still has ISBN label prefix' -ForegroundColor Red
+        $failed++
+    }
+    if ($refOk.Body -match '"isbn":\s*"978-80-7370-542-88"') {
+        Write-Host 'FAIL refbook JSON-LD isbn still has invalid 14-digit value' -ForegroundColor Red
         $failed++
     }
     $failed += Assert-BodyContains -Label 'refbook' -Body $refOk.Body -Pattern '"@type":\s*"Book"[^}]*"inLanguage":\s*"cs"' -OkMessage 'refbook Book inLanguage cs'
