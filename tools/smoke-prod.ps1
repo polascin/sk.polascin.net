@@ -56,6 +56,7 @@
 # Beh #57: msapplication-TileImage versioned android-chrome-192x192.png (TileColor companion).
 # Beh #58: MEL PDF text link has title (iframe already titled).
 # Beh #59: msapplication-config=none (skip legacy /browserconfig.xml 404).
+# Beh #60: eugenika.sk publisher link in lipton-tx has title.
 #
 # Spusti z koreňa:  .\tools\smoke-prod.ps1
 
@@ -298,6 +299,7 @@ try {
         $failed++
     }
     $failed += Assert-BodyContains -Label 'home' -Body $probe.Body -Pattern 'href="/docs/mel\.pdf"[^>]*title="Mimotelová eliminačná liečba \(PDF, © 2009\)"' -OkMessage 'home link /docs/mel.pdf with title'
+    $failed += Assert-BodyContains -Label 'home' -Body $probe.Body -Pattern 'href="https://eugenika\.sk/"[^>]*title="Vydavateľstvo Eugenika \(eugenika\.sk\)"' -OkMessage 'home eugenika.sk title'
     $failed += Assert-BodyContains -Label 'home' -Body $probe.Body -Pattern 'title="Mimotelová eliminačná liečba\. Copyright 2009"' -OkMessage 'home mel.pdf iframe title without HTML entity'
     $failed += Assert-BodyContains -Label 'home' -Body $probe.Body -Pattern 'name="color-scheme" content="light"' -OkMessage 'home color-scheme light'
     $failed += Assert-BodyContains -Label 'home' -Body $probe.Body -Pattern 'src="/pix/dial\.jpeg"[^>]*loading="lazy"' -OkMessage 'home dial.jpeg loading=lazy'
