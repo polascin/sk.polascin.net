@@ -53,7 +53,7 @@
         "description": "Zásady ochrany osobných údajov (GDPR) webového sídla sk.polascin.net",
         "inLanguage": "sk",
         "isPartOf": { "@id": "https://sk.polascin.net/#website" },
-        "dateModified": "2026-11-01",
+        "dateModified": "<?php echo htmlspecialchars(gmdate('Y-m-d', (int) @filemtime(__FILE__)), ENT_QUOTES, 'UTF-8'); ?>",
         "breadcrumb": { "@id": "https://sk.polascin.net/privacy.php#breadcrumb" }
       },
       {

@@ -53,7 +53,7 @@
         "description": "Podmienky používania webového sídla sk.polascin.net vrátane zdravotného zrieknutia sa zodpovednosti",
         "inLanguage": "sk",
         "isPartOf": { "@id": "https://sk.polascin.net/#website" },
-        "dateModified": "2026-09-05",
+        "dateModified": "<?php echo htmlspecialchars(gmdate('Y-m-d', (int) @filemtime(__FILE__)), ENT_QUOTES, 'UTF-8'); ?>",
         "breadcrumb": { "@id": "https://sk.polascin.net/terms.php#breadcrumb" }
       },
       {

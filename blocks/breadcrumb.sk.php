@@ -13,7 +13,7 @@ $skBcEsc = static function (string $value): string {
 ?>
 <nav class="breadcrumb" aria-label="Navigačná cesta">
 	<ol>
-		<li><a href="/">Domov</a></li>
+		<li><a href="/" title="Úvodná stránka">Domov</a></li>
 		<li aria-hidden="true">/</li>
 		<li aria-current="page"><?= $skBcEsc($skBcLabel) ?></li>
 	</ol>

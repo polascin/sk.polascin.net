@@ -45,6 +45,7 @@
 # Beh #46: visible breadcrumb nav matching JSON-LD (privacy/terms/refbook success; not 404).
 # Beh #47: breadcrumb slash separator aria-hidden; homepage quote blockquote lang=sk.
 # Beh #48: blockquote cite= URL (homepage → refbook; refbook → canonical quote URL).
+# Beh #49: WebPage dateModified from filemtime; breadcrumb Domov title.
 #
 # Spusti z koreňa:  .\tools\smoke-prod.ps1
 
@@ -298,6 +299,7 @@ try {
     $failed += Assert-BodyContains -Label 'home' -Body $probe.Body -Pattern '"knowsAbout"' -OkMessage 'home JSON-LD knowsAbout'
     $failed += Assert-BodyContains -Label 'home' -Body $probe.Body -Pattern '"@type":\s*"WebSite"' -OkMessage 'home JSON-LD WebSite'
     $failed += Assert-BodyContains -Label 'home' -Body $probe.Body -Pattern '"@type":\s*"WebPage"' -OkMessage 'home JSON-LD WebPage'
+    $failed += Assert-BodyContains -Label 'home' -Body $probe.Body -Pattern '"dateModified":\s*"\d{4}-\d{2}-\d{2}"' -OkMessage 'home JSON-LD WebPage dateModified'
     $failed += Assert-BodyContains -Label 'home' -Body $probe.Body -Pattern '"@graph"' -OkMessage 'home JSON-LD @graph'
     $failed += Assert-BodyContains -Label 'home' -Body $probe.Body -Pattern '"isPartOf"\s*:\s*\{\s*"@id"\s*:\s*"https://sk\.polascin\.net/#website"' -OkMessage 'home JSON-LD WebPage isPartOf website'
     $failed += Assert-BodyContains -Label 'home' -Body $probe.Body -Pattern '"mainEntity"\s*:\s*\{\s*"@id"\s*:\s*"https://sk\.polascin\.net/#person"' -OkMessage 'home JSON-LD WebPage mainEntity person'
@@ -466,7 +468,9 @@ try {
     $failed += Assert-BodyContains -Label 'privacy' -Body $privacy.Body -Pattern '"isPartOf"\s*:\s*\{\s*"@id"\s*:\s*"https://sk\.polascin\.net/#website"' -OkMessage 'privacy WebPage isPartOf website'
     $failed += Assert-BodyContains -Label 'privacy' -Body $privacy.Body -Pattern '"item":\s*"https://sk\.polascin\.net/privacy\.php"' -OkMessage 'privacy breadcrumb item privacy.php'
     $failed += Assert-BodyContains -Label 'privacy' -Body $privacy.Body -Pattern 'aria-label="Navigačná cesta"' -OkMessage 'privacy visible breadcrumb nav'
-    $failed += Assert-BodyContains -Label 'privacy' -Body $privacy.Body -Pattern 'class="breadcrumb"[^>]*>[\s\S]*?<a href="/">Domov</a>[\s\S]*?<li aria-hidden="true">/</li>[\s\S]*?aria-current="page">Ochrana osobných údajov<' -OkMessage 'privacy visible Domov → Ochrana osobných údajov'
+    $failed += Assert-BodyContains -Label 'privacy' -Body $privacy.Body -Pattern 'class="breadcrumb"[^>]*>[\s\S]*?<a href="/"[^>]*>Domov</a>[\s\S]*?<li aria-hidden="true">/</li>[\s\S]*?aria-current="page">Ochrana osobných údajov<' -OkMessage 'privacy visible Domov → Ochrana osobných údajov'
+    $failed += Assert-BodyContains -Label 'privacy' -Body $privacy.Body -Pattern '"dateModified":\s*"\d{4}-\d{2}-\d{2}"' -OkMessage 'privacy JSON-LD dateModified'
+    $failed += Assert-BodyContains -Label 'privacy' -Body $privacy.Body -Pattern 'href="/"[^>]*title="Úvodná stránka"' -OkMessage 'privacy breadcrumb Domov title'
     $failed += Assert-BodyContains -Label 'privacy' -Body $privacy.Body -Pattern '<li aria-hidden="true">/</li>' -OkMessage 'privacy breadcrumb separator aria-hidden'
 
     $terms = Get-PageProbe -Path '/terms.php' -UserAgent $ua
@@ -482,7 +486,8 @@ try {
     $failed += Assert-BodyContains -Label 'terms' -Body $terms.Body -Pattern '"isPartOf"\s*:\s*\{\s*"@id"\s*:\s*"https://sk\.polascin\.net/#website"' -OkMessage 'terms WebPage isPartOf website'
     $failed += Assert-BodyContains -Label 'terms' -Body $terms.Body -Pattern '"item":\s*"https://sk\.polascin\.net/terms\.php"' -OkMessage 'terms breadcrumb item terms.php'
     $failed += Assert-BodyContains -Label 'terms' -Body $terms.Body -Pattern 'aria-label="Navigačná cesta"' -OkMessage 'terms visible breadcrumb nav'
-    $failed += Assert-BodyContains -Label 'terms' -Body $terms.Body -Pattern 'class="breadcrumb"[^>]*>[\s\S]*?<a href="/">Domov</a>[\s\S]*?<li aria-hidden="true">/</li>[\s\S]*?aria-current="page">Podmienky používania<' -OkMessage 'terms visible Domov → Podmienky používania'
+    $failed += Assert-BodyContains -Label 'terms' -Body $terms.Body -Pattern 'class="breadcrumb"[^>]*>[\s\S]*?<a href="/"[^>]*>Domov</a>[\s\S]*?<li aria-hidden="true">/</li>[\s\S]*?aria-current="page">Podmienky používania<' -OkMessage 'terms visible Domov → Podmienky používania'
+    $failed += Assert-BodyContains -Label 'terms' -Body $terms.Body -Pattern '"dateModified":\s*"\d{4}-\d{2}-\d{2}"' -OkMessage 'terms JSON-LD dateModified'
 } catch {
     Write-Host "FAIL legal GET probe - $($_.Exception.Message)" -ForegroundColor Red
     $failed++
@@ -516,7 +521,7 @@ try {
     $failed += Assert-BodyContains -Label 'refbook' -Body $refOk.Body -Pattern '"mainEntity"\s*:\s*\{\s*"@id"\s*:\s*"https://sk\.polascin\.net/refbook\.sk\.php\?data=1#quotation"' -OkMessage 'refbook WebPage mainEntity Quotation'
     $failed += Assert-BodyContains -Label 'refbook' -Body $refOk.Body -Pattern '"name":\s*"Citát"' -OkMessage 'refbook BreadcrumbList Citát'
     $failed += Assert-BodyContains -Label 'refbook' -Body $refOk.Body -Pattern 'aria-label="Navigačná cesta"' -OkMessage 'refbook visible breadcrumb nav'
-    $failed += Assert-BodyContains -Label 'refbook' -Body $refOk.Body -Pattern 'class="breadcrumb"[^>]*>[\s\S]*?<a href="/">Domov</a>[\s\S]*?<li aria-hidden="true">/</li>[\s\S]*?aria-current="page">Citát<' -OkMessage 'refbook visible Domov → Citát'
+    $failed += Assert-BodyContains -Label 'refbook' -Body $refOk.Body -Pattern 'class="breadcrumb"[^>]*>[\s\S]*?<a href="/"[^>]*>Domov</a>[\s\S]*?<li aria-hidden="true">/</li>[\s\S]*?aria-current="page">Citát<' -OkMessage 'refbook visible Domov → Citát'
     $failed += Assert-BodyContains -Label 'refbook' -Body $refOk.Body -Pattern '<blockquote class="quotebox"[^>]*cite="https://sk\.polascin\.net/refbook\.sk\.php\?data=1"' -OkMessage 'refbook blockquote cite=canonical'
     $failed += Assert-BodyContains -Label 'refbook' -Body $refOk.Body -Pattern '"author"\s*:\s*\{\s*"@type"\s*:\s*"Person"' -OkMessage 'refbook Quotation author Person'
     # data=1 book lang is stored as "cz" in DB; JSON-LD/lang must emit ISO 639-1 "cs".
