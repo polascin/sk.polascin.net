@@ -9,7 +9,7 @@
 
   <?php require "./blocks/favicon.php"; ?>
 
-  <meta name="date" content="2026-11-06T01:12:00+0100" >
+  <meta name="date" content="2026-11-06T01:40:00+0100" >
 	<meta name="description" content="Podmienky používania webového sídla sk.polascin.net vrátane zdravotného zrieknutia sa zodpovednosti">
   <meta name="copyright" content="Ľubomír Polaščín">
 	<meta name="keywords" content="podmienky používania,zrieknutie sa zodpovednosti,disclaimer,duševné vlastníctvo,sk.polascin.net,Ľubomír Polaščín">
@@ -39,6 +39,42 @@
   <meta name="twitter:image" content="https://sk.polascin.net/pix/lpsk2.jpg">
   <meta name="twitter:image:alt" content="Fotografia Ľubomíra Polaščína">
 
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebPage",
+        "@id": "https://sk.polascin.net/terms.php#webpage",
+        "url": "https://sk.polascin.net/terms.php",
+        "name": "Podmienky používania (sk.polascin.net)",
+        "description": "Podmienky používania webového sídla sk.polascin.net vrátane zdravotného zrieknutia sa zodpovednosti",
+        "inLanguage": "sk",
+        "isPartOf": { "@id": "https://sk.polascin.net/#website" },
+        "dateModified": "2026-09-05",
+        "breadcrumb": { "@id": "https://sk.polascin.net/terms.php#breadcrumb" }
+      },
+      {
+        "@type": "BreadcrumbList",
+        "@id": "https://sk.polascin.net/terms.php#breadcrumb",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Domov",
+            "item": "https://sk.polascin.net/"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Podmienky používania",
+            "item": "https://sk.polascin.net/terms.php"
+          }
+        ]
+      }
+    ]
+  }
+  </script>
 
   <link rel="stylesheet" href="/styles.css?v=<?php echo (int) @filemtime(__DIR__ . '/styles.css'); ?>">
 

@@ -38,6 +38,7 @@
 # Beh #40: footer aria-label; bio contact/Amazon titles; Permissions-Policy browsing-topics.
 # Beh #40: homepage @graph WebSite+Person; sameAs assert scoped inside JSON-LD (not nav href).
 # Beh #41: @graph WebPage (isPartOf/about/mainEntity); main aria-label Hlavný obsah.
+# Beh #42: privacy/terms WebPage + BreadcrumbList JSON-LD (isPartOf #website).
 #
 # Spusti z koreňa:  .\tools\smoke-prod.ps1
 
@@ -449,6 +450,10 @@ try {
     $failed += Assert-BodyContains -Label 'privacy' -Body $privacy.Body -Pattern 'property="og:title" content="Ochrana osobných údajov' -OkMessage 'privacy og:title'
     $failed += Assert-BodyContains -Label 'privacy' -Body $privacy.Body -Pattern 'name="twitter:image:alt"' -OkMessage 'privacy twitter:image:alt'
     $failed += Assert-BodyContains -Label 'privacy' -Body $privacy.Body -Pattern '<main[^>]*aria-label="Hlavný obsah"' -OkMessage 'privacy main aria-label'
+    $failed += Assert-BodyContains -Label 'privacy' -Body $privacy.Body -Pattern '"@type":\s*"WebPage"' -OkMessage 'privacy JSON-LD WebPage'
+    $failed += Assert-BodyContains -Label 'privacy' -Body $privacy.Body -Pattern '"@type":\s*"BreadcrumbList"' -OkMessage 'privacy JSON-LD BreadcrumbList'
+    $failed += Assert-BodyContains -Label 'privacy' -Body $privacy.Body -Pattern '"isPartOf"\s*:\s*\{\s*"@id"\s*:\s*"https://sk\.polascin\.net/#website"' -OkMessage 'privacy WebPage isPartOf website'
+    $failed += Assert-BodyContains -Label 'privacy' -Body $privacy.Body -Pattern '"item":\s*"https://sk\.polascin\.net/privacy\.php"' -OkMessage 'privacy breadcrumb item privacy.php'
 
     $terms = Get-PageProbe -Path '/terms.php' -UserAgent $ua
     $failed += Assert-BodyContains -Label 'terms' -Body $terms.Body -Pattern 'href="/styles\.css\?v=' -OkMessage 'terms stylesheet /styles.css'
@@ -456,6 +461,10 @@ try {
     $failed += Assert-BodyContains -Label 'terms' -Body $terms.Body -Pattern 'property="og:title" content="Podmienky používania' -OkMessage 'terms og:title'
     $failed += Assert-BodyContains -Label 'terms' -Body $terms.Body -Pattern 'name="twitter:image:alt"' -OkMessage 'terms twitter:image:alt'
     $failed += Assert-BodyContains -Label 'terms' -Body $terms.Body -Pattern '<main[^>]*aria-label="Hlavný obsah"' -OkMessage 'terms main aria-label'
+    $failed += Assert-BodyContains -Label 'terms' -Body $terms.Body -Pattern '"@type":\s*"WebPage"' -OkMessage 'terms JSON-LD WebPage'
+    $failed += Assert-BodyContains -Label 'terms' -Body $terms.Body -Pattern '"@type":\s*"BreadcrumbList"' -OkMessage 'terms JSON-LD BreadcrumbList'
+    $failed += Assert-BodyContains -Label 'terms' -Body $terms.Body -Pattern '"isPartOf"\s*:\s*\{\s*"@id"\s*:\s*"https://sk\.polascin\.net/#website"' -OkMessage 'terms WebPage isPartOf website'
+    $failed += Assert-BodyContains -Label 'terms' -Body $terms.Body -Pattern '"item":\s*"https://sk\.polascin\.net/terms\.php"' -OkMessage 'terms breadcrumb item terms.php'
 } catch {
     Write-Host "FAIL legal GET probe - $($_.Exception.Message)" -ForegroundColor Red
     $failed++

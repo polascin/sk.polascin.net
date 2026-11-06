@@ -58,11 +58,13 @@ cz→cs), Cache-Control pre `mel.pdf` a `sitemap.xml`, `color-scheme: light`,
 nadpisy bez preskoku úrovní (Amazon knihy `h2`, podsekcie nefamb `h3`),
 JSON-LD `@graph` (`WebSite` + `WebPage` + `Person`, `publisher`/`isPartOf`/
 `mainEntity` `@id`), `sameAs` vrátane `https://polascin.sk/` (assert scoped
-do `sameAs`, nie nav `href`), focus outline Clarity `#6a0dad` (zhoda so
-skip-link), `main` `aria-label="Hlavný obsah"`, footer
-`aria-label="Pätička stránky"`, bio `title` na kontaktných/Amazon odkazoch,
-Permissions-Policy `browsing-topics=()` / `interest-cohort=()`,
-`robots.txt` s `Allow: /docs/mel.pdf` pri `Disallow: /docs/`, a verziovaný
+do `sameAs`, nie nav `href`), na `privacy.php` / `terms.php` `@graph`
+`WebPage` + `BreadcrumbList` (`isPartOf` `#website`, Domov → právna stránka),
+focus outline Clarity `#6a0dad` (zhoda so skip-link), `main`
+`aria-label="Hlavný obsah"`, footer `aria-label="Pätička stránky"`, bio
+`title` na kontaktných/Amazon odkazoch, Permissions-Policy
+`browsing-topics=()` / `interest-cohort=()`, `robots.txt` s
+`Allow: /docs/mel.pdf` pri `Disallow: /docs/`, a verziovaný
 `clarity-consent.js` s `aria-modal`, Escape, focus trap, `aria-describedby` /
 `aria-expanded`, `data-css-v` pre cache-bust CSS a obnovenie focusu na tlačidlo
 nastavení po Allow/Decline, keď dialóg otvorili nastavenia: `returnToSettings`
