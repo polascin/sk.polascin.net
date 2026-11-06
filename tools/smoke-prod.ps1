@@ -39,6 +39,7 @@
 # Beh #40: homepage @graph WebSite+Person; sameAs assert scoped inside JSON-LD (not nav href).
 # Beh #41: @graph WebPage (isPartOf/about/mainEntity); main aria-label Hlavný obsah.
 # Beh #42: privacy/terms WebPage + BreadcrumbList JSON-LD (isPartOf #website).
+# Beh #43: current.sk.php clock links title (Swatch / time.is).
 #
 # Spusti z koreňa:  .\tools\smoke-prod.ps1
 
@@ -389,6 +390,8 @@ try {
     }
     # Age fraction must keep a decimal point (sprintf %.3f); whole ages used to drop the fraction.
     $failed += Assert-BodyContains -Label 'home' -Body $probe.Body -Pattern '\(\d+<small>\.\d{3}</small>\)' -OkMessage 'home age keeps decimal fraction via sprintf'
+    $failed += Assert-BodyContains -Label 'home' -Body $probe.Body -Pattern 'href="https://en\.wikipedia\.org/wiki/Swatch_Internet_Time"[^>]*title="Swatch Internet Time \(Wikipedia\)"' -OkMessage 'home Swatch Internet Time link title'
+    $failed += Assert-BodyContains -Label 'home' -Body $probe.Body -Pattern 'href="https://time\.is/"[^>]*title="Aktuálny dátum a čas \(time\.is\)"' -OkMessage 'home time.is link title'
     # Clarity consent a11y: modal pattern (versioned script; bare path may be edge-cached).
     if ($probe.Body -match 'src="(/js/clarity-consent\.js\?v=\d+)"') {
         $consent = Get-PageProbe -Path $Matches[1] -UserAgent $ua
