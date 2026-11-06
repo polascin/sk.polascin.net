@@ -41,7 +41,7 @@ $url = 'https://sk.polascin.net/refbook.sk.php?data=' . urlencode((string) $row[
 $esc = static fn (mixed $value): string => htmlspecialchars((string) $value, ENT_QUOTES, 'UTF-8');
 
 ?>
-<blockquote class="quotebox" lang="sk">
+<blockquote class="quotebox" lang="sk" cite="<?= $esc($url) ?>">
 	<p class="quote"><?= $esc($row['quote']) ?></p>
 	<footer>
 		<div class="author"><?= $esc($row['author']) ?></div>

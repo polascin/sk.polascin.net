@@ -44,6 +44,7 @@
 # Beh #45: hreflang sk/x-default on privacy, terms, and refbook success pages.
 # Beh #46: visible breadcrumb nav matching JSON-LD (privacy/terms/refbook success; not 404).
 # Beh #47: breadcrumb slash separator aria-hidden; homepage quote blockquote lang=sk.
+# Beh #48: blockquote cite= URL (homepage → refbook; refbook → canonical quote URL).
 #
 # Spusti z koreňa:  .\tools\smoke-prod.ps1
 
@@ -396,7 +397,7 @@ try {
     $failed += Assert-BodyContains -Label 'home' -Body $probe.Body -Pattern '\(\d+<small>\.\d{3}</small>\)' -OkMessage 'home age keeps decimal fraction via sprintf'
     $failed += Assert-BodyContains -Label 'home' -Body $probe.Body -Pattern 'href="https://en\.wikipedia\.org/wiki/Swatch_Internet_Time"[^>]*title="Swatch Internet Time \(Wikipedia\)"' -OkMessage 'home Swatch Internet Time link title'
     $failed += Assert-BodyContains -Label 'home' -Body $probe.Body -Pattern 'href="https://time\.is/"[^>]*title="Aktuálny dátum a čas \(time\.is\)"' -OkMessage 'home time.is link title'
-    $failed += Assert-BodyContains -Label 'home' -Body $probe.Body -Pattern '<blockquote class="quotebox" lang="sk">' -OkMessage 'home quote blockquote lang=sk'
+    $failed += Assert-BodyContains -Label 'home' -Body $probe.Body -Pattern '<blockquote class="quotebox" lang="sk" cite="https://sk\.polascin\.net/refbook\.sk\.php\?data=\d+">' -OkMessage 'home quote blockquote lang=sk cite=refbook'
     # Clarity consent a11y: modal pattern (versioned script; bare path may be edge-cached).
     if ($probe.Body -match 'src="(/js/clarity-consent\.js\?v=\d+)"') {
         $consent = Get-PageProbe -Path $Matches[1] -UserAgent $ua
@@ -516,6 +517,7 @@ try {
     $failed += Assert-BodyContains -Label 'refbook' -Body $refOk.Body -Pattern '"name":\s*"Citát"' -OkMessage 'refbook BreadcrumbList Citát'
     $failed += Assert-BodyContains -Label 'refbook' -Body $refOk.Body -Pattern 'aria-label="Navigačná cesta"' -OkMessage 'refbook visible breadcrumb nav'
     $failed += Assert-BodyContains -Label 'refbook' -Body $refOk.Body -Pattern 'class="breadcrumb"[^>]*>[\s\S]*?<a href="/">Domov</a>[\s\S]*?<li aria-hidden="true">/</li>[\s\S]*?aria-current="page">Citát<' -OkMessage 'refbook visible Domov → Citát'
+    $failed += Assert-BodyContains -Label 'refbook' -Body $refOk.Body -Pattern '<blockquote class="quotebox"[^>]*cite="https://sk\.polascin\.net/refbook\.sk\.php\?data=1"' -OkMessage 'refbook blockquote cite=canonical'
     $failed += Assert-BodyContains -Label 'refbook' -Body $refOk.Body -Pattern '"author"\s*:\s*\{\s*"@type"\s*:\s*"Person"' -OkMessage 'refbook Quotation author Person'
     # data=1 book lang is stored as "cz" in DB; JSON-LD/lang must emit ISO 639-1 "cs".
     $failed += Assert-BodyContains -Label 'refbook' -Body $refOk.Body -Pattern '"inLanguage":\s*"cs"' -OkMessage 'refbook Quotation inLanguage cs (not cz)'

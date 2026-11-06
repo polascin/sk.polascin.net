@@ -315,7 +315,7 @@ if (is_array($record)) {
 
 	<div><em>Citát</em></div>
 	<br>
-	<blockquote class="quotebox" style="display: block; width: auto; margin: 0; text-align: left;"<?= $quoteLang !== '' ? ' lang="' . $esc($quoteLang) . '"' : '' ?>>
+	<blockquote class="quotebox" style="display: block; width: auto; margin: 0; text-align: left;"<?= $quoteLang !== '' ? ' lang="' . $esc($quoteLang) . '"' : '' ?> cite="<?= $esc($quotePageUrl) ?>">
 		<p class="quote" style="margin: 0;"><?= $esc($record['quote']) ?></p>
 		<footer>
 			<div class="author"><?= $esc($record['author']) ?></div>
