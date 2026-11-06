@@ -55,6 +55,7 @@
 # Beh #56: format-detection telephone=no; msapplication-TileColor #f5fffa (theme parity).
 # Beh #57: msapplication-TileImage versioned android-chrome-192x192.png (TileColor companion).
 # Beh #58: MEL PDF text link has title (iframe already titled).
+# Beh #59: msapplication-config=none (skip legacy /browserconfig.xml 404).
 #
 # Spusti z koreňa:  .\tools\smoke-prod.ps1
 
@@ -345,6 +346,7 @@ try {
     $failed += Assert-BodyContains -Label 'home' -Body $probe.Body -Pattern 'name="format-detection" content="telephone=no"' -OkMessage 'home format-detection telephone=no'
     $failed += Assert-BodyContains -Label 'home' -Body $probe.Body -Pattern 'name="msapplication-TileColor" content="#f5fffa"' -OkMessage 'home msapplication-TileColor'
     $failed += Assert-BodyContains -Label 'home' -Body $probe.Body -Pattern 'name="msapplication-TileImage" content="/favicon/android-chrome-192x192\.png\?v=\d+"' -OkMessage 'home msapplication-TileImage 192'
+    $failed += Assert-BodyContains -Label 'home' -Body $probe.Body -Pattern 'name="msapplication-config" content="none"' -OkMessage 'home msapplication-config none'
     $failed += Assert-BodyContains -Label 'home' -Body $probe.Body -Pattern '<main[^>]*aria-label="Hlavný obsah"' -OkMessage 'home main aria-label'
     $failed += Assert-BodyContains -Label 'home' -Body $probe.Body -Pattern 'aria-label="Súvisiace weby"' -OkMessage 'home sister-sites nav aria-label'
     $failed += Assert-BodyContains -Label 'home' -Body $probe.Body -Pattern 'href="https://polascin\.net/"[^>]*title="Polascin\.Net \(EN\)"' -OkMessage 'home intersection polascin.net title'

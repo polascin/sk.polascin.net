@@ -12,6 +12,7 @@ $skChrome192V = (int) @filemtime($skFavDir . '/android-chrome-192x192.png');
 <meta name="format-detection" content="telephone=no">
 <meta name="msapplication-TileColor" content="#f5fffa">
 <meta name="msapplication-TileImage" content="/favicon/android-chrome-192x192.png?v=<?= $skChrome192V ?>">
+<meta name="msapplication-config" content="none">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="Polaščín">
