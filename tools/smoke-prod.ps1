@@ -34,6 +34,7 @@
 # Beh #35: robots.txt Allow /docs/mel.pdf while Disallow /docs/; comment-block logo attrs.
 # Beh #36: heading hierarchy — Amazon books h2 (not h3); nefamb subsection h3 (not h4).
 # Beh #38: JSON-LD isbn ISBN-13 check digit; trim doubled check digit (…542-88 → …542-8).
+# Beh #39: Person sameAs polascin.sk; clarity-consent focus outline matches site #6a0dad.
 #
 # Spusti z koreňa:  .\tools\smoke-prod.ps1
 
@@ -285,6 +286,7 @@ try {
     $failed += Assert-BodyContains -Label 'home' -Body $probe.Body -Pattern '"description":\s*"MUDr\.' -OkMessage 'home JSON-LD Person description'
     $failed += Assert-BodyContains -Label 'home' -Body $probe.Body -Pattern '"inLanguage":\s*"sk"' -OkMessage 'home JSON-LD inLanguage sk'
     $failed += Assert-BodyContains -Label 'home' -Body $probe.Body -Pattern '"knowsAbout"' -OkMessage 'home JSON-LD knowsAbout'
+    $failed += Assert-BodyContains -Label 'home' -Body $probe.Body -Pattern 'https://polascin\.sk/' -OkMessage 'home JSON-LD sameAs polascin.sk'
     $failed += Assert-BodyContains -Label 'home' -Body $probe.Body -Pattern 'rel="alternate" hreflang="sk"' -OkMessage 'home hreflang sk'
     $failed += Assert-BodyContains -Label 'home' -Body $probe.Body -Pattern 'rel="alternate" hreflang="x-default"' -OkMessage 'home hreflang x-default'
     $failed += Assert-BodyContains -Label 'home' -Body $probe.Body -Pattern 'href="/favicon\.ico\?v=\d+"' -OkMessage 'home versioned /favicon.ico?v='
@@ -380,6 +382,13 @@ try {
             Write-Host 'OK clarity-consent.js modal a11y (Escape, focus trap, apply focus restore, css ?v=)' -ForegroundColor Green
         } else {
             Write-Host 'FAIL clarity-consent.js missing modal a11y/focus trap/apply restore/css versioning' -ForegroundColor Red
+            $failed++
+        }
+        if ($probe.Body -match 'data-css-v="(\d+)"') {
+            $clarityCss = Get-PageProbe -Path ("/js/clarity-consent.css?v=" + $Matches[1]) -UserAgent $ua
+            $failed += Assert-BodyContains -Label 'clarity-consent.css' -Body $clarityCss.Body -Pattern 'focus-visible\{[^}]*#6a0dad' -OkMessage 'clarity-consent focus outline #6a0dad'
+        } else {
+            Write-Host 'FAIL home missing data-css-v for clarity-consent.css probe' -ForegroundColor Red
             $failed++
         }
     } else {

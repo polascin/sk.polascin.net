@@ -9,7 +9,7 @@
 
   <?php require "./blocks/favicon.php"; ?>
 
-  <meta name="date" content="2026-11-05T23:50:00+0100" >
+  <meta name="date" content="2026-11-06T01:12:00+0100" >
 	<meta name="description" content="Podmienky používania webového sídla sk.polascin.net vrátane zdravotného zrieknutia sa zodpovednosti">
   <meta name="copyright" content="Ľubomír Polaščín">
 	<meta name="keywords" content="podmienky používania,zrieknutie sa zodpovednosti,disclaimer,duševné vlastníctvo,sk.polascin.net,Ľubomír Polaščín">
