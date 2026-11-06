@@ -40,6 +40,7 @@
 # Beh #41: @graph WebPage (isPartOf/about/mainEntity); main aria-label Hlavný obsah.
 # Beh #42: privacy/terms WebPage + BreadcrumbList JSON-LD (isPartOf #website).
 # Beh #43: current.sk.php clock links title (Swatch / time.is).
+# Beh #44: refbook @graph WebPage + BreadcrumbList + Quotation (isPartOf #website).
 #
 # Spusti z koreňa:  .\tools\smoke-prod.ps1
 
@@ -492,6 +493,12 @@ try {
     $failed += Assert-BodyContains -Label 'refbook' -Body $refOk.Body -Pattern 'property="og:title" content="Isaac Bashevis Singer:' -OkMessage 'refbook data=1 og:title'
     $failed += Assert-BodyContains -Label 'refbook' -Body $refOk.Body -Pattern 'property="og:url" content="https://sk\.polascin\.net/refbook\.sk\.php\?data=1"' -OkMessage 'refbook data=1 og:url'
     $failed += Assert-BodyContains -Label 'refbook' -Body $refOk.Body -Pattern '"@type":\s*"Quotation"' -OkMessage 'refbook Quotation JSON-LD'
+    $failed += Assert-BodyContains -Label 'refbook' -Body $refOk.Body -Pattern '"@type":\s*"WebPage"' -OkMessage 'refbook JSON-LD WebPage'
+    $failed += Assert-BodyContains -Label 'refbook' -Body $refOk.Body -Pattern '"@type":\s*"BreadcrumbList"' -OkMessage 'refbook JSON-LD BreadcrumbList'
+    $failed += Assert-BodyContains -Label 'refbook' -Body $refOk.Body -Pattern '"isPartOf"\s*:\s*\{\s*"@id"\s*:\s*"https://sk\.polascin\.net/#website"' -OkMessage 'refbook WebPage isPartOf website'
+    $failed += Assert-BodyContains -Label 'refbook' -Body $refOk.Body -Pattern '"@id":\s*"https://sk\.polascin\.net/refbook\.sk\.php\?data=1#quotation"' -OkMessage 'refbook Quotation @id'
+    $failed += Assert-BodyContains -Label 'refbook' -Body $refOk.Body -Pattern '"mainEntity"\s*:\s*\{\s*"@id"\s*:\s*"https://sk\.polascin\.net/refbook\.sk\.php\?data=1#quotation"' -OkMessage 'refbook WebPage mainEntity Quotation'
+    $failed += Assert-BodyContains -Label 'refbook' -Body $refOk.Body -Pattern '"name":\s*"Citát"' -OkMessage 'refbook BreadcrumbList Citát'
     $failed += Assert-BodyContains -Label 'refbook' -Body $refOk.Body -Pattern '"author"\s*:\s*\{\s*"@type"\s*:\s*"Person"' -OkMessage 'refbook Quotation author Person'
     # data=1 book lang is stored as "cz" in DB; JSON-LD/lang must emit ISO 639-1 "cs".
     $failed += Assert-BodyContains -Label 'refbook' -Body $refOk.Body -Pattern '"inLanguage":\s*"cs"' -OkMessage 'refbook Quotation inLanguage cs (not cz)'

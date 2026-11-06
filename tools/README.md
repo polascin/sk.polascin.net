@@ -60,6 +60,8 @@ JSON-LD `@graph` (`WebSite` + `WebPage` + `Person`, `publisher`/`isPartOf`/
 `mainEntity` `@id`), `sameAs` vrátane `https://polascin.sk/` (assert scoped
 do `sameAs`, nie nav `href`), na `privacy.php` / `terms.php` `@graph`
 `WebPage` + `BreadcrumbList` (`isPartOf` `#website`, Domov → právna stránka),
+na `refbook.sk.php?data=` `@graph` `WebPage` + `BreadcrumbList` + `Quotation`
+(`isPartOf` `#website`, Domov → Citát, `mainEntity` `#quotation`),
 focus outline Clarity `#6a0dad` (zhoda so skip-link), `main`
 `aria-label="Hlavný obsah"`, footer `aria-label="Pätička stránky"`, bio
 `title` na kontaktných/Amazon odkazoch, Permissions-Policy

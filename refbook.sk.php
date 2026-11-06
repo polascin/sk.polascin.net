@@ -107,7 +107,7 @@ if (is_array($record)) {
 
   <?php require "./blocks/favicon.php"; ?>
 
-  <meta name="date" content="2026-11-06T00:20:00+0100" >
+  <meta name="date" content="2026-11-06T02:00:00+0100" >
 	<meta name="description" content="<?= $esc($pageDescription) ?>">
   <meta name="copyright" content="Ľubomír Polaščín">
 	<meta name="keywords" content="Ľubomír Polaščín,Ľubomír,Polaščín,polascin,lubomir,kniha,citát,citat,citácia,citacia">
@@ -140,11 +140,12 @@ if (is_array($record)) {
   <meta name="twitter:image" content="https://sk.polascin.net/pix/lpsk2.jpg">
   <meta name="twitter:image:alt" content="Fotografia Ľubomíra Polaščína">
 <?php if (is_array($record) && is_int($quoteId)) {
+    $quotePageUrl = 'https://sk.polascin.net/refbook.sk.php?data=' . $quoteId;
     $quotationLd = [
-        '@context' => 'https://schema.org',
         '@type' => 'Quotation',
+        '@id' => $quotePageUrl . '#quotation',
         'text' => (string) ($record['quote'] ?? ''),
-        'url' => 'https://sk.polascin.net/refbook.sk.php?data=' . $quoteId,
+        'url' => $quotePageUrl,
     ];
     $authorNameLd = trim((string) ($record['author'] ?? ''));
     if ($authorNameLd !== '') {
@@ -224,8 +225,43 @@ if (is_array($record)) {
     if ($quoteLang !== '') {
         $quotationLd['inLanguage'] = $quoteLang;
     }
+    $refbookGraphLd = [
+        '@context' => 'https://schema.org',
+        '@graph' => [
+            [
+                '@type' => 'WebPage',
+                '@id' => $quotePageUrl . '#webpage',
+                'url' => $quotePageUrl,
+                'name' => $pageTitle,
+                'description' => $pageDescription,
+                'inLanguage' => 'sk',
+                'isPartOf' => ['@id' => 'https://sk.polascin.net/#website'],
+                'mainEntity' => ['@id' => $quotePageUrl . '#quotation'],
+                'breadcrumb' => ['@id' => $quotePageUrl . '#breadcrumb'],
+            ],
+            [
+                '@type' => 'BreadcrumbList',
+                '@id' => $quotePageUrl . '#breadcrumb',
+                'itemListElement' => [
+                    [
+                        '@type' => 'ListItem',
+                        'position' => 1,
+                        'name' => 'Domov',
+                        'item' => 'https://sk.polascin.net/',
+                    ],
+                    [
+                        '@type' => 'ListItem',
+                        'position' => 2,
+                        'name' => 'Citát',
+                        'item' => $quotePageUrl,
+                    ],
+                ],
+            ],
+            $quotationLd,
+        ],
+    ];
     $quotationJson = json_encode(
-        $quotationLd,
+        $refbookGraphLd,
         JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS
     );
     if (is_string($quotationJson)) {
