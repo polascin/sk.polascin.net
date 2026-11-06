@@ -54,6 +54,7 @@
 # Beh #55: mobile-web-app-capable + apple-mobile-web-app-capable + status-bar-style (manifest display:standalone).
 # Beh #56: format-detection telephone=no; msapplication-TileColor #f5fffa (theme parity).
 # Beh #57: msapplication-TileImage versioned android-chrome-192x192.png (TileColor companion).
+# Beh #58: MEL PDF text link has title (iframe already titled).
 #
 # Spusti z koreňa:  .\tools\smoke-prod.ps1
 
@@ -295,7 +296,7 @@ try {
         Write-Host ('FAIL fedora footer link count={0} expected 1' -f $fedoraCount) -ForegroundColor Red
         $failed++
     }
-    $failed += Assert-BodyContains -Label 'home' -Body $probe.Body -Pattern 'href="/docs/mel\.pdf"' -OkMessage 'home link /docs/mel.pdf'
+    $failed += Assert-BodyContains -Label 'home' -Body $probe.Body -Pattern 'href="/docs/mel\.pdf"[^>]*title="Mimotelová eliminačná liečba \(PDF, © 2009\)"' -OkMessage 'home link /docs/mel.pdf with title'
     $failed += Assert-BodyContains -Label 'home' -Body $probe.Body -Pattern 'title="Mimotelová eliminačná liečba\. Copyright 2009"' -OkMessage 'home mel.pdf iframe title without HTML entity'
     $failed += Assert-BodyContains -Label 'home' -Body $probe.Body -Pattern 'name="color-scheme" content="light"' -OkMessage 'home color-scheme light'
     $failed += Assert-BodyContains -Label 'home' -Body $probe.Body -Pattern 'src="/pix/dial\.jpeg"[^>]*loading="lazy"' -OkMessage 'home dial.jpeg loading=lazy'
