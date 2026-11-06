@@ -20,13 +20,13 @@
 		<br>
 		<span style="font-size: small; font-style: italic; color: gray;">Web: </span>
 		&nbsp;&nbsp;&nbsp;
-		<a href="https://sk.polascin.net/" target="_self">
+		<a href="https://sk.polascin.net/" target="_self" title="sk.polascin.net">
 			<strong>sk.polascin.net</strong>
 		</a>
-		<a href="https://polascin.sk/" target="_top">
+		<a href="https://polascin.sk/" target="_top" title="polascin.sk">
 			<strong>&nbsp;|&nbsp;polascin.sk</strong>
 		</a>
-		<a href="https://polascin.net/" target="_blank" rel="noopener noreferrer">
+		<a href="https://polascin.net/" target="_blank" title="polascin.net" rel="noopener noreferrer">
 			<strong>&nbsp;|&nbsp;polascin.net</strong>
 		</a>
 		<br>
@@ -75,7 +75,7 @@
 	<hr>
 
 	<div>
-		<a href="https://www.amazon.com/stores/author/B07PN436VJ/about?ingress=0&visitId=c86fef74-be71-4951-8486-08f60b67d802&store_ref=ap_rdr&linkCode=ll2&tag=mobile0f21130-20&linkId=4e84ad9ae239b52e2b33aaadfb5a7ff8&language=en_US&ref_=as_li_ss_tl" target="_blank" rel="noopener noreferrer">
+		<a href="https://www.amazon.com/stores/author/B07PN436VJ/about?ingress=0&visitId=c86fef74-be71-4951-8486-08f60b67d802&store_ref=ap_rdr&linkCode=ll2&tag=mobile0f21130-20&linkId=4e84ad9ae239b52e2b33aaadfb5a7ff8&language=en_US&ref_=as_li_ss_tl" target="_blank" title="Autorská stránka na Amazone (EN)" rel="noopener noreferrer">
 			<em>Autorská stránka Ľubomíra Polaščína na <strong>Amazone</strong> v angličtine.</em>
 		</a>
 	</div>

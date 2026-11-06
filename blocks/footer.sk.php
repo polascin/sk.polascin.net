@@ -1,5 +1,5 @@
 <!-- Polascin.Net SK Footer -->
-<footer>
+<footer aria-label="Pätička stránky">
 <hr>
 
 <!-- Copyright Statement -->

@@ -35,6 +35,8 @@
 # Beh #36: heading hierarchy — Amazon books h2 (not h3); nefamb subsection h3 (not h4).
 # Beh #38: JSON-LD isbn ISBN-13 check digit; trim doubled check digit (…542-88 → …542-8).
 # Beh #39: Person sameAs polascin.sk; clarity-consent focus outline matches site #6a0dad.
+# Beh #40: footer aria-label; bio contact/Amazon titles; Permissions-Policy browsing-topics.
+# Beh #40: homepage @graph WebSite+Person; sameAs assert scoped inside JSON-LD (not nav href).
 #
 # Spusti z koreňa:  .\tools\smoke-prod.ps1
 
@@ -286,7 +288,21 @@ try {
     $failed += Assert-BodyContains -Label 'home' -Body $probe.Body -Pattern '"description":\s*"MUDr\.' -OkMessage 'home JSON-LD Person description'
     $failed += Assert-BodyContains -Label 'home' -Body $probe.Body -Pattern '"inLanguage":\s*"sk"' -OkMessage 'home JSON-LD inLanguage sk'
     $failed += Assert-BodyContains -Label 'home' -Body $probe.Body -Pattern '"knowsAbout"' -OkMessage 'home JSON-LD knowsAbout'
-    $failed += Assert-BodyContains -Label 'home' -Body $probe.Body -Pattern 'https://polascin\.sk/' -OkMessage 'home JSON-LD sameAs polascin.sk'
+    $failed += Assert-BodyContains -Label 'home' -Body $probe.Body -Pattern '"@type":\s*"WebSite"' -OkMessage 'home JSON-LD WebSite'
+    $failed += Assert-BodyContains -Label 'home' -Body $probe.Body -Pattern '"@graph"' -OkMessage 'home JSON-LD @graph'
+    $failed += Assert-BodyContains -Label 'home' -Body $probe.Body -Pattern '"sameAs"\s*:\s*\[[\s\S]*?https://polascin\.sk/' -OkMessage 'home JSON-LD sameAs polascin.sk'
+    $failed += Assert-BodyContains -Label 'home' -Body $probe.Body -Pattern '<footer[^>]*aria-label="Pätička stránky"' -OkMessage 'home footer aria-label'
+    $failed += Assert-BodyContains -Label 'home' -Body $probe.Body -Pattern 'href="https://polascin\.sk/"[^>]*title="polascin\.sk"' -OkMessage 'home bio polascin.sk title'
+    $pp = $null
+    foreach ($key in $probe.Headers.Keys) {
+        if ($key -ieq 'Permissions-Policy') { $pp = $probe.Headers[$key]; break }
+    }
+    if ($pp -and ($pp -match 'browsing-topics=\(\)') -and ($pp -match 'interest-cohort=\(\)')) {
+        Write-Host 'OK home Permissions-Policy browsing-topics and interest-cohort' -ForegroundColor Green
+    } else {
+        Write-Host 'FAIL home Permissions-Policy missing browsing-topics/interest-cohort' -ForegroundColor Red
+        $failed++
+    }
     $failed += Assert-BodyContains -Label 'home' -Body $probe.Body -Pattern 'rel="alternate" hreflang="sk"' -OkMessage 'home hreflang sk'
     $failed += Assert-BodyContains -Label 'home' -Body $probe.Body -Pattern 'rel="alternate" hreflang="x-default"' -OkMessage 'home hreflang x-default'
     $failed += Assert-BodyContains -Label 'home' -Body $probe.Body -Pattern 'href="/favicon\.ico\?v=\d+"' -OkMessage 'home versioned /favicon.ico?v='
