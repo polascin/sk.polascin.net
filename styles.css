@@ -241,10 +241,10 @@ a.quote-link cite {
   display: inline;
 }
 
-.breadcrumb li:not(:last-child)::after {
-  content: " / ";
+.breadcrumb li[aria-hidden="true"] {
   margin: 0 0.35em;
   color: dimgray;
+  font-weight: normal;
 }
 
 .breadcrumb a {
