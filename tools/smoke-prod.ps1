@@ -47,6 +47,8 @@
 # Beh #48: blockquote cite= URL (homepage → refbook; refbook → canonical quote URL).
 # Beh #49: WebPage dateModified from filemtime; breadcrumb Domov title.
 # Beh #50: meta name="date" from filemtime (ISO-8601 date('c')); refbook WebPage dateModified.
+# Beh #51: og:updated_time from filemtime (same ISO-8601 as meta date) on home/privacy/terms/refbook.
+# Beh #51: intersection sister-site nav links have title attributes.
 #
 # Spusti z koreňa:  .\tools\smoke-prod.ps1
 
@@ -302,11 +304,16 @@ try {
     $failed += Assert-BodyContains -Label 'home' -Body $probe.Body -Pattern '"@type":\s*"WebPage"' -OkMessage 'home JSON-LD WebPage'
     $failed += Assert-BodyContains -Label 'home' -Body $probe.Body -Pattern '"dateModified":\s*"\d{4}-\d{2}-\d{2}"' -OkMessage 'home JSON-LD WebPage dateModified'
     $failed += Assert-BodyContains -Label 'home' -Body $probe.Body -Pattern 'name="date" content="\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}[+-]\d{2}:\d{2}"' -OkMessage 'home meta date ISO-8601 with offset'
+    $failed += Assert-BodyContains -Label 'home' -Body $probe.Body -Pattern 'property="og:updated_time" content="\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}[+-]\d{2}:\d{2}"' -OkMessage 'home og:updated_time ISO-8601 with offset'
     $failed += Assert-BodyContains -Label 'home' -Body $probe.Body -Pattern '"@graph"' -OkMessage 'home JSON-LD @graph'
     $failed += Assert-BodyContains -Label 'home' -Body $probe.Body -Pattern '"isPartOf"\s*:\s*\{\s*"@id"\s*:\s*"https://sk\.polascin\.net/#website"' -OkMessage 'home JSON-LD WebPage isPartOf website'
     $failed += Assert-BodyContains -Label 'home' -Body $probe.Body -Pattern '"mainEntity"\s*:\s*\{\s*"@id"\s*:\s*"https://sk\.polascin\.net/#person"' -OkMessage 'home JSON-LD WebPage mainEntity person'
     $failed += Assert-BodyContains -Label 'home' -Body $probe.Body -Pattern '"sameAs"\s*:\s*\[[\s\S]*?https://polascin\.sk/' -OkMessage 'home JSON-LD sameAs polascin.sk'
     $failed += Assert-BodyContains -Label 'home' -Body $probe.Body -Pattern '<main[^>]*aria-label="Hlavný obsah"' -OkMessage 'home main aria-label'
+    $failed += Assert-BodyContains -Label 'home' -Body $probe.Body -Pattern 'aria-label="Súvisiace weby"' -OkMessage 'home sister-sites nav aria-label'
+    $failed += Assert-BodyContains -Label 'home' -Body $probe.Body -Pattern 'href="https://polascin\.net/"[^>]*title="Polascin\.Net \(EN\)"' -OkMessage 'home intersection polascin.net title'
+    $failed += Assert-BodyContains -Label 'home' -Body $probe.Body -Pattern 'href="https://polascin\.sk/"[^>]*title="Polascin\.Sk"' -OkMessage 'home intersection polascin.sk title'
+    $failed += Assert-BodyContains -Label 'home' -Body $probe.Body -Pattern 'href="https://nephrosite\.polascin\.net/"[^>]*title="NephroSite"' -OkMessage 'home intersection NephroSite title'
     $failed += Assert-BodyContains -Label 'home' -Body $probe.Body -Pattern '<footer[^>]*aria-label="Pätička stránky"' -OkMessage 'home footer aria-label'
     $failed += Assert-BodyContains -Label 'home' -Body $probe.Body -Pattern 'href="https://polascin\.sk/"[^>]*title="polascin\.sk"' -OkMessage 'home bio polascin.sk title'
     $pp = $null
@@ -473,6 +480,7 @@ try {
     $failed += Assert-BodyContains -Label 'privacy' -Body $privacy.Body -Pattern 'class="breadcrumb"[^>]*>[\s\S]*?<a href="/"[^>]*>Domov</a>[\s\S]*?<li aria-hidden="true">/</li>[\s\S]*?aria-current="page">Ochrana osobných údajov<' -OkMessage 'privacy visible Domov → Ochrana osobných údajov'
     $failed += Assert-BodyContains -Label 'privacy' -Body $privacy.Body -Pattern '"dateModified":\s*"\d{4}-\d{2}-\d{2}"' -OkMessage 'privacy JSON-LD dateModified'
     $failed += Assert-BodyContains -Label 'privacy' -Body $privacy.Body -Pattern 'name="date" content="\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}[+-]\d{2}:\d{2}"' -OkMessage 'privacy meta date ISO-8601 with offset'
+    $failed += Assert-BodyContains -Label 'privacy' -Body $privacy.Body -Pattern 'property="og:updated_time" content="\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}[+-]\d{2}:\d{2}"' -OkMessage 'privacy og:updated_time ISO-8601 with offset'
     $failed += Assert-BodyContains -Label 'privacy' -Body $privacy.Body -Pattern 'href="/"[^>]*title="Úvodná stránka"' -OkMessage 'privacy breadcrumb Domov title'
     $failed += Assert-BodyContains -Label 'privacy' -Body $privacy.Body -Pattern '<li aria-hidden="true">/</li>' -OkMessage 'privacy breadcrumb separator aria-hidden'
 
@@ -492,6 +500,7 @@ try {
     $failed += Assert-BodyContains -Label 'terms' -Body $terms.Body -Pattern 'class="breadcrumb"[^>]*>[\s\S]*?<a href="/"[^>]*>Domov</a>[\s\S]*?<li aria-hidden="true">/</li>[\s\S]*?aria-current="page">Podmienky používania<' -OkMessage 'terms visible Domov → Podmienky používania'
     $failed += Assert-BodyContains -Label 'terms' -Body $terms.Body -Pattern '"dateModified":\s*"\d{4}-\d{2}-\d{2}"' -OkMessage 'terms JSON-LD dateModified'
     $failed += Assert-BodyContains -Label 'terms' -Body $terms.Body -Pattern 'name="date" content="\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}[+-]\d{2}:\d{2}"' -OkMessage 'terms meta date ISO-8601 with offset'
+    $failed += Assert-BodyContains -Label 'terms' -Body $terms.Body -Pattern 'property="og:updated_time" content="\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}[+-]\d{2}:\d{2}"' -OkMessage 'terms og:updated_time ISO-8601 with offset'
 } catch {
     Write-Host "FAIL legal GET probe - $($_.Exception.Message)" -ForegroundColor Red
     $failed++
@@ -521,6 +530,7 @@ try {
     $failed += Assert-BodyContains -Label 'refbook' -Body $refOk.Body -Pattern '"@type":\s*"WebPage"' -OkMessage 'refbook JSON-LD WebPage'
     $failed += Assert-BodyContains -Label 'refbook' -Body $refOk.Body -Pattern '"dateModified":\s*"\d{4}-\d{2}-\d{2}"' -OkMessage 'refbook JSON-LD WebPage dateModified'
     $failed += Assert-BodyContains -Label 'refbook' -Body $refOk.Body -Pattern 'name="date" content="\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}[+-]\d{2}:\d{2}"' -OkMessage 'refbook meta date ISO-8601 with offset'
+    $failed += Assert-BodyContains -Label 'refbook' -Body $refOk.Body -Pattern 'property="og:updated_time" content="\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}[+-]\d{2}:\d{2}"' -OkMessage 'refbook og:updated_time ISO-8601 with offset'
     $failed += Assert-BodyContains -Label 'refbook' -Body $refOk.Body -Pattern '"@type":\s*"BreadcrumbList"' -OkMessage 'refbook JSON-LD BreadcrumbList'
     $failed += Assert-BodyContains -Label 'refbook' -Body $refOk.Body -Pattern '"isPartOf"\s*:\s*\{\s*"@id"\s*:\s*"https://sk\.polascin\.net/#website"' -OkMessage 'refbook WebPage isPartOf website'
     $failed += Assert-BodyContains -Label 'refbook' -Body $refOk.Body -Pattern '"@id":\s*"https://sk\.polascin\.net/refbook\.sk\.php\?data=1#quotation"' -OkMessage 'refbook Quotation @id'

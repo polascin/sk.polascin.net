@@ -5,27 +5,27 @@ $skAriaCurrent = ($skPath === '/' || $skPath === '/index.php') ? ' aria-current=
 <nav aria-label="Súvisiace weby" style="text-align: center; color: gray; ">
 	<small>
 		&nbsp;
-		<a href="https://polascin.net/" target="_blank" hreflang="en" rel="noopener noreferrer">
+		<a href="https://polascin.net/" target="_blank" title="Polascin.Net (EN)" hreflang="en" rel="noopener noreferrer">
 			{Polascin.Net}
 		</a>
 		&nbsp;&nbsp;&nbsp;
-		<a href="https://sk.polascin.net/" target="_top" hreflang="sk"<?= $skAriaCurrent ?>>
+		<a href="https://sk.polascin.net/" target="_top" title="SK.polascin.net" hreflang="sk"<?= $skAriaCurrent ?>>
 			{SK.polascin.net}
 		</a>
 		&nbsp;&nbsp;&nbsp;
-		<a href="https://polascin.sk/" target="_top" hreflang="sk">
+		<a href="https://polascin.sk/" target="_top" title="Polascin.Sk" hreflang="sk">
 			{Polascin.Sk}
 		</a>
 		&nbsp;&nbsp;&nbsp;
-		<a href="https://books.polascin.net/" target="_blank" hreflang="en" rel="noopener noreferrer">
+		<a href="https://books.polascin.net/" target="_blank" title="Books (EN)" hreflang="en" rel="noopener noreferrer">
 			{Books}
 		</a>
 		&nbsp;&nbsp;&nbsp;
-		<a href="https://polascin.org/" target="_blank" hreflang="en" rel="noopener noreferrer">
+		<a href="https://polascin.org/" target="_blank" title="polascin.org (EN)" hreflang="en" rel="noopener noreferrer">
 			{polascin.org}
 		</a>
 		&nbsp;&nbsp;&nbsp;
-		<a href="https://nephrosite.polascin.net/" target="_blank" hreflang="sk" rel="noopener noreferrer">
+		<a href="https://nephrosite.polascin.net/" target="_blank" title="NephroSite" hreflang="sk" rel="noopener noreferrer">
 			{nephrosite.polascin.net}
 		</a>
 		&nbsp;
