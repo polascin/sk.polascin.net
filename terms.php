@@ -20,6 +20,8 @@
   <meta name="theme-color" content="#f5fffa">
 
   <link rel="canonical" href="https://sk.polascin.net/terms.php">
+  <link rel="alternate" hreflang="sk" href="https://sk.polascin.net/terms.php">
+  <link rel="alternate" hreflang="x-default" href="https://sk.polascin.net/terms.php">
 
   <title>Podmienky používania (sk.polascin.net)</title>
 

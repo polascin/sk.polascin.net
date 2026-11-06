@@ -41,6 +41,7 @@
 # Beh #42: privacy/terms WebPage + BreadcrumbList JSON-LD (isPartOf #website).
 # Beh #43: current.sk.php clock links title (Swatch / time.is).
 # Beh #44: refbook @graph WebPage + BreadcrumbList + Quotation (isPartOf #website).
+# Beh #45: hreflang sk/x-default on privacy, terms, and refbook success pages.
 #
 # Spusti z koreňa:  .\tools\smoke-prod.ps1
 
@@ -454,6 +455,8 @@ try {
     $failed += Assert-BodyContains -Label 'privacy' -Body $privacy.Body -Pattern 'property="og:title" content="Ochrana osobných údajov' -OkMessage 'privacy og:title'
     $failed += Assert-BodyContains -Label 'privacy' -Body $privacy.Body -Pattern 'name="twitter:image:alt"' -OkMessage 'privacy twitter:image:alt'
     $failed += Assert-BodyContains -Label 'privacy' -Body $privacy.Body -Pattern '<main[^>]*aria-label="Hlavný obsah"' -OkMessage 'privacy main aria-label'
+    $failed += Assert-BodyContains -Label 'privacy' -Body $privacy.Body -Pattern 'rel="alternate" hreflang="sk"[^>]*href="https://sk\.polascin\.net/privacy\.php"' -OkMessage 'privacy hreflang sk'
+    $failed += Assert-BodyContains -Label 'privacy' -Body $privacy.Body -Pattern 'rel="alternate" hreflang="x-default"[^>]*href="https://sk\.polascin\.net/privacy\.php"' -OkMessage 'privacy hreflang x-default'
     $failed += Assert-BodyContains -Label 'privacy' -Body $privacy.Body -Pattern '"@type":\s*"WebPage"' -OkMessage 'privacy JSON-LD WebPage'
     $failed += Assert-BodyContains -Label 'privacy' -Body $privacy.Body -Pattern '"@type":\s*"BreadcrumbList"' -OkMessage 'privacy JSON-LD BreadcrumbList'
     $failed += Assert-BodyContains -Label 'privacy' -Body $privacy.Body -Pattern '"isPartOf"\s*:\s*\{\s*"@id"\s*:\s*"https://sk\.polascin\.net/#website"' -OkMessage 'privacy WebPage isPartOf website'
@@ -465,6 +468,8 @@ try {
     $failed += Assert-BodyContains -Label 'terms' -Body $terms.Body -Pattern 'property="og:title" content="Podmienky používania' -OkMessage 'terms og:title'
     $failed += Assert-BodyContains -Label 'terms' -Body $terms.Body -Pattern 'name="twitter:image:alt"' -OkMessage 'terms twitter:image:alt'
     $failed += Assert-BodyContains -Label 'terms' -Body $terms.Body -Pattern '<main[^>]*aria-label="Hlavný obsah"' -OkMessage 'terms main aria-label'
+    $failed += Assert-BodyContains -Label 'terms' -Body $terms.Body -Pattern 'rel="alternate" hreflang="sk"[^>]*href="https://sk\.polascin\.net/terms\.php"' -OkMessage 'terms hreflang sk'
+    $failed += Assert-BodyContains -Label 'terms' -Body $terms.Body -Pattern 'rel="alternate" hreflang="x-default"[^>]*href="https://sk\.polascin\.net/terms\.php"' -OkMessage 'terms hreflang x-default'
     $failed += Assert-BodyContains -Label 'terms' -Body $terms.Body -Pattern '"@type":\s*"WebPage"' -OkMessage 'terms JSON-LD WebPage'
     $failed += Assert-BodyContains -Label 'terms' -Body $terms.Body -Pattern '"@type":\s*"BreadcrumbList"' -OkMessage 'terms JSON-LD BreadcrumbList'
     $failed += Assert-BodyContains -Label 'terms' -Body $terms.Body -Pattern '"isPartOf"\s*:\s*\{\s*"@id"\s*:\s*"https://sk\.polascin\.net/#website"' -OkMessage 'terms WebPage isPartOf website'
@@ -490,6 +495,8 @@ try {
     $failed += Assert-BodyContains -Label 'refbook' -Body $refOk.Body -Pattern 'name="description" content="Citát od autora Isaac Bashevis Singer' -OkMessage 'refbook data=1 description names author'
     $failed += Assert-BodyContains -Label 'refbook' -Body $refOk.Body -Pattern 'href="/styles\.css\?v=\d+"' -OkMessage 'refbook stylesheet /styles.css?v='
     $failed += Assert-BodyContains -Label 'refbook' -Body $refOk.Body -Pattern 'rel="canonical" href="https://sk\.polascin\.net/refbook\.sk\.php\?data=1"' -OkMessage 'refbook data=1 canonical'
+    $failed += Assert-BodyContains -Label 'refbook' -Body $refOk.Body -Pattern 'rel="alternate" hreflang="sk"[^>]*href="https://sk\.polascin\.net/refbook\.sk\.php\?data=1"' -OkMessage 'refbook hreflang sk'
+    $failed += Assert-BodyContains -Label 'refbook' -Body $refOk.Body -Pattern 'rel="alternate" hreflang="x-default"[^>]*href="https://sk\.polascin\.net/refbook\.sk\.php\?data=1"' -OkMessage 'refbook hreflang x-default'
     $failed += Assert-BodyContains -Label 'refbook' -Body $refOk.Body -Pattern 'property="og:title" content="Isaac Bashevis Singer:' -OkMessage 'refbook data=1 og:title'
     $failed += Assert-BodyContains -Label 'refbook' -Body $refOk.Body -Pattern 'property="og:url" content="https://sk\.polascin\.net/refbook\.sk\.php\?data=1"' -OkMessage 'refbook data=1 og:url'
     $failed += Assert-BodyContains -Label 'refbook' -Body $refOk.Body -Pattern '"@type":\s*"Quotation"' -OkMessage 'refbook Quotation JSON-LD'

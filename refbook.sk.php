@@ -120,6 +120,8 @@ if (is_array($record)) {
   <title><?= $esc($pageTitle) ?></title>
 <?php if (is_array($record) && is_int($quoteId)) { ?>
   <link rel="canonical" href="https://sk.polascin.net/refbook.sk.php?data=<?= $quoteId ?>">
+  <link rel="alternate" hreflang="sk" href="https://sk.polascin.net/refbook.sk.php?data=<?= $quoteId ?>">
+  <link rel="alternate" hreflang="x-default" href="https://sk.polascin.net/refbook.sk.php?data=<?= $quoteId ?>">
 <?php } ?>
 
   <meta property="og:type" content="website">

@@ -20,6 +20,8 @@
   <meta name="theme-color" content="#f5fffa">
 
   <link rel="canonical" href="https://sk.polascin.net/privacy.php">
+  <link rel="alternate" hreflang="sk" href="https://sk.polascin.net/privacy.php">
+  <link rel="alternate" hreflang="x-default" href="https://sk.polascin.net/privacy.php">
 
   <title>Ochrana osobných údajov (sk.polascin.net)</title>
 
