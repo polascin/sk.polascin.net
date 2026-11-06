@@ -9,7 +9,7 @@
 
   <?php require "./blocks/favicon.php"; ?>
 
-  <meta name="date" content="2026-11-06T01:40:00+0100" >
+  <meta name="date" content="<?php echo htmlspecialchars(date('c', (int) @filemtime(__FILE__)), ENT_QUOTES, 'UTF-8'); ?>">
 	<meta name="description" content="Zásady ochrany osobných údajov (GDPR) webového sídla sk.polascin.net">
   <meta name="copyright" content="Ľubomír Polaščín">
 	<meta name="keywords" content="ochrana osobných údajov,ochrana súkromia,GDPR,zásady,sk.polascin.net,Ľubomír Polaščín">

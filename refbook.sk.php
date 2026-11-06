@@ -107,7 +107,7 @@ if (is_array($record)) {
 
   <?php require "./blocks/favicon.php"; ?>
 
-  <meta name="date" content="2026-11-06T02:00:00+0100" >
+  <meta name="date" content="<?php echo htmlspecialchars(date('c', (int) @filemtime(__FILE__)), ENT_QUOTES, 'UTF-8'); ?>">
 	<meta name="description" content="<?= $esc($pageDescription) ?>">
   <meta name="copyright" content="Ľubomír Polaščín">
 	<meta name="keywords" content="Ľubomír Polaščín,Ľubomír,Polaščín,polascin,lubomir,kniha,citát,citat,citácia,citacia">
@@ -237,6 +237,7 @@ if (is_array($record)) {
                 'name' => $pageTitle,
                 'description' => $pageDescription,
                 'inLanguage' => 'sk',
+                'dateModified' => gmdate('Y-m-d', (int) @filemtime(__FILE__)),
                 'isPartOf' => ['@id' => 'https://sk.polascin.net/#website'],
                 'mainEntity' => ['@id' => $quotePageUrl . '#quotation'],
                 'breadcrumb' => ['@id' => $quotePageUrl . '#breadcrumb'],
