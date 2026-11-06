@@ -63,6 +63,7 @@
 # Beh #66: PHP site.webmanifest.php with ?v=filemtime on icon src; rewrite from .webmanifest.
 # Beh #68: single Cache-Control for manifest (htaccess only); drop static site.webmanifest.
 # Beh #69: RFC 9116 /.well-known/security.txt (Contact mailto; text/plain).
+# Beh #70: security-txt.php reads .well-known/security.txt (single source); Expires present.
 #
 # Spusti z koreňa:  .\tools\smoke-prod.ps1
 
@@ -259,6 +260,7 @@ Write-Host "RFC 9116 security.txt" -ForegroundColor Cyan
 try {
     $sec = Get-PageProbe -Path '/.well-known/security.txt' -UserAgent $ua
     $failed += Assert-BodyContains -Label 'security.txt' -Body $sec.Body -Pattern 'Contact:\s*mailto:lubomir@polascin\.net' -OkMessage 'security.txt Contact mailto'
+    $failed += Assert-BodyContains -Label 'security.txt' -Body $sec.Body -Pattern 'Expires:\s*\d{4}-\d{2}-\d{2}T' -OkMessage 'security.txt Expires'
     $failed += Assert-BodyContains -Label 'security.txt' -Body $sec.Body -Pattern 'Canonical:\s*https://sk\.polascin\.net/\.well-known/security\.txt' -OkMessage 'security.txt Canonical'
     $secCt = $null
     $secCc = $null
