@@ -95,6 +95,11 @@ if (is_array($record)) {
     }
 }
 
+// Canonical quote URL for OG/JSON-LD/cite; only when a row was loaded.
+$quotePageUrl = is_array($record)
+    ? 'https://sk.polascin.net/refbook.sk.php?data=' . (int) $quoteId
+    : '';
+
 ?>
 <!DOCTYPE html>
 
@@ -143,8 +148,7 @@ if (is_array($record)) {
   <meta name="twitter:description" content="<?= $esc($pageDescription) ?>">
   <meta name="twitter:image" content="https://sk.polascin.net/pix/lpsk2.jpg">
   <meta name="twitter:image:alt" content="Fotografia Ľubomíra Polaščína">
-<?php if (is_array($record) && is_int($quoteId)) {
-    $quotePageUrl = 'https://sk.polascin.net/refbook.sk.php?data=' . $quoteId;
+<?php if ($quotePageUrl !== '') {
     $quotationLd = [
         '@type' => 'Quotation',
         '@id' => $quotePageUrl . '#quotation',
