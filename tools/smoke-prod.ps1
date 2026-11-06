@@ -59,6 +59,7 @@
 # Beh #60: eugenika.sk publisher link in lipton-tx has title (file kept; not on homepage).
 # Beh #61: privacy/terms cross-links + Microsoft Clarity docs have title; externals noopener.
 # Beh #62: stop PHP-require of lipton-tx inside HTML comment (include skipped; home has no eugenika).
+# Beh #65: versioned link rel=icon 192x192 + 512x512 (manifest assets also in HTML head).
 #
 # Spusti z koreňa:  .\tools\smoke-prod.ps1
 
@@ -380,6 +381,8 @@ try {
     $failed += Assert-BodyContains -Label 'home' -Body $probe.Body -Pattern 'rel="alternate" hreflang="x-default"' -OkMessage 'home hreflang x-default'
     $failed += Assert-BodyContains -Label 'home' -Body $probe.Body -Pattern 'href="/favicon\.ico\?v=\d+"' -OkMessage 'home versioned /favicon.ico?v='
     $failed += Assert-BodyContains -Label 'home' -Body $probe.Body -Pattern 'href="/favicon/apple-touch-icon\.png\?v=\d+"' -OkMessage 'home versioned apple-touch-icon'
+    $failed += Assert-BodyContains -Label 'home' -Body $probe.Body -Pattern 'rel="icon" type="image/png" sizes="192x192" href="/favicon/android-chrome-192x192\.png\?v=\d+"' -OkMessage 'home versioned icon 192x192'
+    $failed += Assert-BodyContains -Label 'home' -Body $probe.Body -Pattern 'rel="icon" type="image/png" sizes="512x512" href="/favicon/android-chrome-512x512\.png\?v=\d+"' -OkMessage 'home versioned icon 512x512'
     # Bare webmanifest may be edge-cached; pages use ?v=filemtime.
     if ($probe.Body -match 'href="(/favicon/site\.webmanifest\?v=\d+)"') {
         $manifestPath = $Matches[1]
