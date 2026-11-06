@@ -144,7 +144,7 @@
 		<a href="mailto:lubomir@polascin.net" title="Pošli e-mail">lubomir@polascin.net</a>
 		<br>
 		Webové sídlo:
-		<a href="https://sk.polascin.net/" target="_self">sk.polascin.net</a>
+		<a href="https://sk.polascin.net/" target="_self" title="Úvodná stránka sk.polascin.net">sk.polascin.net</a>
 	</div>
 
 	<p>
@@ -230,7 +230,7 @@
 	<h3>3.3 Databáza citátov a bibliografických údajov</h3>
 
 	<p>
-		Stránka <a href="/refbook.sk.php" target="_self">refbook.sk.php</a> zobrazuje
+		Stránka <a href="/refbook.sk.php" target="_self" title="Citát dňa a bibliografia">refbook.sk.php</a> zobrazuje
 		citáty a bibliografické údaje o knihách (názov, autori, jazyk, vydanie, ISBN)
 		z databázy prevádzkovanej pre potreby tohto webového sídla. Ide o údaje
 		o publikáciách, nie o osobné údaje návštevníkov. O návštevníkoch sa do tejto
@@ -258,7 +258,7 @@
 	</p>
 
 	<h3>5.2 Microsoft Clarity</h3>
-	<p>Údaje o používaní webu prijíma spoločnosť Microsoft na účel analýzy a zlepšovania webu. Ide o voliteľné spracúvanie založené na vašom súhlase. Viac o spracúvaní údajov vrátane medzinárodných prenosov nájdete vo <a href="https://privacy.microsoft.com/privacystatement">vyhlásení spoločnosti Microsoft o ochrane osobných údajov</a>. Technické podrobnosti obsahuje <a href="https://learn.microsoft.com/en-us/clarity/setup-and-installation/clarity-cookies">dokumentácia cookies Clarity</a>.</p>
+	<p>Údaje o používaní webu prijíma spoločnosť Microsoft na účel analýzy a zlepšovania webu. Ide o voliteľné spracúvanie založené na vašom súhlase. Viac o spracúvaní údajov vrátane medzinárodných prenosov nájdete vo <a href="https://privacy.microsoft.com/privacystatement" target="_blank" rel="noopener noreferrer" title="Vyhlásenie Microsoft o ochrane osobných údajov">vyhlásení spoločnosti Microsoft o ochrane osobných údajov</a>. Technické podrobnosti obsahuje <a href="https://learn.microsoft.com/en-us/clarity/setup-and-installation/clarity-cookies" target="_blank" rel="noopener noreferrer" title="Dokumentácia cookies Microsoft Clarity (EN)">dokumentácia cookies Clarity</a>.</p>
 
 	<h3>5.3 Reklamné bannery tretích strán</h3>
 
@@ -299,7 +299,7 @@
 		NordVPN, Surfshark, Blinkist, G2, Grammarly, Skillmea, 23andMe, W3C, W3Schools,
 		DistroWatch, Wikipédia, Národné centrum zdravotníckych informácií a ďalšie).
 		Časť z nich sú <strong>partnerské (affiliate) odkazy</strong> &mdash; pozri
-		<a href="/terms" target="_self">Podmienky používania</a>.
+		<a href="/terms" target="_self" title="Podmienky používania webového sídla">Podmienky používania</a>.
 	</p>
 
 	<p>
@@ -459,7 +459,7 @@
 	</p>
 
 	<p class="legal-seealso">
-		Pozri aj: <a href="/terms" target="_self">Podmienky používania</a>
+		Pozri aj: <a href="/terms" target="_self" title="Podmienky používania webového sídla">Podmienky používania</a>
 	</p>
 
 </main>

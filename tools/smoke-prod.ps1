@@ -57,6 +57,7 @@
 # Beh #58: MEL PDF text link has title (iframe already titled).
 # Beh #59: msapplication-config=none (skip legacy /browserconfig.xml 404).
 # Beh #60: eugenika.sk publisher link in lipton-tx has title.
+# Beh #61: privacy/terms cross-links + Microsoft Clarity docs have title; externals noopener.
 #
 # Spusti z koreňa:  .\tools\smoke-prod.ps1
 
@@ -508,8 +509,11 @@ Write-Host "Legal GET: root-absolute cross-links + stylesheet" -ForegroundColor 
 try {
     $privacy = Get-PageProbe -Path '/privacy.php' -UserAgent $ua
     $failed += Assert-BodyContains -Label 'privacy' -Body $privacy.Body -Pattern 'href="/styles\.css\?v=' -OkMessage 'privacy stylesheet /styles.css'
-    $failed += Assert-BodyContains -Label 'privacy' -Body $privacy.Body -Pattern 'href="/terms"' -OkMessage 'privacy link /terms'
-    $failed += Assert-BodyContains -Label 'privacy' -Body $privacy.Body -Pattern 'href="/refbook\.sk\.php"' -OkMessage 'privacy link /refbook.sk.php'
+    $failed += Assert-BodyContains -Label 'privacy' -Body $privacy.Body -Pattern 'href="/terms"[^>]*title="Podmienky používania webového sídla"' -OkMessage 'privacy link /terms with title'
+    $failed += Assert-BodyContains -Label 'privacy' -Body $privacy.Body -Pattern 'href="/refbook\.sk\.php"[^>]*title="Citát dňa a bibliografia"' -OkMessage 'privacy link /refbook.sk.php with title'
+    $failed += Assert-BodyContains -Label 'privacy' -Body $privacy.Body -Pattern 'href="https://sk\.polascin\.net/"[^>]*title="Úvodná stránka sk\.polascin\.net"' -OkMessage 'privacy site link title'
+    $failed += Assert-BodyContains -Label 'privacy' -Body $privacy.Body -Pattern 'href="https://privacy\.microsoft\.com/privacystatement"[^>]*target="_blank"[^>]*rel="noopener noreferrer"[^>]*title="Vyhlásenie Microsoft o ochrane osobných údajov"' -OkMessage 'privacy Microsoft statement blank+noopener+title'
+    $failed += Assert-BodyContains -Label 'privacy' -Body $privacy.Body -Pattern 'href="https://learn\.microsoft\.com/en-us/clarity/setup-and-installation/clarity-cookies"[^>]*target="_blank"[^>]*rel="noopener noreferrer"[^>]*title="Dokumentácia cookies Microsoft Clarity \(EN\)"' -OkMessage 'privacy Clarity cookies blank+noopener+title'
     $failed += Assert-BodyContains -Label 'privacy' -Body $privacy.Body -Pattern 'property="og:title" content="Ochrana osobných údajov' -OkMessage 'privacy og:title'
     $failed += Assert-BodyContains -Label 'privacy' -Body $privacy.Body -Pattern 'property="og:image:type" content="image/jpeg"' -OkMessage 'privacy og:image:type image/jpeg'
     $failed += Assert-BodyContains -Label 'privacy' -Body $privacy.Body -Pattern 'name="twitter:image:alt"' -OkMessage 'privacy twitter:image:alt'
@@ -531,7 +535,7 @@ try {
 
     $terms = Get-PageProbe -Path '/terms.php' -UserAgent $ua
     $failed += Assert-BodyContains -Label 'terms' -Body $terms.Body -Pattern 'href="/styles\.css\?v=' -OkMessage 'terms stylesheet /styles.css'
-    $failed += Assert-BodyContains -Label 'terms' -Body $terms.Body -Pattern 'href="/privacy"' -OkMessage 'terms link /privacy'
+    $failed += Assert-BodyContains -Label 'terms' -Body $terms.Body -Pattern 'href="/privacy"[^>]*title="Zásady ochrany osobných údajov \(GDPR\)"' -OkMessage 'terms link /privacy with title'
     $failed += Assert-BodyContains -Label 'terms' -Body $terms.Body -Pattern 'property="og:title" content="Podmienky používania' -OkMessage 'terms og:title'
     $failed += Assert-BodyContains -Label 'terms' -Body $terms.Body -Pattern 'property="og:image:type" content="image/jpeg"' -OkMessage 'terms og:image:type image/jpeg'
     $failed += Assert-BodyContains -Label 'terms' -Body $terms.Body -Pattern 'name="twitter:image:alt"' -OkMessage 'terms twitter:image:alt'

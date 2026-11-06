@@ -251,7 +251,7 @@
 
 	<p>
 		Spracúvanie údajov pri kliknutí na odkazy tretích strán je opísané v
-		<a href="/privacy" target="_self">Zásadách ochrany osobných údajov</a>.
+		<a href="/privacy" target="_self" title="Zásady ochrany osobných údajov (GDPR)">Zásadách ochrany osobných údajov</a>.
 	</p>
 
 	<h2 id="pravidla-pouzivania">7. Pravidlá používania webového sídla</h2>
@@ -308,7 +308,7 @@
 	<p>
 		Spracúvanie osobných údajov v súvislosti s návštevou webového sídla je podrobne
 		opísané v samostatnom dokumente
-		<a href="/privacy" target="_self"><strong>Ochrana osobných údajov</strong></a>,
+		<a href="/privacy" target="_self" title="Zásady ochrany osobných údajov (GDPR)"><strong>Ochrana osobných údajov</strong></a>,
 		ktorý tvorí neoddeliteľnú súčasť týchto podmienok.
 	</p>
 
@@ -353,7 +353,7 @@
 	</p>
 
 	<p class="legal-seealso">
-		Pozri aj: <a href="/privacy" target="_self">Ochrana osobných údajov</a>
+		Pozri aj: <a href="/privacy" target="_self" title="Zásady ochrany osobných údajov (GDPR)">Ochrana osobných údajov</a>
 	</p>
 
 </main>
