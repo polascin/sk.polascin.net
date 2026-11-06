@@ -58,7 +58,7 @@ cz→cs), Cache-Control pre `mel.pdf` a `sitemap.xml`, `color-scheme: light`,
 nadpisy bez preskoku úrovní (Amazon knihy `h2`, podsekcie nefamb `h3`),
 JSON-LD `@graph` (`WebSite` + `WebPage` + `Person`, `publisher`/`isPartOf`/
 `mainEntity` `@id`), `sameAs` vrátane `https://polascin.sk/` a `https://polascin.org/` (assert scoped
-do `sameAs`, nie nav `href`), `application-name` / `apple-mobile-web-app-title` podľa manifestu, `mobile-web-app-capable` / `apple-mobile-web-app-capable` / `apple-mobile-web-app-status-bar-style` (zhoda s `display: standalone`), `format-detection` `telephone=no`, `msapplication-TileColor` `#f5fffa`, na `privacy.php` / `terms.php` `@graph`
+do `sameAs`, nie nav `href`), `application-name` / `apple-mobile-web-app-title` podľa manifestu, `mobile-web-app-capable` / `apple-mobile-web-app-capable` / `apple-mobile-web-app-status-bar-style` (zhoda s `display: standalone`), `format-detection` `telephone=no`, `msapplication-TileColor` `#f5fffa`, `msapplication-TileImage` versioned `android-chrome-192x192.png`, na `privacy.php` / `terms.php` `@graph`
 `WebPage` + `BreadcrumbList` (`isPartOf` `#website`, Domov → právna stránka),
 na `refbook.sk.php?data=` `@graph` `WebPage` + `BreadcrumbList` + `Quotation`
 (`isPartOf` `#website`, Domov → Citát, `mainEntity` `#quotation`),
