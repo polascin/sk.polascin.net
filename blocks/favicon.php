@@ -8,6 +8,8 @@ $skManifestV = (int) @filemtime($skFavDir . '/site.webmanifest');
 ?>
 <meta name="color-scheme" content="light">
 <meta name="application-name" content="Ľubomír Polaščín">
+<meta name="format-detection" content="telephone=no">
+<meta name="msapplication-TileColor" content="#f5fffa">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="Polaščín">

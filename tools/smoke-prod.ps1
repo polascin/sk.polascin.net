@@ -52,6 +52,7 @@
 # Beh #53: og:image:type image/jpeg; smoke covers all six intersection titles.
 # Beh #54: application-name / apple-mobile-web-app-title (manifest parity); sameAs polascin.org.
 # Beh #55: mobile-web-app-capable + apple-mobile-web-app-capable + status-bar-style (manifest display:standalone).
+# Beh #56: format-detection telephone=no; msapplication-TileColor #f5fffa (theme parity).
 #
 # Spusti z koreňa:  .\tools\smoke-prod.ps1
 
@@ -339,6 +340,8 @@ try {
     $failed += Assert-BodyContains -Label 'home' -Body $probe.Body -Pattern 'name="apple-mobile-web-app-capable" content="yes"' -OkMessage 'home apple-mobile-web-app-capable'
     $failed += Assert-BodyContains -Label 'home' -Body $probe.Body -Pattern 'name="apple-mobile-web-app-title" content="Polaščín"' -OkMessage 'home apple-mobile-web-app-title'
     $failed += Assert-BodyContains -Label 'home' -Body $probe.Body -Pattern 'name="apple-mobile-web-app-status-bar-style" content="default"' -OkMessage 'home apple-mobile-web-app-status-bar-style'
+    $failed += Assert-BodyContains -Label 'home' -Body $probe.Body -Pattern 'name="format-detection" content="telephone=no"' -OkMessage 'home format-detection telephone=no'
+    $failed += Assert-BodyContains -Label 'home' -Body $probe.Body -Pattern 'name="msapplication-TileColor" content="#f5fffa"' -OkMessage 'home msapplication-TileColor'
     $failed += Assert-BodyContains -Label 'home' -Body $probe.Body -Pattern '<main[^>]*aria-label="Hlavný obsah"' -OkMessage 'home main aria-label'
     $failed += Assert-BodyContains -Label 'home' -Body $probe.Body -Pattern 'aria-label="Súvisiace weby"' -OkMessage 'home sister-sites nav aria-label'
     $failed += Assert-BodyContains -Label 'home' -Body $probe.Body -Pattern 'href="https://polascin\.net/"[^>]*title="Polascin\.Net \(EN\)"' -OkMessage 'home intersection polascin.net title'
