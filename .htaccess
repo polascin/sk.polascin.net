@@ -76,6 +76,12 @@ ServerSignature Off
     Require all denied
 </FilesMatch>
 
+# Zdroj RFC 9116 security.txt (súbor v koreni pre PHP file_get_contents).
+# Verejná kanonická URL je len /.well-known/security.txt (RewriteRule → security-txt.php).
+<Files "security.txt">
+    Require all denied
+</Files>
+
 # Interné Markdown dokumenty (.agent.md, AGENTS.md, README, …) — nie cez web
 <FilesMatch "\.md$">
     Require all denied

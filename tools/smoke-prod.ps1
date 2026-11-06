@@ -63,7 +63,8 @@
 # Beh #66: PHP site.webmanifest.php with ?v=filemtime on icon src; rewrite from .webmanifest.
 # Beh #68: single Cache-Control for manifest (htaccess only); drop static site.webmanifest.
 # Beh #69: RFC 9116 /.well-known/security.txt (Contact mailto; text/plain).
-# Beh #70: security-txt.php reads .well-known/security.txt (single source); Expires present.
+# Beh #70: security-txt.php reads security.txt in docroot (single source); Expires present.
+# Beh #71: HTTP /security.txt denied (403); only /.well-known/security.txt is public.
 #
 # Spusti z koreňa:  .\tools\smoke-prod.ps1
 
@@ -85,6 +86,7 @@ $checks = [ordered]@{
     '/favicon/site.webmanifest'= 200
     '/favicon.ico'             = 200
     '/.well-known/security.txt'= 200
+    '/security.txt'            = 403
     '/refbook.sk.php?data=1'   = 200
     '/refbook.sk.php?data=abc' = 404
     '/privacy'                 = 301
