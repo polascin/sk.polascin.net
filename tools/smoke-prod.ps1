@@ -56,8 +56,9 @@
 # Beh #57: msapplication-TileImage versioned android-chrome-192x192.png (TileColor companion).
 # Beh #58: MEL PDF text link has title (iframe already titled).
 # Beh #59: msapplication-config=none (skip legacy /browserconfig.xml 404).
-# Beh #60: eugenika.sk publisher link in lipton-tx has title.
+# Beh #60: eugenika.sk publisher link in lipton-tx has title (file kept; not on homepage).
 # Beh #61: privacy/terms cross-links + Microsoft Clarity docs have title; externals noopener.
+# Beh #62: stop PHP-require of lipton-tx inside HTML comment (include skipped; home has no eugenika).
 #
 # Spusti z koreňa:  .\tools\smoke-prod.ps1
 
@@ -300,7 +301,12 @@ try {
         $failed++
     }
     $failed += Assert-BodyContains -Label 'home' -Body $probe.Body -Pattern 'href="/docs/mel\.pdf"[^>]*title="Mimotelová eliminačná liečba \(PDF, © 2009\)"' -OkMessage 'home link /docs/mel.pdf with title'
-    $failed += Assert-BodyContains -Label 'home' -Body $probe.Body -Pattern 'href="https://eugenika\.sk/"[^>]*title="Vydavateľstvo Eugenika \(eugenika\.sk\)"' -OkMessage 'home eugenika.sk title'
+    if ($probe.Body -match 'eugenika\.sk') {
+        Write-Host 'FAIL home unexpectedly contains eugenika.sk (lipton include should be skipped)' -ForegroundColor Red
+        $failed++
+    } else {
+        Write-Host 'OK home omits eugenika.sk (lipton-tx not required)' -ForegroundColor Green
+    }
     $failed += Assert-BodyContains -Label 'home' -Body $probe.Body -Pattern 'title="Mimotelová eliminačná liečba\. Copyright 2009"' -OkMessage 'home mel.pdf iframe title without HTML entity'
     $failed += Assert-BodyContains -Label 'home' -Body $probe.Body -Pattern 'name="color-scheme" content="light"' -OkMessage 'home color-scheme light'
     $failed += Assert-BodyContains -Label 'home' -Body $probe.Body -Pattern 'src="/pix/dial\.jpeg"[^>]*loading="lazy"' -OkMessage 'home dial.jpeg loading=lazy'

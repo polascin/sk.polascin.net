@@ -32,11 +32,12 @@
 	<?php require "./files/usgo.html"; ?>
 </div>
 
-<!-- <br><br><br>
-
-<div class="info" style="text-align: justify; background-color: snow;">
-	<?php require "./files/lipton-tx.html"; ?>
-</div> -->
+<?php
+// Lipton TX nie je na homepage: HTML komentár by PHP require aj tak vykonal
+// a vložil celý článok do zdroja (prípadne rozbil komentár pri výskyte -->).
+// Súbor files/lipton-tx.html ostáva v repozitári na neskoršie použitie.
+// require "./files/lipton-tx.html";
+?>
 
 <br><br><br>
 
