@@ -2,6 +2,10 @@
 Options -Indexes
 ServerSignature Off
 
+# Vlastná 404 stránka (UTF-8, branding webu; nie Apache default iso-8859-1).
+ErrorDocument 404 /404.php
+
+
 # PWA: bez AddType vracia Apache .webmanifest bez Content-Type (Beh #22).
 <IfModule mod_mime.c>
     AddType application/manifest+json .webmanifest

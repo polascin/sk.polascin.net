@@ -65,8 +65,10 @@
 # Beh #69: RFC 9116 /.well-known/security.txt (Contact mailto; text/plain).
 # Beh #70: security-txt.php reads security.txt in docroot (single source); Expires present.
 # Beh #71: HTTP /security.txt denied (403); only /.well-known/security.txt is public.
+# Beh #72: ErrorDocument 404 → 404.php (UTF-8 Slovak branded; no canonical/og:url).
 #
 # Spusti z koreňa:  .\tools\smoke-prod.ps1
+
 
 $ErrorActionPreference = 'Stop'
 $ua = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
@@ -697,6 +699,39 @@ try {
     $failed += Assert-BodyContains -Label 'refbook404' -Body $ref404.Body -Pattern 'property="og:title" content="Kniha, z ktorej je citát' -OkMessage 'refbook 404 generic og:title'
 } catch {
     Write-Host "FAIL refbook GET probe - $($_.Exception.Message)" -ForegroundColor Red
+    $failed++
+}
+
+Write-Host "Custom ErrorDocument 404" -ForegroundColor Cyan
+try {
+    $miss = Get-PageProbe -Path '/no-such-page-beh72.html' -UserAgent $ua -ExpectedStatus 404
+    $failed += Assert-BodyContains -Label 'custom404' -Body $miss.Body -Pattern 'Stránka sa nenašla' -OkMessage 'custom 404 Slovak heading/title'
+    $failed += Assert-BodyContains -Label 'custom404' -Body $miss.Body -Pattern 'href="/"[^>]*title="Úvodná stránka sk\.polascin\.net"' -OkMessage 'custom 404 home link with title'
+    $failed += Assert-BodyContains -Label 'custom404' -Body $miss.Body -Pattern 'name="robots" content="noindex,\s*follow"' -OkMessage 'custom 404 robots noindex,follow'
+    if ($miss.Body -match 'rel="canonical"') {
+        Write-Host 'FAIL custom 404 should not expose canonical' -ForegroundColor Red
+        $failed++
+    } else {
+        Write-Host 'OK custom 404 has no canonical' -ForegroundColor Green
+    }
+    if ($miss.Body -match 'property="og:url"') {
+        Write-Host 'FAIL custom 404 should not expose og:url' -ForegroundColor Red
+        $failed++
+    } else {
+        Write-Host 'OK custom 404 has no og:url' -ForegroundColor Green
+    }
+    $missCt = ''
+    foreach ($key in $miss.Headers.Keys) {
+        if ($key -ieq 'Content-Type') { $missCt = [string]$miss.Headers[$key]; break }
+    }
+    if ($missCt -match 'charset\s*=\s*utf-8') {
+        Write-Host ('OK custom 404 Content-Type={0}' -f $missCt) -ForegroundColor Green
+    } else {
+        Write-Host ('FAIL custom 404 Content-Type missing charset=utf-8 (got {0})' -f $missCt) -ForegroundColor Red
+        $failed++
+    }
+} catch {
+    Write-Host "FAIL custom 404 probe - $($_.Exception.Message)" -ForegroundColor Red
     $failed++
 }
 

@@ -74,7 +74,7 @@ na home/privacy/terms/refbook, `og:image:type` `image/jpeg`, focus outline Clari
 `browsing-topics=()` / `interest-cohort=()`, `robots.txt` s
 `Allow: /docs/mel.pdf` pri `Disallow: /docs/`, RFC 9116
 `/.well-known/security.txt` (HTTP `/security.txt` → 403; `Contact: mailto:lubomir@polascin.net`,
-`text/plain`), a verziovaný
+`text/plain`), vlastnú `404.php` cez `ErrorDocument 404` (UTF-8, noindex), a verziovaný
 `clarity-consent.js` s `aria-modal`, Escape, focus trap, `aria-describedby` /
 `aria-expanded`, `data-css-v` pre cache-bust CSS a obnovenie focusu na tlačidlo
 nastavení po Allow/Decline, keď dialóg otvorili nastavenia: `returnToSettings`
