@@ -44,11 +44,6 @@ ServerSignature Off
     <FilesMatch "^(robots\.txt)$">
         Header set Cache-Control "public, max-age=3600, must-revalidate"
     </FilesMatch>
-    # RFC 9116 security.txt (Beh #69): text/plain + krátka cache.
-    <Files "security.txt">
-        Header set Content-Type "text/plain; charset=utf-8"
-        Header set Cache-Control "public, max-age=3600, must-revalidate"
-    </Files>
     # HTML z PHP: po deployi nesmie edge držať starý dokument (CSS/JS majú vlastné ?v=).
     <FilesMatch "\.php$">
         Header set Cache-Control "no-cache, must-revalidate"
@@ -56,6 +51,10 @@ ServerSignature Off
     # PWA manifest (PHP): ikony majú ?v=filemtime; samotný JSON môže byť krátko cacheovaný.
     <Files "site.webmanifest.php">
         Header set Cache-Control "public, max-age=86400, must-revalidate"
+    </Files>
+    # RFC 9116 security.txt cez security-txt.php (RewriteRule → /.well-known/security.txt).
+    <Files "security-txt.php">
+        Header set Cache-Control "public, max-age=3600, must-revalidate"
     </Files>
 </IfModule>
 
@@ -89,6 +88,8 @@ ServerSignature Off
 # odpoveď je konzistentne 403 Forbidden ([F]).
 <IfModule mod_rewrite.c>
     RewriteEngine On
+    # RFC 9116: kanonická cesta bez fyzického .well-known/ (Websupport 403 na dot-dir).
+    RewriteRule ^\.well-known/security\.txt$ /security-txt.php [L]
     RewriteRule ^(\.git|\.claude|\.vscode|\.codex|\.cursor|\.github|\.kilo|\.trunk|\.agents?|blocks|files|tools)(/.*)?$ - [F,L]
     # docs/: adresár nie je verejne prehľadávateľný, ale docs/mel.pdf je zámerne
     # vložený na stránke (odkaz aj iframe), preto ho ako jediný ponechávame dostupný.

@@ -151,9 +151,10 @@ jobs:
             # already double-quoted in bash, so '$FTP_DIR' would be a literal path.
             put -O $FTP_DIR robots.txt;
             put -O $FTP_DIR .htaccess;
-            # RFC 9116: lftp mirror často vynechá dot-adresáre (.well-known).
-            mkdir -p $FTP_DIR/.well-known;
-            put -O $FTP_DIR/.well-known .well-known/security.txt;
+            put -O $FTP_DIR security-txt.php;
+            # RFC 9116: URL /.well-known/security.txt → security-txt.php (RewriteRule).
+            # Fyzický remote .well-known/ na OpenResty dával 403 — odstráň ho.
+            rm -r -f $FTP_DIR/.well-known;
             bye
           "
           echo "FTP deploy done."
