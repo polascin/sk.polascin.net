@@ -62,6 +62,7 @@
 # Beh #65: versioned link rel=icon 192x192 + 512x512 (manifest assets also in HTML head).
 # Beh #66: PHP site.webmanifest.php with ?v=filemtime on icon src; rewrite from .webmanifest.
 # Beh #68: single Cache-Control for manifest (htaccess only); drop static site.webmanifest.
+# Beh #69: RFC 9116 /.well-known/security.txt (Contact mailto; text/plain).
 #
 # Spusti z koreňa:  .\tools\smoke-prod.ps1
 
@@ -82,6 +83,7 @@ $checks = [ordered]@{
     '/favicon/site.webmanifest.php' = 200
     '/favicon/site.webmanifest'= 200
     '/favicon.ico'             = 200
+    '/.well-known/security.txt'= 200
     '/refbook.sk.php?data=1'   = 200
     '/refbook.sk.php?data=abc' = 404
     '/privacy'                 = 301
@@ -249,6 +251,35 @@ try {
     $failed += Assert-BodyContains -Label 'robots' -Body $robots.Body -Pattern 'Aktualizovan[eé]:\s*2026-11-06' -OkMessage 'robots last-updated 2026-11-06'
 } catch {
     Write-Host "FAIL robots.txt probe - $($_.Exception.Message)" -ForegroundColor Red
+    $failed++
+}
+
+Write-Host ""
+Write-Host "RFC 9116 security.txt" -ForegroundColor Cyan
+try {
+    $sec = Get-PageProbe -Path '/.well-known/security.txt' -UserAgent $ua
+    $failed += Assert-BodyContains -Label 'security.txt' -Body $sec.Body -Pattern 'Contact:\s*mailto:lubomir@polascin\.net' -OkMessage 'security.txt Contact mailto'
+    $failed += Assert-BodyContains -Label 'security.txt' -Body $sec.Body -Pattern 'Canonical:\s*https://sk\.polascin\.net/\.well-known/security\.txt' -OkMessage 'security.txt Canonical'
+    $secCt = $null
+    $secCc = $null
+    foreach ($key in $sec.Headers.Keys) {
+        if ($key -ieq 'Content-Type') { $secCt = $sec.Headers[$key] }
+        if ($key -ieq 'Cache-Control') { $secCc = $sec.Headers[$key] }
+    }
+    if ($secCt -and ($secCt -match '(?i)^text/plain(\s*;|$)')) {
+        Write-Host ('OK security.txt Content-Type={0}' -f $secCt) -ForegroundColor Green
+    } else {
+        Write-Host ('FAIL security.txt Content-Type missing text/plain (got {0})' -f $secCt) -ForegroundColor Red
+        $failed++
+    }
+    if ($secCc -and ($secCc -match 'max-age=')) {
+        Write-Host ('OK security.txt Cache-Control={0}' -f $secCc) -ForegroundColor Green
+    } else {
+        Write-Host ('FAIL security.txt missing Cache-Control max-age (got {0})' -f $secCc) -ForegroundColor Red
+        $failed++
+    }
+} catch {
+    Write-Host "FAIL security.txt probe - $($_.Exception.Message)" -ForegroundColor Red
     $failed++
 }
 

@@ -44,6 +44,11 @@ ServerSignature Off
     <FilesMatch "^(robots\.txt)$">
         Header set Cache-Control "public, max-age=3600, must-revalidate"
     </FilesMatch>
+    # RFC 9116 security.txt (Beh #69): text/plain + krátka cache.
+    <Files "security.txt">
+        Header set Content-Type "text/plain; charset=utf-8"
+        Header set Cache-Control "public, max-age=3600, must-revalidate"
+    </Files>
     # HTML z PHP: po deployi nesmie edge držať starý dokument (CSS/JS majú vlastné ?v=).
     <FilesMatch "\.php$">
         Header set Cache-Control "no-cache, must-revalidate"

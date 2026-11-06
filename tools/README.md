@@ -72,7 +72,9 @@ na home/privacy/terms/refbook, `og:image:type` `image/jpeg`, focus outline Clari
 `aria-label="Hlavný obsah"`, footer `aria-label="Pätička stránky"`, bio
 `title` na kontaktných/Amazon odkazoch, Permissions-Policy
 `browsing-topics=()` / `interest-cohort=()`, `robots.txt` s
-`Allow: /docs/mel.pdf` pri `Disallow: /docs/`, a verziovaný
+`Allow: /docs/mel.pdf` pri `Disallow: /docs/`, RFC 9116
+`/.well-known/security.txt` (`Contact: mailto:lubomir@polascin.net`,
+`text/plain`), a verziovaný
 `clarity-consent.js` s `aria-modal`, Escape, focus trap, `aria-describedby` /
 `aria-expanded`, `data-css-v` pre cache-bust CSS a obnovenie focusu na tlačidlo
 nastavení po Allow/Decline, keď dialóg otvorili nastavenia: `returnToSettings`
