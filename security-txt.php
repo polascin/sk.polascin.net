@@ -5,9 +5,10 @@ declare(strict_types=1);
  * RFC 9116 security.txt.
  * Kanonická URL: /.well-known/security.txt (RewriteRule v .htaccess).
  * Fyzický remote adresár .well-known/ na Websupport OpenResty vracal 403,
- * preto sa telo posiela z tohto PHP. Jediný zdroj textu: .well-known/security.txt.
+ * preto sa telo posiela z tohto PHP. Jediný zdroj textu: security.txt v koreni
+ * (remote .well-known/ OpenResty 403 — deploy ho maže; súbor musí byť mimo dot-dir).
  */
-$path = __DIR__ . '/.well-known/security.txt';
+$path = __DIR__ . '/security.txt';
 if (!is_readable($path)) {
     http_response_code(500);
     header('Content-Type: text/plain; charset=utf-8');

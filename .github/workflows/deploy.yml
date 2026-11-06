@@ -152,8 +152,10 @@ jobs:
             put -O $FTP_DIR robots.txt;
             put -O $FTP_DIR .htaccess;
             put -O $FTP_DIR security-txt.php;
+            put -O $FTP_DIR security.txt;
             # RFC 9116: URL /.well-known/security.txt → security-txt.php (RewriteRule).
             # Fyzický remote .well-known/ na OpenResty dával 403 — odstráň ho.
+            # Telo security.txt je v koreni (PHP ho číta); nie pod .well-known/.
             rm -r -f $FTP_DIR/.well-known;
             bye
           "
