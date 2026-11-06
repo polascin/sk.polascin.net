@@ -37,6 +37,7 @@
 # Beh #39: Person sameAs polascin.sk; clarity-consent focus outline matches site #6a0dad.
 # Beh #40: footer aria-label; bio contact/Amazon titles; Permissions-Policy browsing-topics.
 # Beh #40: homepage @graph WebSite+Person; sameAs assert scoped inside JSON-LD (not nav href).
+# Beh #41: @graph WebPage (isPartOf/about/mainEntity); main aria-label Hlavný obsah.
 #
 # Spusti z koreňa:  .\tools\smoke-prod.ps1
 
@@ -289,8 +290,12 @@ try {
     $failed += Assert-BodyContains -Label 'home' -Body $probe.Body -Pattern '"inLanguage":\s*"sk"' -OkMessage 'home JSON-LD inLanguage sk'
     $failed += Assert-BodyContains -Label 'home' -Body $probe.Body -Pattern '"knowsAbout"' -OkMessage 'home JSON-LD knowsAbout'
     $failed += Assert-BodyContains -Label 'home' -Body $probe.Body -Pattern '"@type":\s*"WebSite"' -OkMessage 'home JSON-LD WebSite'
+    $failed += Assert-BodyContains -Label 'home' -Body $probe.Body -Pattern '"@type":\s*"WebPage"' -OkMessage 'home JSON-LD WebPage'
     $failed += Assert-BodyContains -Label 'home' -Body $probe.Body -Pattern '"@graph"' -OkMessage 'home JSON-LD @graph'
+    $failed += Assert-BodyContains -Label 'home' -Body $probe.Body -Pattern '"isPartOf"\s*:\s*\{\s*"@id"\s*:\s*"https://sk\.polascin\.net/#website"' -OkMessage 'home JSON-LD WebPage isPartOf website'
+    $failed += Assert-BodyContains -Label 'home' -Body $probe.Body -Pattern '"mainEntity"\s*:\s*\{\s*"@id"\s*:\s*"https://sk\.polascin\.net/#person"' -OkMessage 'home JSON-LD WebPage mainEntity person'
     $failed += Assert-BodyContains -Label 'home' -Body $probe.Body -Pattern '"sameAs"\s*:\s*\[[\s\S]*?https://polascin\.sk/' -OkMessage 'home JSON-LD sameAs polascin.sk'
+    $failed += Assert-BodyContains -Label 'home' -Body $probe.Body -Pattern '<main[^>]*aria-label="Hlavný obsah"' -OkMessage 'home main aria-label'
     $failed += Assert-BodyContains -Label 'home' -Body $probe.Body -Pattern '<footer[^>]*aria-label="Pätička stránky"' -OkMessage 'home footer aria-label'
     $failed += Assert-BodyContains -Label 'home' -Body $probe.Body -Pattern 'href="https://polascin\.sk/"[^>]*title="polascin\.sk"' -OkMessage 'home bio polascin.sk title'
     $pp = $null
@@ -443,12 +448,14 @@ try {
     $failed += Assert-BodyContains -Label 'privacy' -Body $privacy.Body -Pattern 'href="/refbook\.sk\.php"' -OkMessage 'privacy link /refbook.sk.php'
     $failed += Assert-BodyContains -Label 'privacy' -Body $privacy.Body -Pattern 'property="og:title" content="Ochrana osobných údajov' -OkMessage 'privacy og:title'
     $failed += Assert-BodyContains -Label 'privacy' -Body $privacy.Body -Pattern 'name="twitter:image:alt"' -OkMessage 'privacy twitter:image:alt'
+    $failed += Assert-BodyContains -Label 'privacy' -Body $privacy.Body -Pattern '<main[^>]*aria-label="Hlavný obsah"' -OkMessage 'privacy main aria-label'
 
     $terms = Get-PageProbe -Path '/terms.php' -UserAgent $ua
     $failed += Assert-BodyContains -Label 'terms' -Body $terms.Body -Pattern 'href="/styles\.css\?v=' -OkMessage 'terms stylesheet /styles.css'
     $failed += Assert-BodyContains -Label 'terms' -Body $terms.Body -Pattern 'href="/privacy"' -OkMessage 'terms link /privacy'
     $failed += Assert-BodyContains -Label 'terms' -Body $terms.Body -Pattern 'property="og:title" content="Podmienky používania' -OkMessage 'terms og:title'
     $failed += Assert-BodyContains -Label 'terms' -Body $terms.Body -Pattern 'name="twitter:image:alt"' -OkMessage 'terms twitter:image:alt'
+    $failed += Assert-BodyContains -Label 'terms' -Body $terms.Body -Pattern '<main[^>]*aria-label="Hlavný obsah"' -OkMessage 'terms main aria-label'
 } catch {
     Write-Host "FAIL legal GET probe - $($_.Exception.Message)" -ForegroundColor Red
     $failed++
@@ -496,6 +503,7 @@ try {
         $failed++
     }
     $failed += Assert-BodyContains -Label 'refbook' -Body $refOk.Body -Pattern 'name="twitter:image:alt"' -OkMessage 'refbook twitter:image:alt'
+    $failed += Assert-BodyContains -Label 'refbook' -Body $refOk.Body -Pattern '<main[^>]*aria-label="Hlavný obsah"' -OkMessage 'refbook main aria-label'
 
     $ref404 = Get-PageProbe -Path '/refbook.sk.php?data=abc' -UserAgent $ua -ExpectedStatus 404
     if ($ref404.Body -match $genericTitle) {

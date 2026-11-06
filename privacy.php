@@ -57,7 +57,7 @@
 
 <br>
 
-<main id="obsah" class="info legal" tabindex="-1">
+<main id="obsah" class="info legal" tabindex="-1" aria-label="Hlavný obsah">
 
 	<h1>Ochrana osobných údajov</h1>
 

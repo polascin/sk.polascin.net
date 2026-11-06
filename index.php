@@ -9,7 +9,7 @@
 
   <?php require "./blocks/favicon.php"; ?>
 
-  <meta name="date" content="2026-11-06T01:16:00+0100" >
+  <meta name="date" content="2026-11-06T01:28:00+0100" >
 	<meta name="description" content="MUDr. Ľubomír Polaščín, nefrológ a internista: slovenské webové sídlo, odborné texty o dialýze, transplantácii obličiek a nefrológii, kontakty a odkazy.">
   <meta name="copyright" content="Ľubomír Polaščín">
 	<meta name="keywords" content="Ľubomír Polaščín,Ľubomír,Polaščín,nefrológ,internista,nefrológia,dialýza,interná medicína,medicína,vnútorné lekárstvo,lekárstvo">
@@ -55,6 +55,16 @@
         "publisher": { "@id": "https://sk.polascin.net/#person" }
       },
       {
+        "@type": "WebPage",
+        "@id": "https://sk.polascin.net/#webpage",
+        "url": "https://sk.polascin.net/",
+        "name": "Ľubomír Polaščín (webové sídlo)",
+        "inLanguage": "sk",
+        "isPartOf": { "@id": "https://sk.polascin.net/#website" },
+        "about": { "@id": "https://sk.polascin.net/#person" },
+        "mainEntity": { "@id": "https://sk.polascin.net/#person" }
+      },
+      {
         "@type": "Person",
         "@id": "https://sk.polascin.net/#person",
         "name": "Ľubomír Polaščín",
@@ -93,7 +103,7 @@
 
 <hr>
 
-<main id="obsah" tabindex="-1">
+<main id="obsah" tabindex="-1" aria-label="Hlavný obsah">
 
 <?php require "./blocks/current.sk.php"; ?>
 

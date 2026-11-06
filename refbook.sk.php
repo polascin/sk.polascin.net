@@ -248,7 +248,7 @@ if (is_array($record)) {
 
 <hr>
 
-<main id="obsah" tabindex="-1">
+<main id="obsah" tabindex="-1" aria-label="Hlavný obsah">
 
 <?php require "./blocks/current.sk.php"; ?>
 

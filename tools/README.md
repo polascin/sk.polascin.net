@@ -56,9 +56,10 @@ bez textového prefixu `ISBN `, Book aj Quotation `inLanguage` vrátane mapovani
 cz→cs), Cache-Control pre `mel.pdf` a `sitemap.xml`, `color-scheme: light`,
 `loading=lazy` na odborných obrázkoch (`dial.jpeg`, `klinef.jpeg`, …),
 nadpisy bez preskoku úrovní (Amazon knihy `h2`, podsekcie nefamb `h3`),
-JSON-LD `@graph` (`WebSite` + `Person`, `publisher` `@id`), `sameAs`
-vrátane `https://polascin.sk/` (assert scoped do `sameAs`, nie nav `href`),
-focus outline Clarity `#6a0dad` (zhoda so skip-link), footer
+JSON-LD `@graph` (`WebSite` + `WebPage` + `Person`, `publisher`/`isPartOf`/
+`mainEntity` `@id`), `sameAs` vrátane `https://polascin.sk/` (assert scoped
+do `sameAs`, nie nav `href`), focus outline Clarity `#6a0dad` (zhoda so
+skip-link), `main` `aria-label="Hlavný obsah"`, footer
 `aria-label="Pätička stránky"`, bio `title` na kontaktných/Amazon odkazoch,
 Permissions-Policy `browsing-topics=()` / `interest-cohort=()`,
 `robots.txt` s `Allow: /docs/mel.pdf` pri `Disallow: /docs/`, a verziovaný
