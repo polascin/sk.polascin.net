@@ -6,7 +6,8 @@ $v192 = (int) @filemtime($dir . '/android-chrome-192x192.png');
 $v512 = (int) @filemtime($dir . '/android-chrome-512x512.png');
 
 header('Content-Type: application/manifest+json; charset=utf-8');
-header('Cache-Control: public, max-age=86400, must-revalidate');
+# Cache-Control nastavuje .htaccess <Files "site.webmanifest.php"> (nie tu),
+# aby sa nezdvojil s Header set z Apache.
 
 $manifest = [
     'name' => 'Ľubomír Polaščín',

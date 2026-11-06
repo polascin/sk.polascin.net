@@ -39,7 +39,7 @@ outline `#6a0dad` a `Cache-Control max-age` idú cez versioned `/styles.css?v=`
 (holé `/styles.css` môže byť edge-cached). Overí aj jeden Fedora odkaz v pätičke,
 `twitter:image:alt`, versioned `/favicon.ico?v=` + apple-touch-icon + versioned
 `rel="icon"` 192×192 / 512×512 (`android-chrome-*.png`) a versioned
-`/favicon/site.webmanifest.php?v=` (ikony s `?v=filemtime`; rewrite zo `.webmanifest`; `theme_color` / `background_color` `#f5fffa`,
+`/favicon/site.webmanifest.php?v=` (ikony s `?v=filemtime`; rewrite zo `.webmanifest`; Cache-Control len z htaccess; `theme_color` / `background_color` `#f5fffa`,
 `start_url`, `id`, `scope`, `lang`, `description`, icon `purpose`, `Content-Type`
 `application/manifest+json`, Cache-Control). HEAD `/favicon.ico` → 200. Overí
 OG/Twitter na privacy/terms a na `refbook.sk.php` (dynamický `og:title` /

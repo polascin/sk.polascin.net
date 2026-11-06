@@ -61,6 +61,7 @@
 # Beh #62: stop PHP-require of lipton-tx inside HTML comment (include skipped; home has no eugenika).
 # Beh #65: versioned link rel=icon 192x192 + 512x512 (manifest assets also in HTML head).
 # Beh #66: PHP site.webmanifest.php with ?v=filemtime on icon src; rewrite from .webmanifest.
+# Beh #68: single Cache-Control for manifest (htaccess only); drop static site.webmanifest.
 #
 # Spusti z koreňa:  .\tools\smoke-prod.ps1
 
@@ -413,8 +414,11 @@ try {
             Write-Host ('FAIL webmanifest Content-Type missing application/manifest+json (got {0})' -f $manifestCt) -ForegroundColor Red
             $failed++
         }
-        if ($manifestCc -and ($manifestCc -match 'max-age=')) {
+        if ($manifestCc -and ($manifestCc -match 'max-age=') -and ($manifestCc -notmatch 'max-age=.*,.*max-age=')) {
             Write-Host ('OK webmanifest Cache-Control={0}' -f $manifestCc) -ForegroundColor Green
+        } elseif ($manifestCc -match 'max-age=.*,.*max-age=') {
+            Write-Host ('FAIL webmanifest duplicate Cache-Control ({0})' -f $manifestCc) -ForegroundColor Red
+            $failed++
         } else {
             Write-Host 'FAIL webmanifest missing Cache-Control max-age' -ForegroundColor Red
             $failed++
